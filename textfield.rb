@@ -3,4 +3,5 @@ class Textfield < Element
     super()
     @element_type = 'input'
   end
+
 end

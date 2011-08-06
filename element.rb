@@ -29,6 +29,10 @@ class Element
     App.dom_on_sockets.add_onclick @element_id,&block
   end
 
+  def onkeypress &block
+    App.dom_on_sockets.add_onkeypress @element_id,&block
+  end
+
   def alert message
     App.dom_on_sockets.alert message
   end

@@ -45,6 +45,11 @@
               ws.send("click,"+cmd.element_id)
             })
           }
+          if (cmd.method == 'add_onkeypress' ){
+            $("#"+cmd.element_id).keypress(function(e){
+              ws.send("keypress,"+cmd.element_id+","+e.which)
+            })
+          }
           if (cmd.method == 'get_value' ){
             var val = $("#"+cmd.element_id).val()
             ws.send("value,"+cmd.element_id+","+val)
