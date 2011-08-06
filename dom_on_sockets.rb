@@ -1,4 +1,4 @@
-class WebApp
+class DomOnSockets
 
   def initialize ws
     @ws = ws
@@ -20,9 +20,9 @@ class WebApp
     @ws.send message
   end
 
-  def onopen
-    setup_app
-  end
+#  def onopen
+#    setup_app
+#  end
 
   def onclose
     puts "Connection closed"
@@ -32,7 +32,6 @@ class WebApp
     puts "Recieved message: #{message}"
     cmds = message.split ','
     if cmds.first == 'click'
-      puts 'about to call click event for'
       @onclick[cmds.last].call
     end
   end
