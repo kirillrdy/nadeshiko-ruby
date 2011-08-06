@@ -1,0 +1,53 @@
+<html>
+  <head>
+
+    <script type="text/javascript" language="javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
+
+    </script>
+
+    <script>
+
+        function debug(string) {
+          var element = document.getElementById("main");
+          var p = document.createElement("p");
+          p.appendChild(document.createTextNode(string));
+          element.appendChild(p);
+        }
+
+      function init() {
+
+        ws = new WebSocket("ws://localhost:8080/");
+        
+        ws.onclose = function() { debug("socket closed"); };
+        ws.onopen = function() {
+          debug("connected...");
+          ws.send("hello server");
+        };
+
+        ws.onmessage =  function messageReader(event){
+          var cmd = JSON.parse(event.data)
+          if (cmd.method == 'add_element'){
+            $("#"+ cmd.parent_id).append(
+              ['<',cmd.element_type,' id="',cmd.element_id,'"></',cmd.element_type
+              ,'>'
+              ].join(''))
+          }
+          if (cmd.method == 'set_inner_html' ){
+            $("#"+cmd.element_id).text(cmd.text)
+          }
+          if (cmd.method == 'set_css' ){
+            $("#"+cmd.element_id).css( cmd.property,cmd.value )
+          }
+        }
+
+      };
+
+
+    </script>
+  </head>
+
+  <body onload="init();">
+    <div id="main"></div>
+
+  </body>
+</html>
