@@ -21,7 +21,6 @@
         ws.onclose = function() { debug("socket closed"); };
         ws.onopen = function() {
           debug("connected...");
-          ws.send("hello server");
         };
 
         ws.onmessage =  function messageReader(event){
@@ -45,6 +44,10 @@
             $("#"+cmd.element_id).click(function(){
               ws.send("click,"+cmd.element_id)
             })
+          }
+          if (cmd.method == 'get_value' ){
+            var val = $("#"+cmd.element_id).val()
+            ws.send("value,"+cmd.element_id+","+val)
           }
         }
 

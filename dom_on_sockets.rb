@@ -17,6 +17,7 @@ class DomOnSockets
   end
 
   def send message
+    puts message
     @ws.send message
   end
 
@@ -30,9 +31,12 @@ class DomOnSockets
 
   def onmessage message
     puts "Recieved message: #{message}"
-    cmds = message.split ','
+    cmds = message.split ',',-1
     if cmds.first == 'click'
       @onclick[cmds.last].call
+    end
+    if cmds.first == 'value'
+      @get_value[cmds[1]].call cmds.last
     end
   end
 
@@ -63,6 +67,18 @@ class DomOnSockets
     send hash.to_json
   end
 
+
+  def get_value element_id, &block
+    hash = {
+      'method' => 'get_value',
+      'element_id' => element_id
+    }
+    send hash.to_json
+    @get_value ||= {}
+    @get_value[element_id] = block
+  end
+
+
   def add_onclick element_id, &block
     hash = {
       'method' => 'add_onclick',
@@ -78,8 +94,8 @@ class DomOnSockets
 
   def set_css element_id, property,value
     hash = {
-      'element_id' => element_id,
       'method' => 'set_css',
+      'element_id' => element_id,
       'property' => property,
       'value' => value
     }
