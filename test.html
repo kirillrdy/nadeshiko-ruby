@@ -49,6 +49,9 @@
             var val = $("#"+cmd.element_id).val()
             ws.send("value,"+cmd.element_id+","+val)
           }
+          if (cmd.method == 'set_value' ){
+            var val = $("#"+cmd.element_id).val(cmd.value)
+          }
         }
 
       };

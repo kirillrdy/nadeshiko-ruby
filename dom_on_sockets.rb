@@ -91,6 +91,15 @@ class DomOnSockets
 
   end
 
+  def set_value element_id, value
+    hash = {
+      'method' => 'set_value',
+      'element_id' => element_id,
+      'value' => value
+    }
+    send hash.to_json
+  end
+
 
   def set_css element_id, property,value
     hash = {
