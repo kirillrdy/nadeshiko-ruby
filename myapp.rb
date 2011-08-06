@@ -4,5 +4,10 @@ class MyApp < WebApp
     set_inner_html 'div1','Hello'
     set_css 'div1','border','1px solid black'
     set_css 'div1','width','200px'
+
+    add_onclick 'div1' do
+      alert 'hello'
+    end
+
   end
 end
