@@ -10,14 +10,13 @@ require_relative 'element'
 require_relative 'button'
 require_relative 'textfield'
 require_relative 'list'
+require_relative 'app_sprawn'
 require_relative 'app'
 require_relative 'myapp'
 
 
 EventMachine.run do
   EventMachine::WebSocket.start(:host => "0.0.0.0", :port => 8080) do |ws|
-    MyApp.new(ws)
+    AppSprawn.setup ws
   end
 end
-
-

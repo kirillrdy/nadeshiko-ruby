@@ -3,7 +3,7 @@ class Element
   attr_accessor :parent_id, :element_id,:element_type
 
   def initialize
-    @element_id = Digest::SHA1.hexdigest(rand.to_s)
+    @element_id = Digest::SHA1.hexdigest(rand.to_s)[0..5]
     @element_type = 'div'
   end
 
