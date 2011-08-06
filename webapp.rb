@@ -15,24 +15,28 @@ class WebApp
     end
 
   end
-  
+
   def send message
     @ws.send message
   end
-  
+
   def onopen
     setup_app
   end
-  
-  
+
   def onclose
     puts "Connection closed"
   end
-  
+
   def onmessage message
     puts "Recieved message: #{message}"
+    cmds = message.split ','
+    if cmds.first == 'click'
+      puts 'about to call click event for'
+      @onclick[cmds.last].call
+    end
   end
-  
+
   def add_element element_type,element_id,parent_id
     hash = {
       'method' => 'add_element',
@@ -51,6 +55,27 @@ class WebApp
     }
     send hash.to_json
   end
+
+  def alert message
+    hash = {
+      'method' => 'alert',
+      'message' => message
+    }
+    send hash.to_json
+  end
+
+  def add_onclick element_id, &block
+    hash = {
+      'method' => 'add_onclick',
+      'element_id' => element_id
+    }
+    send hash.to_json
+
+    @onclick ||= {}
+    @onclick[element_id] = block
+
+  end
+
 
   def set_css element_id, property,value
     hash = {

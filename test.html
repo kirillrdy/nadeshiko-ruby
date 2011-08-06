@@ -38,6 +38,14 @@
           if (cmd.method == 'set_css' ){
             $("#"+cmd.element_id).css( cmd.property,cmd.value )
           }
+          if (cmd.method == 'alert' ){
+            alert(cmd.message)
+          }
+          if (cmd.method == 'add_onclick' ){
+            $("#"+cmd.element_id).click(function(){
+              ws.send("click,"+cmd.element_id)
+            })
+          }
         }
 
       };
