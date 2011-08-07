@@ -1,6 +1,6 @@
 class Textfield < Element
-  def initialize
-    super()
+  def initialize app
+    super(app)
     @element_type = 'input'
   end
 

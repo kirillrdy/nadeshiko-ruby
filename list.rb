@@ -1,11 +1,9 @@
 class List < Element
   attr_accessor :items
 
-
-
   def add_item string
-    item = Element.new
-    add item
+    item = Element.new(@app)
+    add_element item
 
     item.set_inner_html string
     item.onclick do

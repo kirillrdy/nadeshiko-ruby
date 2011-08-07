@@ -1,10 +1,11 @@
 class AppSprawn
 
   def self.setup web_socket
-    App.dom_on_sockets = DomOnSockets.new(web_socket)
 
     web_socket.onopen do
-      MyApp.new.setup_app
+      dom_on_sockets = DomOnSockets.new(web_socket)
+      app = MyApp.new dom_on_sockets
+      app.setup_app
     end
 
   end
