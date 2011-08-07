@@ -1,14 +1,27 @@
 class MyApp < App
 
   def setup_app
+  
+  
+    # div :main do
+    #   grid :store => MovieStore
+    #   textfield
+    #   button 'Add new Entry' do
+    #     get 'textfield1'
+    #   end
+    # end
+    #
+    #
+    #
+
     main = Element.new self
     main.element_id = 'main'
 
-    @list = List.new self
+    @list = Grid.new self, MovieStore
     main.add_element @list
 
-    items = Store.all @list
-    items.each{|i| @list.add_item i }
+    # load data from store
+    @list.load
 
     @textfield = Textfield.new self
     main.add_element @textfield
@@ -27,8 +40,7 @@ class MyApp < App
   def on_add_button_click
     @textfield.get_value do |value|
       if value != ''
-        @list.add_item value
-        Store.add self,value
+        MovieStore.add :title => value
       end
       @textfield.set_value ''
     end
