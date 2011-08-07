@@ -54,7 +54,7 @@ class Element
   def setup
     #set_inner_html 'Basic Element'
     set_css 'border','1px solid black'
-    set_css 'width','200px'
+    #set_css 'width','200px'
 
 #    onclick do
 #      alert 'Hello from Kirill'
