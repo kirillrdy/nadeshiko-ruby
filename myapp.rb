@@ -1,8 +1,6 @@
 class MyApp < App
 
   def setup_app
-  
-  
     # div :main do
     #   grid :store => MovieStore
     #   textfield
@@ -10,9 +8,6 @@ class MyApp < App
     #     get 'textfield1'
     #   end
     # end
-    #
-    #
-    #
 
     main = Element.new self
     main.element_id = 'main'
@@ -41,6 +36,8 @@ class MyApp < App
     @textfield.get_value do |value|
       if value != ''
         MovieStore.add :title => value
+      else
+        dom_on_sockets.alert 'Please enter something'
       end
       @textfield.set_value ''
     end
