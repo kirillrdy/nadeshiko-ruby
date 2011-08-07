@@ -57,6 +57,9 @@
           if (cmd.method == 'set_value' ){
             var val = $("#"+cmd.element_id).val(cmd.value)
           }
+          if (cmd.method == 'remove_element' ){
+            var val = $("#"+cmd.element_id).remove()
+          }
         }
 
       };

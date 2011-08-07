@@ -115,6 +115,13 @@ class DomOnSockets
     send hash.to_json
   end
 
+  def remove_element element_id
+    hash = {
+      'method' => 'remove_element',
+      'element_id' => element_id,
+    }
+    send hash.to_json
+  end
 
   def set_css element_id, property,value
     hash = {

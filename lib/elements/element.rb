@@ -19,6 +19,10 @@ class Element
     @app.dom_on_sockets.add_element @element_type,@element_id,@parent_id
   end
 
+  def remove_own_element
+    @app.dom_on_sockets.remove_element @element_id
+  end
+
   def set_inner_html text
     @app.dom_on_sockets.set_inner_html @element_id, text
   end
@@ -48,7 +52,7 @@ class Element
   end
 
   def setup
-    set_inner_html 'Basic Element'
+    #set_inner_html 'Basic Element'
     set_css 'border','1px solid black'
     set_css 'width','200px'
 

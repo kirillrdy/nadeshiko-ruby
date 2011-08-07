@@ -13,6 +13,15 @@ class Store
     end
   end
 
+  def self.remove app,item
+    self.items.delete! item
+    self.elements.each do |element|
+      next if app == element.app
+      element.remove item
+    end
+    
+  end
+
   def self.all element
     self.elements ||= []
     self.elements << element
