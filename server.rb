@@ -12,6 +12,7 @@ elements.each{|x| require_relative 'lib/elements/'+x }
 require_relative 'lib/dom_on_sockets'
 require_relative 'lib/app_sprawn'
 require_relative 'lib/app'
+require_relative 'store'
 require_relative 'myapp'
 
 EventMachine.run do
