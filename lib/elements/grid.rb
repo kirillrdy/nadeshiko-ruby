@@ -31,8 +31,6 @@ class Grid < Element
 
     end
 
-
-
     @items ||=[]
     @items << row
 
