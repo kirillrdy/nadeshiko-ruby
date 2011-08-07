@@ -17,11 +17,12 @@
       function init() {
         
         ws = new WebSocket("ws://localhost:8080/");
-        
+
         ws.onclose = function() { debug("socket closed"); };
-        ws.onopen = function() {
-          debug("connected...");
-        };
+
+        //ws.onopen = function() {
+        //  debug("connected...");
+        //};
 
         ws.onmessage =  function messageReader(event){
           var cmd = JSON.parse(event.data)
