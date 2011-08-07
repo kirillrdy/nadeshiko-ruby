@@ -6,5 +6,6 @@ class AddedMovies < ActiveRecord::Migration
   end
 
   def self.down
+    drop_table :movies
   end
 end
