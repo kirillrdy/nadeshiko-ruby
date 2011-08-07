@@ -17,15 +17,21 @@ class Grid < Element
     row.element_type = 'tr'
     add_element row
 
+    columns = [:id,:title]
+    
+    columns.each do |c|
+      item = Element.new(@app)
+      item.element_type = 'td'
+      row.add_element item
+      item.set_inner_html record.send(c)
 
-    item = Element.new(@app)
-    item.element_type = 'td'
-    row.add_element item
+      item.onclick do
+        alert 'You clicked ' + record.title
+      end
 
-    item.set_inner_html record.title
-    item.onclick do
-      alert 'You clicked ' + record.title
     end
+
+
 
     @items ||=[]
     @items << row
