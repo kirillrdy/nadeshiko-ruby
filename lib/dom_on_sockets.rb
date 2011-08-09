@@ -21,10 +21,6 @@ class DomOnSockets
     @ws.send message
   end
 
-#  def onopen
-#    setup_app
-#  end
-
   def onclose
     puts "Connection closed"
   end
