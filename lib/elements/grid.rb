@@ -1,10 +1,11 @@
 class Grid < Element
   attr_accessor :items,:store
 
-  def initialize app, store
+  def initialize app, store, options = {}
     super app
     @store = store
     @element_type = 'table'
+    @columns = options[:columns]
   end
 
   def load
@@ -17,13 +18,19 @@ class Grid < Element
     row.element_type = 'tr'
     add_element row
 
-    columns = [:id,:title]
-    
-    columns.each do |c|
+
+    @columns.each do |c|
       item = Element.new(@app)
       item.element_type = 'td'
       row.add_element item
       item.set_inner_html record.send(c)
+
+      item.set_css 'border-width','1px'
+      item.set_css 'border-collapse','collapse'
+      item.set_css 'padding','5px'
+      item.set_css 'border-style','dotted'
+      item.set_css 'border-color','gray'
+      item.set_css 'background-color','white'
 
       item.onclick do
         alert 'You clicked ' + record.title
@@ -55,6 +62,33 @@ class Grid < Element
   end
 
   def setup
+
+    set_css 'border-width','1px'
+    set_css 'border-collapse','collapse'
+    set_css 'border-spacing','2px'
+    set_css 'border-style','solid'
+    set_css 'border-color','gray'
+    set_css 'background-color','white'
+
+    @header = Element.new(@app)
+    @header.element_type = 'tr'
+    add_element @header
+
+    (@columns + ['']).each do |c|
+      item = Element.new(@app)
+      item.element_type = 'th'
+      @header.add_element item
+      item.set_inner_html c.to_s
+      
+      item.set_css 'border-width','1px'
+      item.set_css 'border-collapse','collapse'
+      item.set_css 'padding','5px'
+      item.set_css 'border-style','dotted'
+      item.set_css 'border-color','gray'
+      item.set_css 'background-color','white'
+      
+    end
+
   end
 
 end
