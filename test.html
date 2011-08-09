@@ -9,7 +9,7 @@
       function init() {
         ws = new WebSocket("ws://localhost:8080/");
         ws.onclose = function() { alert("socket closed"); };
-        ws.onmessage =  event_parser
+        ws.onmessage =  add_cmd_to_list
       };
 
     </script>

@@ -1,7 +1,13 @@
-function event_parser(event){
+window.actions_list = []
+function add_cmd_to_list(event){
   var cmd = JSON.parse(event.data)
+  window.actions_list.push(cmd)
+}
+
+
+function action_single_cmd(cmd){
   if (cmd.method == 'add_element'){
-    $("#"+ cmd.parent_id).append(
+  $("#"+ cmd.parent_id).append(
       ['<',cmd.element_type,' id="',cmd.element_id,'"></',cmd.element_type
       ,'>'
       ].join(''))
@@ -36,3 +42,15 @@ function event_parser(event){
     var val = $("#"+cmd.element_id).remove()
   }
 }
+
+
+function event_parser(event){
+  var i;
+  for(i = 0; i < 100; i++){
+    var cmd = window.actions_list.shift();
+    if (cmd == undefined){ return }
+    action_single_cmd(cmd)
+  }
+}
+
+setInterval('event_parser()',0)
