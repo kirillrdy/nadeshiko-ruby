@@ -12,12 +12,6 @@ class MyApp < App
     main = Element.new self
     main.element_id = 'main'
 
-    @list = Grid.new self, MovieStore
-    main.add_element @list
-
-    # load data from store
-    @list.load
-
     @textfield = Textfield.new self
     main.add_element @textfield
 
@@ -29,6 +23,13 @@ class MyApp < App
       on_add_button_click
     end
     main.add_element @button
+
+    @list = Grid.new self, MovieStore, :columns => [:id,:title]
+    main.add_element @list
+
+    @list.set_css 'width','600px'
+    # load data from store
+    @list.load
 
   end
 
