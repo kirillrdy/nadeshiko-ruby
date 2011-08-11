@@ -3,9 +3,11 @@ class Element
   attr_accessor :app
   attr_accessor :parent_id, :element_id,:element_type
 
+  include Dsl
+
   def initialize app
     @app = app
-    @element_id = Digest::SHA1.hexdigest(rand.to_s)[0..5]
+    @element_id = Digest::SHA1.hexdigest(rand.to_s)[0..6]
     @element_type = 'div'
   end
 
