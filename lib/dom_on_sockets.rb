@@ -1,35 +1,38 @@
 class DomOnSockets
 
-  def initialize ws
-    @ws = ws
-    @ws.onopen do
+  def initialize web_socket
+
+    # Lets setup our callbacks hash
+    
+
+    @web_socket = web_socket
+    @web_socket.onopen do
       self.onopen
     end
     
-    @ws.onclose do
-      self.onclose
+    @web_socket.onclose do
+      puts "Connection closed"
     end
     
-    @ws.onmessage do |msg|
+    @web_socket.onmessage do |msg|
       self.onmessage msg
     end
 
   end
 
+
   def send message
     puts message
-    @ws.send message
+    @web_socket.send message
   end
 
-  def onclose
-    puts "Connection closed"
-  end
 
   def onmessage message
-    puts "Recieved message: #{message}"
+    puts "Recieved message: '#{message}'"
     cmds = message.split ',',-1
     if cmds.first == 'click'
-      @onclick[cmds.last].call
+      callbacks_block = @onclick[cmds.last]
+      callbacks_block.call
     end
     if cmds.first == 'keypress'
       @onkeypress[cmds[1]].call cmds.last
