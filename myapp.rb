@@ -4,6 +4,18 @@ class MyApp < App
     
   end
 
+  def parse_nodes root, parent
+    e = Element.new self
+    e.element_type = root.element_type.to_s
+
+    parent.add_element e
+
+    root.children.each do |x|
+      parse_nodes x, e
+    end
+
+  end
+
   def setup_app
     # div :main do
     #   grid :store => MovieStore
@@ -15,6 +27,15 @@ class MyApp < App
 
     main = Element.new self
     main.element_id = 'main'
+
+    root = Node.new :div
+    root.instance_eval do
+      div do
+        button 'hello'
+      end
+    end
+
+    parse_nodes root, main
 
     @textfield = Textfield.new self
     main.add_element @textfield
@@ -31,7 +52,7 @@ class MyApp < App
     @list = Grid.new self, MovieStore, :columns => [:id,:title]
     main.add_element @list
 
-    @list.set_css 'width','600px'
+    #@list.set_css 'width','800px'
     # load data from store
     @list.load
 

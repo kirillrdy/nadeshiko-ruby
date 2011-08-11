@@ -1,11 +1,10 @@
 module Dsl
 
-  attr_accessor :children, :method
+  attr_accessor :children, :element_type
 
   def method_missing method,*args, &block
     a = Node.new(method)
     a.instance_eval(&block) if block_given?
-    @children ||= []
     @children << a
   end
   
@@ -13,23 +12,24 @@ end
 
 class Node
   include Dsl
-  def initialize(name)
-    @name = name
+  def initialize(element_type)
+    @element_type = element_type
+    @children = []
   end
 end
 
 
-p = Node.new :root
+#p = Node.new :root
 
-p.instance_eval do
-  hbox do
-    vbox do
-      text 'a'
-      text 'b'
-      button 'hello'
-    end
-    button 'hello'
-  end
-end
+#p.instance_eval do
+#  hbox do
+#    vbox do
+#      text 'a'
+#      text 'b'
+#      button 'hello'
+#    end
+#    button 'hello'
+#  end
+#end
 
-puts p.inspect
+#puts p.inspect
