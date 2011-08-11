@@ -54,8 +54,9 @@ class Element
   end
 
   def setup
+    #set_css 'border','1px solid black'
     #set_inner_html 'Basic Element'
-    set_css 'border','1px solid black'
+    
     #set_css 'width','200px'
 
 #    onclick do
