@@ -3,4 +3,9 @@ class App
   def initialize dom_on_sockets
     @dom_on_sockets = dom_on_sockets
   end
+  
+  def start
+    onstart
+  end
+  
 end

@@ -1,5 +1,9 @@
 class MyApp < App
 
+  def onstart
+    
+  end
+
   def setup_app
     # div :main do
     #   grid :store => MovieStore
