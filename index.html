@@ -8,7 +8,8 @@
 
       function init() {
         $("#main").empty()
-        ws = new WebSocket("ws://localhost:8080/");
+        if (window.WebSocket){ws = new WebSocket("ws://localhost:8080/");}
+        if (window.MozWebSocket){ws = new MozWebSocket("ws://localhost:8080/");}
         ws.onclose = function(){
           init()
         };
