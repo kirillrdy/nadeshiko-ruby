@@ -1,9 +1,10 @@
 module Dsl
 
-  attr_accessor :children, :element_type
+  attr_accessor :children, :element_type, :args
 
   def method_missing method,*args, &block
     a = Node.new(method)
+    a.args = args
     a.instance_eval(&block) if block_given?
     @children << a
   end
