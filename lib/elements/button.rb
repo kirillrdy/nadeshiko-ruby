@@ -1,13 +1,13 @@
 class Button < Element
-  def initialize app,title, &block
-    super(app)
+  def initialize options = {}, &block
+    super(options)
     @element_type = 'button'
-    @title = title
+    @text = options[:text]
     @onclick = block
   end
 
   def setup
-    set_inner_html @title
+    set_inner_html @text
     onclick &@onclick
   end
 
