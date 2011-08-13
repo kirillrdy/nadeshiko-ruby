@@ -41,10 +41,6 @@ class Element
     @app.dom_on_sockets.add_onkeypress @element_id,&block
   end
 
-  def alert message
-    @app.dom_on_sockets.alert message
-  end
-
   def get_value &block
     @app.dom_on_sockets.get_value @element_id, &block
   end
