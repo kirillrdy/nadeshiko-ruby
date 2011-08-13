@@ -49,10 +49,16 @@ class MyApp < App
     end
     main.add_element @button
 
-    @list = Grid.new self, MovieStore, :columns => [:id,:title]
-    main.add_element @list
+    e = Element.new self
+    main.add_element e
 
-    #@list.set_css 'width','800px'
+    @list = Grid.new self, MovieStore, :columns => [:id,:title]
+    e.add_element @list
+
+    e.set_css 'height','500px'
+    e.set_css 'overflow','auto'
+    e.set_css 'width','300px'
+    e.set_css 'border','1px solid black'
     # load data from store
     @list.load
 
