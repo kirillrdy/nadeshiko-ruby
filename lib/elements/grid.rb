@@ -25,12 +25,12 @@ class Grid < Element
       row.add_element item
       item.set_inner_html record.send(c)
 
-#      item.set_css 'border-width','1px'
-#      item.set_css 'border-collapse','collapse'
-#      item.set_css 'padding','5px'
-#      item.set_css 'border-style','dotted'
-#      item.set_css 'border-color','gray'
-#      item.set_css 'background-color','white'
+      item.set_css 'border-width','1px'
+      item.set_css 'border-collapse','collapse'
+      item.set_css 'padding','5px'
+      item.set_css 'border-style','dotted'
+      item.set_css 'border-color','gray'
+      item.set_css 'background-color','white'
 
       item.onclick do
         alert 'You clicked ' + record.title
@@ -48,7 +48,18 @@ class Grid < Element
       @store.remove record
     end
 
-    row.add_element remove_button
+    item = Element.new(@app)
+    item.element_type = 'td'
+    row.add_element item
+    item.set_css 'border-width','1px'
+    item.set_css 'border-collapse','collapse'
+    item.set_css 'padding','5px'
+    item.set_css 'border-style','dotted'
+    item.set_css 'border-color','gray'
+    item.set_css 'background-color','white'
+    item.set_css 'width','20px'
+
+    item.add_element remove_button
   end
 
   def remove(record)
@@ -63,12 +74,13 @@ class Grid < Element
 
   def setup
 
-#    set_css 'border-width','1px'
-#    set_css 'border-collapse','collapse'
-#    set_css 'border-spacing','2px'
-#    set_css 'border-style','solid'
-#    set_css 'border-color','gray'
-#    set_css 'background-color','white'
+    set_css 'border-width','1px'
+    set_css 'border-collapse','collapse'
+    set_css 'border-spacing','2px'
+    set_css 'border-style','solid'
+    set_css 'border-color','gray'
+    set_css 'background-color','white'
+    set_css 'width','100%'
 
     @header = Element.new(@app)
     @header.element_type = 'tr'
@@ -80,12 +92,12 @@ class Grid < Element
       @header.add_element item
       item.set_inner_html c.to_s
       
-#      item.set_css 'border-width','1px'
-#      item.set_css 'border-collapse','collapse'
-#      item.set_css 'padding','5px'
-#      item.set_css 'border-style','dotted'
-#      item.set_css 'border-color','gray'
-#      item.set_css 'background-color','white'
+      item.set_css 'border-width','1px'
+      item.set_css 'border-collapse','collapse'
+      item.set_css 'padding','5px'
+      item.set_css 'border-style','dotted'
+      item.set_css 'border-color','gray'
+      item.set_css 'background-color','white'
       
     end
 
