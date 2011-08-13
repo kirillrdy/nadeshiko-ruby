@@ -52,6 +52,15 @@ class DomOnSockets
     send hash.to_json
   end
 
+  def add_element_to_body element_type,element_id
+    hash = {
+      'method' => 'add_element_to_body',
+      'element_type' => element_type,
+      'element_id' => element_id,
+    }
+    send hash.to_json
+  end
+
   def set_inner_html element_id, text
     hash = {
       'method' => 'set_inner_html',

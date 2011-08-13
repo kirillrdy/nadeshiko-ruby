@@ -7,10 +7,16 @@ function add_cmd_to_list(event){
 
 function action_single_cmd(cmd){
   if (cmd.method == 'add_element'){
-  $("#"+ cmd.parent_id).append(
-      ['<',cmd.element_type,' id="',cmd.element_id,'"></',cmd.element_type
-      ,'>'
-      ].join(''))
+    $("#"+ cmd.parent_id).append(
+        ['<',cmd.element_type,' id="',cmd.element_id,'"></',cmd.element_type
+        ,'>'
+        ].join(''))
+  }
+  if (cmd.method == 'add_element_to_body'){
+    $(document.body).append(
+        ['<',cmd.element_type,' id="',cmd.element_id,'"></',cmd.element_type
+        ,'>'
+        ].join(''))
   }
   if (cmd.method == 'set_inner_html' ){
     $("#"+cmd.element_id).text(cmd.text)
