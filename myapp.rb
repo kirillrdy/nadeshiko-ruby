@@ -28,14 +28,14 @@ class MyApp < App
     main = Element.new self
     main.element_id = 'main'
 
-    root = Node.new :div
-    root.instance_eval do
-      div do
-        button 'hello'
-      end
-    end
+#    root = Node.new :div
+#    root.instance_eval do
+#      div do
+#        button 'hello'
+#      end
+#    end
 
-    parse_nodes root, main
+#    parse_nodes root, main
 
     @textfield = Textfield.new self
     main.add_element @textfield
