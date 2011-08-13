@@ -1,9 +1,9 @@
 class Grid < Element
   attr_accessor :items,:store
 
-  def initialize app, store, options = {}
-    super app
-    @store = store
+  def initialize options = {}
+    super options
+    @store = options[:store]
     @element_type = 'table'
     @columns = options[:columns]
   end
@@ -14,14 +14,11 @@ class Grid < Element
   end
 
   def add_item record
-    row = Element.new(@app)
-    row.element_type = 'tr'
+    row = Element.new :app => @app, :element_type => :tr
     add_element row
 
-
     @columns.each do |c|
-      item = Element.new(@app)
-      item.element_type = 'td'
+      item = Element.new :app => @app, :element_type => :td
       row.add_element item
       item.set_inner_html record.send(c)
 
@@ -33,7 +30,7 @@ class Grid < Element
       item.set_css 'background-color','white'
 
       item.onclick do
-        alert 'You clicked ' + record.title
+        @app.alert 'You clicked ' + record.title
       end
 
     end
@@ -44,12 +41,11 @@ class Grid < Element
     @records ||= {}
     @records[record.id] = [record,row]
 
-    remove_button = Button.new(@app,'x') do
+    remove_button = Button.new :app => @app, :text => 'x' do
       @store.remove record
     end
 
-    item = Element.new(@app)
-    item.element_type = 'td'
+    item = Element.new :app => @app, :element_type => 'td'
     row.add_element item
     item.set_css 'border-width','1px'
     item.set_css 'border-collapse','collapse'
@@ -82,16 +78,14 @@ class Grid < Element
     set_css 'background-color','white'
     set_css 'width','100%'
 
-    @header = Element.new(@app)
-    @header.element_type = 'tr'
+    @header = Element.new :app => @app, :element_type => 'tr'
     add_element @header
 
     (@columns + ['']).each do |c|
-      item = Element.new(@app)
-      item.element_type = 'th'
+      item = Element.new :app => @app, :element_type => 'th'
       @header.add_element item
       item.set_inner_html c.to_s
-      
+
       item.set_css 'border-width','1px'
       item.set_css 'border-collapse','collapse'
       item.set_css 'padding','5px'

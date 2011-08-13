@@ -3,18 +3,30 @@ class Element
   attr_accessor :app
   attr_accessor :parent_id, :element_id,:element_type
 
-  include Dsl
+  #include Dsl
 
-  def initialize app
-    @app = app
-    @element_id = Digest::SHA1.hexdigest(rand.to_s)[0..6]
-    @element_type = 'div'
+  def initialize options = {}
+    default_options = {
+      :app => options[:app],
+      :element_id => Digest::SHA1.hexdigest(rand.to_s)[0..6],
+      :element_type => 'div'
+    }
+
+    options =  default_options.merge options
+
+    @app =  options[:app]
+    @element_id = options[:element_id]
+    @element_type = options[:element_type]
   end
 
   def add_element element
     element.parent_id = self.element_id
     element.add_own_element_to_parent
     element.setup
+  end
+
+  def add_own_element_to_body
+    @app.dom_on_sockets.add_element_to_body @element_type,@element_id
   end
 
   def add_own_element_to_parent
