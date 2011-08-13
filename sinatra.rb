@@ -1,6 +1,5 @@
-
 require 'sinatra'
 
 get '/' do
-  "try /test.html"
+  IO.read 'index.html'
 end
