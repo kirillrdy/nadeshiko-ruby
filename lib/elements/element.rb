@@ -16,6 +16,7 @@ class Element
     @id = options[:id].to_s
     @element_type = options[:element_type]
     @text = options[:text]
+    @style = options[:style]
   end
 
   def add_element element
@@ -63,6 +64,12 @@ class Element
   def setup
     #set_css 'border','1px solid black'
     set_inner_html @text if @text
+    
+    if @style
+      @style.each_pair do |k,v|
+        set_css k,v
+      end
+    end
     
     #set_css 'width','200px'
 

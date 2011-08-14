@@ -29,9 +29,9 @@ class MyApp < App
       on_add_button_click if key.to_i == 13
     end
 
-#    e.set_css 'height','500px'
-#    e.set_css 'overflow','auto'
-#    e.set_css 'width','300px'
+#    grid.set_css 'height','500px'
+#    grid.set_css 'width','300px'
+#    grid.set_css 'overflow','auto'
 #    e.set_css 'border','1px solid black'
 
   end
