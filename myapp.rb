@@ -2,17 +2,29 @@ class MyApp < App
 
   def onstart
 
+    #@dom_on_sockets.set_css_by_selector 'body','background-color','#333'
+    @dom_on_sockets.set_css_by_selector 'body','padding','0px'
+    @dom_on_sockets.set_css_by_selector 'body','margin','0px'
+
+    main_style = { :margin => :auto, :border => '1px solid black',  :width => '1000px',
+                'background-color' => '#eee', 'border-radius'=> '5px', 'margin-top' => '5px' }
+
+    header_style = { :height => '80px','border-radius-top'=> '5px', :padding => '5px',
+          #:background => '-moz-linear-gradient(top, #7abcff 0%,#60abf8 44%,#4096ee 100%)'
+          :background => '-moz-linear-gradient(top, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%)' }
+
     add_elements do
-      div :id => :main, :style => { :margin => :auto, :border => '1px solid black',  :width => '1000px',
-                'background-color' => '#eee', 'border-radius'=> '5px' } do
-        div :height => '80px','border-radius'=> '5px', :padding => '5px', 'margin-top' => '5px' do
-          h1 :text => 'Eiga'
+      div :id => :main, :style => main_style do
+        div :style => header_style do
+          h1 :text => 'Eiga', :style => {'text-shadow' => '#444 2px -2px 2px', :color => 'white'}
         end
-        input :id => :textfield
-        button :id => :add_new_record, :text => 'Add New Entry'
-        grid  :id => :movies_grid,
-              :store => MovieStore,
-              :columns => [:id, :title]
+        div :style => { :padding => '10px' } do
+          input :id => :textfield
+          button :id => :add_new_record, :text => 'Add New Entry'
+          grid  :id => :movies_grid,
+                :store => MovieStore,
+                :columns => [:id, :title]
+        end
       end
     end
 
@@ -23,21 +35,16 @@ class MyApp < App
     grid.load
 
     button.onclick do
-      on_add_button_click
+      add_new_movie
     end
 
     textfield.onkeypress do |key|
-      on_add_button_click if key.to_i == 13
+      add_new_movie if key.to_i == 13
     end
-
-#    grid.set_css 'height','500px'
-#    grid.set_css 'width','300px'
-#    grid.set_css 'overflow','auto'
-#    e.set_css 'border','1px solid black'
 
   end
 
-  def on_add_button_click
+  def add_new_movie
     textfield = get_element :textfield
     textfield.get_value do |value|
       if value != ''
