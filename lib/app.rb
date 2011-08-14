@@ -14,12 +14,14 @@ class App
   end
 
   def add_elements &block
-    root = Node.new :div
+
+    root = Node.new nil
     root.instance_eval &block
 
     root.children.each do |child|
       parse_nodes child
     end
+
   end
 
   def parse_nodes root, parent = nil
@@ -37,7 +39,7 @@ class App
         e = Element.new options.merge({:element_type => root.element_type})
     end
 
-    @elements[e.id] = e
+    register_element e
 
     if parent == nil
       e.add_own_element_to_body
@@ -49,6 +51,10 @@ class App
     root.children.each do |x|
       parse_nodes x, e
     end
+  end
+
+  def register_element element
+    @elements[element.id] = element
   end
 
   def get_element id

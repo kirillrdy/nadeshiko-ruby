@@ -25,6 +25,21 @@ class Element
     element.setup
   end
 
+
+
+  def add_elements &block
+    root = Node.new :div
+    root.instance_eval &block
+
+    root.children.each do |child|
+      @app.parse_nodes child, self
+    end
+
+  end
+
+
+
+
   def add_own_element_to_body
     @app.dom_on_sockets.add_element_to_body @element_type,@id
   end
