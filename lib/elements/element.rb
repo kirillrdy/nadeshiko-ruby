@@ -6,7 +6,7 @@ class Element
   def initialize options = {}
     default_options = {
       :app => options[:app],
-      :id => Digest::SHA1.hexdigest(rand.to_s)[0..6],
+      :id => generate_random_id,
       :element_type => 'div'
     }
 
@@ -17,6 +17,10 @@ class Element
     @element_type = options[:element_type]
     @text = options[:text]
     @style = options[:style]
+  end
+
+  def generate_random_id
+    Digest::SHA1.hexdigest(rand.to_s)[0..6]
   end
 
   def add_element element
