@@ -9,12 +9,14 @@ class MyApp < App
     # Theme presets
     top_heading = { :padding => '5px',
                   'margin-top' => '0px',
+                  'margin-bottom' => '0px',
                   :background => '-moz-linear-gradient(top, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%)'
                   }
 
     background = {'background-color' => '#eee'}
     border = {:border => '1px solid black'}
     round_top = {'border-radius'=> '5px'}
+    float_right = {:float => :right}
 
     main_style = { :margin => :auto, :width => '1000px','margin-top' => '5px' }.merge(background).merge(border).merge(round_top)
     header_style = top_heading.merge({ :height => '80px' })
@@ -38,6 +40,32 @@ class MyApp < App
 
       div :id => :dialog, :style => dialog_style do
         h4 :id => :dialog_header, :text => 'Dialog', :style => top_heading.merge(titles_style)
+        div :style => { :padding => '5px' } do
+          table :style => {:width => '100%'} do
+            tr do
+              td :text => 'Title'
+              td do
+                input
+              end
+            end
+            tr do
+              td :text => 'Year'
+              td do
+                input
+              end
+            end
+            tr do
+              td :text => 'Some other thing'
+              td do
+                input
+              end
+            end
+          end
+          div :style => float_right.merge({'margin' => '10px'}) do
+            button :text => 'Close'
+            button :text => 'Create'
+          end
+        end
       end
 
     end
@@ -55,7 +83,7 @@ class MyApp < App
       top = (screen_heigth / 2) - ( dialog_height / 2)
 
       dialog.set_css 'width',dialog_width
-      dialog.set_css 'height',dialog_height
+      #dialog.set_css 'height',dialog_height
       dialog.set_css 'left',left
       dialog.set_css 'top',top
 
