@@ -49,6 +49,9 @@ function action_single_cmd(cmd){
   if (cmd.method == 'make_draggable' ){
     $(cmd.selector).draggable({handle: cmd.handle_selector})
   }
+ if (cmd.method == 'show_element' ){
+    $(cmd.selector).show()
+  }
 }
 
 
