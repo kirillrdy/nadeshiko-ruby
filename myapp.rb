@@ -3,8 +3,9 @@ class MyApp < App
   def onstart
 
     add_elements do
-      div :id => :main, :style => { :margin => :auto, :width => '900px', :border => '1px solid black' } do
-        div :height => '30px' do
+      div :id => :main, :style => { :margin => :auto, :border => '1px solid black',  :width => '1000px',
+                'background-color' => '#eee', 'border-radius'=> '5px' } do
+        div :height => '80px','border-radius'=> '5px', :padding => '5px', 'margin-top' => '5px' do
           h1 :text => 'Eiga'
         end
         input :id => :textfield
