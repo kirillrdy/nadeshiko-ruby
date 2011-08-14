@@ -51,7 +51,7 @@ function action_single_cmd(cmd){
     $(cmd.selector).draggable({handle: cmd.handle_selector})
   }
  if (cmd.method == 'show_element' ){
-    $(cmd.selector).show()
+    $(cmd.selector).fadeIn()
   }
 }
 
