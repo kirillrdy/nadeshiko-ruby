@@ -3,7 +3,7 @@ require 'json'
 require 'digest/sha1'
 
 
-elements = ['element','button','textfield','list','grid']
+elements = ['element','button','grid']
 
 require_relative 'lib/dsl'
 elements.each{|x| require_relative 'lib/elements/'+x }
