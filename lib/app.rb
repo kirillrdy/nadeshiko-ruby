@@ -18,7 +18,9 @@ class App
     root.instance_eval &block
 
     puts root.inspect
-    parse_nodes root
+    root.children.each do |child|
+      parse_nodes child
+    end
   end
 
   def parse_nodes root, parent = nil
