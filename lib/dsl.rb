@@ -18,19 +18,3 @@ class Node
     @children = []
   end
 end
-
-
-#p = Node.new :root
-
-#p.instance_eval do
-#  hbox do
-#    vbox do
-#      text 'a'
-#      text 'b'
-#      button 'hello'
-#    end
-#    button 'hello'
-#  end
-#end
-
-#puts p.inspect
