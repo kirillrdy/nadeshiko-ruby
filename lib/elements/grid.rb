@@ -91,7 +91,7 @@ class Grid < Element
       item.set_css 'padding','5px'
       item.set_css 'border-style','dotted'
       item.set_css 'border-color','gray'
-      item.set_css 'background-color','white'
+      item.set_css 'background-color','#eee'
       
     end
 
