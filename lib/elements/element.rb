@@ -3,8 +3,6 @@ class Element
   attr_accessor :app
   attr_accessor :parent_id, :id,:element_type
 
-  #include Dsl
-
   def initialize options = {}
     default_options = {
       :app => options[:app],
@@ -15,8 +13,9 @@ class Element
     options =  default_options.merge options
 
     @app =  options[:app]
-    @id = options[:id]
+    @id = options[:id].to_s
     @element_type = options[:element_type]
+    @text = options[:text]
   end
 
   def add_element element
@@ -63,7 +62,7 @@ class Element
 
   def setup
     #set_css 'border','1px solid black'
-    #set_inner_html 'Basic Element'
+    set_inner_html @text if @text
     
     #set_css 'width','200px'
 
