@@ -2,9 +2,6 @@ class DomOnSockets
 
   def initialize web_socket
 
-    # Lets setup our callbacks hash
-    
-
     @web_socket = web_socket
     @web_socket.onopen do
       self.onopen
@@ -18,6 +15,9 @@ class DomOnSockets
       self.onmessage msg
     end
 
+    @get_value = {}
+    @onclick = {}
+    @onkeypress = {}
   end
 
 
@@ -30,16 +30,20 @@ class DomOnSockets
   def onmessage message
     puts "Recieved message: '#{message}'"
     cmds = message.split ',',-1
-    if cmds.first == 'click'
-      callbacks_block = @onclick[cmds.last]
-      callbacks_block.call
+    
+    action,selector,arg1 = cmds
+    id = selector.delete '#'
+
+    case action
+      when 'click'
+        callbacks_block = @onclick[id]
+        callbacks_block.call
+      when 'keypress'
+        @onkeypress[id].call arg1
+      when 'value'
+        @get_value[id].call arg1
     end
-    if cmds.first == 'keypress'
-      @onkeypress[cmds[1]].call cmds.last
-    end
-    if cmds.first == 'value'
-      @get_value[cmds[1]].call cmds.last
-    end
+
   end
 
   def add_element element_type,id,parent_id
@@ -47,16 +51,17 @@ class DomOnSockets
       'method' => 'add_element',
       'element_type' => element_type,
       'id' => id,
-      'parent_id' => parent_id
+      'selector' => '#'+parent_id
     }
     send hash.to_json
   end
 
   def add_element_to_body element_type,id
     hash = {
-      'method' => 'add_element_to_body',
+      'method' => 'add_element',
       'element_type' => element_type,
       'id' => id,
+      'selector' => 'body'
     }
     send hash.to_json
   end
@@ -64,7 +69,7 @@ class DomOnSockets
   def set_inner_html id, text
     hash = {
       'method' => 'set_inner_html',
-      'id' => id,
+      'selector' => '#'+id,
       'text' => text
     }
     send hash.to_json
@@ -82,10 +87,9 @@ class DomOnSockets
   def get_value id, &block
     hash = {
       'method' => 'get_value',
-      'id' => id
+      'selector' => '#'+id
     }
     send hash.to_json
-    @get_value ||= {}
     @get_value[id] = block
   end
 
@@ -93,11 +97,9 @@ class DomOnSockets
   def add_onclick id, &block
     hash = {
       'method' => 'add_onclick',
-      'id' => id
+      'selector' => '#'+id
     }
     send hash.to_json
-
-    @onclick ||= {}
     @onclick[id] = block
 
   end
@@ -105,11 +107,9 @@ class DomOnSockets
   def add_onkeypress id, &block
     hash = {
       'method' => 'add_onkeypress',
-      'id' => id
+      'selector' => '#'+id
     }
     send hash.to_json
-
-    @onkeypress ||= {}
     @onkeypress[id] = block
 
   end
@@ -117,7 +117,7 @@ class DomOnSockets
   def set_value id, value
     hash = {
       'method' => 'set_value',
-      'id' => id,
+      'selector' => '#'+id,
       'value' => value
     }
     send hash.to_json
@@ -126,7 +126,17 @@ class DomOnSockets
   def remove_element id
     hash = {
       'method' => 'remove_element',
-      'id' => id,
+      'selector' => '#'+id,
+    }
+    send hash.to_json
+  end
+
+  def set_css_by_selector  selector, property, value
+    hash = {
+      'method' => 'set_css',
+      'selector' => selector,
+      'property' => property,
+      'value' => value
     }
     send hash.to_json
   end
@@ -134,7 +144,7 @@ class DomOnSockets
   def set_css id, property,value
     hash = {
       'method' => 'set_css',
-      'id' => id,
+      'selector' => '#'+id,
       'property' => property,
       'value' => value
     }

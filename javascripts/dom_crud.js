@@ -7,52 +7,46 @@ function add_cmd_to_list(event){
 
 function action_single_cmd(cmd){
   if (cmd.method == 'add_element'){
-    $("#"+ cmd.parent_id).append(
-        ['<',cmd.element_type,' id="',cmd.id,'"></',cmd.element_type
-        ,'>'
-        ].join(''))
-  }
-  if (cmd.method == 'add_element_to_body'){
-    $(document.body).append(
+    $(cmd.selector).append(
         ['<',cmd.element_type,' id="',cmd.id,'"></',cmd.element_type
         ,'>'
         ].join(''))
   }
   if (cmd.method == 'set_inner_html' ){
-    $("#"+cmd.id).text(cmd.text)
+    $(cmd.selector).text(cmd.text)
   }
   if (cmd.method == 'set_css' ){
-    $("#"+cmd.id).css( cmd.property,cmd.value )
+    $(cmd.selector).css( cmd.property,cmd.value )
   }
   if (cmd.method == 'alert' ){
     alert(cmd.message)
   }
   if (cmd.method == 'add_onclick' ){
-    $("#"+cmd.id).click(function(){
-      ws.send("click,"+cmd.id)
+    $(cmd.selector).click(function(){
+      ws.send("click,"+cmd.selector)
     })
   }
   if (cmd.method == 'add_onkeypress' ){
-    $("#"+cmd.id).keypress(function(e){
-      ws.send("keypress,"+cmd.id+","+e.which)
+    $(cmd.selector).keypress(function(e){
+      ws.send("keypress,"+cmd.selector+","+e.which)
     })
   }
   if (cmd.method == 'get_value' ){
-    var val = $("#"+cmd.id).val()
-    ws.send("value,"+cmd.id+","+val)
+    var val = $(cmd.selector).val()
+    ws.send("value,"+cmd.selector+","+val)
   }
   if (cmd.method == 'set_value' ){
-    var val = $("#"+cmd.id).val(cmd.value)
+    $(cmd.selector).val(cmd.value)
   }
   if (cmd.method == 'remove_element' ){
-    var val = $("#"+cmd.id).remove()
+    $(cmd.selector).remove()
   }
 }
 
 
 function event_parser(event){
   var i;
-  for(i = 0; i < 100; i++){
+  for(i = 0; i < 1000; i++){
     var cmd = window.actions_list.shift();
     if (cmd == undefined){ return }
     action_single_cmd(cmd)
