@@ -30,66 +30,19 @@ class MyApp < App
           h1 :text => 'Eiga', :style => titles_style
         end
         div :style => { :padding => '10px' } do
-          input :id => :textfield
-          button :id => :add_new_record, :text => 'Add New Entry'
+          div :style => float_right do
+            input :id => :textfield
+            button :id => :add_new_record, :text => 'Add New Entry'
+            button :id => :show_dialog_button, :text => 'show demo dialog'
+          end
           grid  :id => :movies_grid,
                 :store => MovieStore,
                 :columns => [:id, :title]
         end
       end
-
-      div :id => :dialog, :style => dialog_style do
-        h4 :id => :dialog_header, :text => 'Dialog', :style => top_heading.merge(titles_style)
-        div :style => { :padding => '5px' } do
-          table :style => {:width => '100%'} do
-            tr do
-              td :text => 'Title'
-              td do
-                input
-              end
-            end
-            tr do
-              td :text => 'Year'
-              td do
-                input
-              end
-            end
-            tr do
-              td :text => 'Some other thing'
-              td do
-                input
-              end
-            end
-          end
-          div :style => float_right.merge({'margin' => '10px'}) do
-            button :text => 'Close'
-            button :text => 'Create'
-          end
-        end
-      end
-
+      #dialog :id => :dialog
     end
 
-
-    @dom_on_sockets.get_screen_size do |width,height|
-      dialog = get_element :dialog
-
-      dialog_width = 400
-      dialog_height = 300
-      screen_width = width.to_i
-      screen_heigth = height.to_i
-      
-      left = (screen_width / 2) - ( dialog_width / 2)
-      top = (screen_heigth / 2) - ( dialog_height / 2)
-
-      dialog.set_css 'width',dialog_width
-      #dialog.set_css 'height',dialog_height
-      dialog.set_css 'left',left
-      dialog.set_css 'top',top
-
-      dialog.make_draggable :dialog_header
-
-    end
 
     button = get_element :add_new_record
     textfield = get_element :textfield
@@ -99,6 +52,10 @@ class MyApp < App
 
     button.onclick do
       add_new_movie
+    end
+
+    get_element(:show_dialog_button).onclick do
+      show_demo_dialog
     end
 
     textfield.onkeypress do |key|
@@ -116,6 +73,61 @@ class MyApp < App
         alert 'Please enter something'
       end
       textfield.set_value ''
+    end
+  end
+
+  def show_demo_dialog
+    dialog = Dialog.new :app => self
+    dialog.add_own_element_to_body
+
+    dialog.show do
+     table :style => {:width => '100%'} do
+        tr do
+          td :text => 'Title'
+          td do
+            input
+          end
+        end
+        tr do
+          td :text => 'Year'
+          td do
+            input
+          end
+        end
+        tr do
+          td :text => 'Some other thing'
+          td do
+            input
+          end
+        end
+      end
+      div :style => {'margin' => '10px','float' => 'right'} do
+        button :text => 'Close', :id => :close_dialog_button
+        button :text => 'Create'
+      end
+    end
+
+    get_element(:close_dialog_button).onclick do
+      dialog.remove_own_element
+    end
+
+    @dom_on_sockets.get_screen_size do |width,height|
+
+      dialog_width = 400
+      dialog_height = 300
+      screen_width = width.to_i
+      screen_heigth = height.to_i
+      
+      left = (screen_width / 2) - ( dialog_width / 2)
+      top = (screen_heigth / 2) - ( dialog_height / 2)
+
+      dialog.set_css 'width',dialog_width
+      #dialog.set_css 'height',dialog_height
+      dialog.set_css 'left',left
+      dialog.set_css 'top',top
+
+      dialog.make_draggable :dialog_header
+
     end
   end
 
