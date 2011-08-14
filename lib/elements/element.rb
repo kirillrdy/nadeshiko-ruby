@@ -26,7 +26,6 @@ class Element
   def add_element element
     element.parent_id = self.id
     element.add_own_element_to_parent
-    element.setup
   end
 
 
