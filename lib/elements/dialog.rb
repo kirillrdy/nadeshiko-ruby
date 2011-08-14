@@ -10,7 +10,26 @@ class Dialog < Element
     @content = block
     content = app.get_element @content_id
     content.add_elements &block
-    show_element
+
+    @app.dom_on_sockets.get_screen_size do |width,height|
+
+      dialog_width = 400
+      dialog_height = 300
+      screen_width = width.to_i
+      screen_heigth = height.to_i
+      
+      left = (screen_width / 2) - ( dialog_width / 2)
+      top = (screen_heigth / 2) - ( dialog_height / 2)
+
+      set_css 'width',dialog_width
+      #dialog.set_css 'height',dialog_height
+      set_css 'left',left
+      set_css 'top',top
+
+      make_draggable @header_id
+      show_element
+    end
+
   end
 
 

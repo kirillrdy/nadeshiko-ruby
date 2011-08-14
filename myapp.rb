@@ -111,24 +111,7 @@ class MyApp < App
       dialog.remove_own_element
     end
 
-    @dom_on_sockets.get_screen_size do |width,height|
-
-      dialog_width = 400
-      dialog_height = 300
-      screen_width = width.to_i
-      screen_heigth = height.to_i
-      
-      left = (screen_width / 2) - ( dialog_width / 2)
-      top = (screen_heigth / 2) - ( dialog_height / 2)
-
-      dialog.set_css 'width',dialog_width
-      #dialog.set_css 'height',dialog_height
-      dialog.set_css 'left',left
-      dialog.set_css 'top',top
-
-      dialog.make_draggable :dialog_header
-
-    end
+    
   end
 
 end
