@@ -39,7 +39,9 @@ function action_single_cmd(cmd){
     $(cmd.selector).val(cmd.value)
   }
   if (cmd.method == 'remove_element' ){
-    $(cmd.selector).remove()
+    $(cmd.selector).fadeOut(function(){
+      $(cmd.selector).remove()
+    })
   }
   if (cmd.method == 'get_screen_size' ){
     ws.send("screen_size,"+ window.innerWidth+','+window.innerHeight)
