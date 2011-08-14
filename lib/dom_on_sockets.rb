@@ -42,6 +42,8 @@ class DomOnSockets
         @onkeypress[id].call arg1
       when 'value'
         @get_value[id].call arg1
+      when 'screen_size'
+        @get_screen_size.call selector,arg1
     end
 
   end
@@ -93,6 +95,13 @@ class DomOnSockets
     @get_value[id] = block
   end
 
+  def get_screen_size &block
+    hash = {
+      'method' => 'get_screen_size'
+    }
+    send hash.to_json
+    @get_screen_size = block
+  end
 
   def add_onclick id, &block
     hash = {
@@ -119,6 +128,15 @@ class DomOnSockets
       'method' => 'set_value',
       'selector' => '#'+id,
       'value' => value
+    }
+    send hash.to_json
+  end
+
+  def make_draggable id, handle_id
+    hash = {
+      'method' => 'make_draggable',
+      'selector' => '#'+id,
+      'handle_selector' => '#'+handle_id.to_s
     }
     send hash.to_json
   end

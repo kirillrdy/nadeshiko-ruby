@@ -61,6 +61,10 @@ class Element
     @app.dom_on_sockets.set_value @id, value
   end
 
+  def make_draggable handle_id
+    @app.dom_on_sockets.make_draggable @id,handle_id
+  end
+
   def setup
     #set_css 'border','1px solid black'
     set_inner_html @text if @text

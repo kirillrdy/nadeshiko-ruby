@@ -41,12 +41,18 @@ function action_single_cmd(cmd){
   if (cmd.method == 'remove_element' ){
     $(cmd.selector).remove()
   }
+  if (cmd.method == 'get_screen_size' ){
+    ws.send("screen_size,"+ window.innerWidth+','+window.innerHeight)
+  }
+  if (cmd.method == 'make_draggable' ){
+    $(cmd.selector).draggable({handle: cmd.handle_selector})
+  }
 }
 
 
 function event_parser(event){
   var i;
-  for(i = 0; i < 1000; i++){
+  for(i = 0; i < 10000; i++){
     var cmd = window.actions_list.shift();
     if (cmd == undefined){ return }
     action_single_cmd(cmd)
