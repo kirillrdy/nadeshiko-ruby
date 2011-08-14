@@ -1,7 +1,6 @@
 class MyApp < App
 
   def onstart
-
   end
 
   def parse_nodes root, parent = nil
@@ -14,7 +13,7 @@ class MyApp < App
         value = root.args.first[option]
         case option
           when :id
-            e.element_id = value
+            e.id = value
         end
       end
     end
@@ -54,7 +53,7 @@ class MyApp < App
 #    end
 
 
-    main = Element.new :app => self, :element_id => :main
+    main = Element.new :app => self, :id => :main
     main.add_own_element_to_body
 
     @textfield = Textfield.new :app => self

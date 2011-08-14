@@ -42,29 +42,29 @@ class DomOnSockets
     end
   end
 
-  def add_element element_type,element_id,parent_id
+  def add_element element_type,id,parent_id
     hash = {
       'method' => 'add_element',
       'element_type' => element_type,
-      'element_id' => element_id,
+      'id' => id,
       'parent_id' => parent_id
     }
     send hash.to_json
   end
 
-  def add_element_to_body element_type,element_id
+  def add_element_to_body element_type,id
     hash = {
       'method' => 'add_element_to_body',
       'element_type' => element_type,
-      'element_id' => element_id,
+      'id' => id,
     }
     send hash.to_json
   end
 
-  def set_inner_html element_id, text
+  def set_inner_html id, text
     hash = {
       'method' => 'set_inner_html',
-      'element_id' => element_id,
+      'id' => id,
       'text' => text
     }
     send hash.to_json
@@ -79,62 +79,62 @@ class DomOnSockets
   end
 
 
-  def get_value element_id, &block
+  def get_value id, &block
     hash = {
       'method' => 'get_value',
-      'element_id' => element_id
+      'id' => id
     }
     send hash.to_json
     @get_value ||= {}
-    @get_value[element_id] = block
+    @get_value[id] = block
   end
 
 
-  def add_onclick element_id, &block
+  def add_onclick id, &block
     hash = {
       'method' => 'add_onclick',
-      'element_id' => element_id
+      'id' => id
     }
     send hash.to_json
 
     @onclick ||= {}
-    @onclick[element_id] = block
+    @onclick[id] = block
 
   end
 
-  def add_onkeypress element_id, &block
+  def add_onkeypress id, &block
     hash = {
       'method' => 'add_onkeypress',
-      'element_id' => element_id
+      'id' => id
     }
     send hash.to_json
 
     @onkeypress ||= {}
-    @onkeypress[element_id] = block
+    @onkeypress[id] = block
 
   end
 
-  def set_value element_id, value
+  def set_value id, value
     hash = {
       'method' => 'set_value',
-      'element_id' => element_id,
+      'id' => id,
       'value' => value
     }
     send hash.to_json
   end
 
-  def remove_element element_id
+  def remove_element id
     hash = {
       'method' => 'remove_element',
-      'element_id' => element_id,
+      'id' => id,
     }
     send hash.to_json
   end
 
-  def set_css element_id, property,value
+  def set_css id, property,value
     hash = {
       'method' => 'set_css',
-      'element_id' => element_id,
+      'id' => id,
       'property' => property,
       'value' => value
     }

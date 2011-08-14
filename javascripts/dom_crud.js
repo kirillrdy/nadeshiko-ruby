@@ -8,44 +8,44 @@ function add_cmd_to_list(event){
 function action_single_cmd(cmd){
   if (cmd.method == 'add_element'){
     $("#"+ cmd.parent_id).append(
-        ['<',cmd.element_type,' id="',cmd.element_id,'"></',cmd.element_type
+        ['<',cmd.element_type,' id="',cmd.id,'"></',cmd.element_type
         ,'>'
         ].join(''))
   }
   if (cmd.method == 'add_element_to_body'){
     $(document.body).append(
-        ['<',cmd.element_type,' id="',cmd.element_id,'"></',cmd.element_type
+        ['<',cmd.element_type,' id="',cmd.id,'"></',cmd.element_type
         ,'>'
         ].join(''))
   }
   if (cmd.method == 'set_inner_html' ){
-    $("#"+cmd.element_id).text(cmd.text)
+    $("#"+cmd.id).text(cmd.text)
   }
   if (cmd.method == 'set_css' ){
-    $("#"+cmd.element_id).css( cmd.property,cmd.value )
+    $("#"+cmd.id).css( cmd.property,cmd.value )
   }
   if (cmd.method == 'alert' ){
     alert(cmd.message)
   }
   if (cmd.method == 'add_onclick' ){
-    $("#"+cmd.element_id).click(function(){
-      ws.send("click,"+cmd.element_id)
+    $("#"+cmd.id).click(function(){
+      ws.send("click,"+cmd.id)
     })
   }
   if (cmd.method == 'add_onkeypress' ){
-    $("#"+cmd.element_id).keypress(function(e){
-      ws.send("keypress,"+cmd.element_id+","+e.which)
+    $("#"+cmd.id).keypress(function(e){
+      ws.send("keypress,"+cmd.id+","+e.which)
     })
   }
   if (cmd.method == 'get_value' ){
-    var val = $("#"+cmd.element_id).val()
-    ws.send("value,"+cmd.element_id+","+val)
+    var val = $("#"+cmd.id).val()
+    ws.send("value,"+cmd.id+","+val)
   }
   if (cmd.method == 'set_value' ){
-    var val = $("#"+cmd.element_id).val(cmd.value)
+    var val = $("#"+cmd.id).val(cmd.value)
   }
   if (cmd.method == 'remove_element' ){
-    var val = $("#"+cmd.element_id).remove()
+    var val = $("#"+cmd.id).remove()
   }
 }
 
