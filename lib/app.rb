@@ -35,15 +35,18 @@ class App
     case root.element_type
       when :grid
         e = Grid.new options
+      when :dialog
+        e = Dialog.new options
+        
       else
         e = Element.new options.merge({:element_type => root.element_type})
     end
+
 
     register_element e
 
     if parent == nil
       e.add_own_element_to_body
-      e.setup
     else
       parent.add_element e
     end

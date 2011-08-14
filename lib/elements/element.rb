@@ -38,14 +38,18 @@ class Element
   end
 
 
-
+  def show_element
+    @app.dom_on_sockets.show_element @id
+  end
 
   def add_own_element_to_body
     @app.dom_on_sockets.add_element_to_body @element_type,@id
+    setup
   end
 
   def add_own_element_to_parent
     @app.dom_on_sockets.add_element @element_type,@id,@parent_id
+    setup
   end
 
   def remove_own_element

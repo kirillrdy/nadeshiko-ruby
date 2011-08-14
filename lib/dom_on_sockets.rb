@@ -159,6 +159,14 @@ class DomOnSockets
     send hash.to_json
   end
 
+  def show_element id
+    hash = {
+      'method' => 'show_element',
+      'selector' => '#'+ id
+    }
+    send hash.to_json
+  end
+
   def set_css id, property,value
     hash = {
       'method' => 'set_css',
