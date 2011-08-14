@@ -80,23 +80,13 @@ class MyApp < App
     dialog.add_own_element_to_body
 
     dialog.show do
-     table :style => {:width => '100%'} do
-        tr do
-          td :text => 'Title'
-          td do
-            input
-          end
-        end
-        tr do
-          td :text => 'Year'
-          td do
-            input
-          end
-        end
-        tr do
-          td :text => 'Some other thing'
-          td do
-            input
+      table :style => {:width => '100%'} do
+        ['Title','Year','Some other field'].each do |x|
+          tr do
+            td :text => x
+            td do
+              input
+            end
           end
         end
       end
