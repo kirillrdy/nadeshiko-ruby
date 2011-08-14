@@ -17,7 +17,6 @@ class App
     root = Node.new :div
     root.instance_eval &block
 
-    puts root.inspect
     root.children.each do |child|
       parse_nodes child
     end
