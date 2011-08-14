@@ -1,7 +1,8 @@
 window.actions_list = []
 function add_cmd_to_list(event){
   var cmd = JSON.parse(event.data)
-  window.actions_list.push(cmd)
+  //window.actions_list.push(cmd)
+  action_single_cmd(cmd)
 }
 
 
@@ -64,4 +65,4 @@ function event_parser(event){
   }
 }
 
-setInterval('event_parser()',0)
+//setInterval('event_parser()',0)
