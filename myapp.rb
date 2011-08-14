@@ -10,7 +10,7 @@ class MyApp < App
     top_heading = { :padding => '5px',
                   'margin-top' => '0px',
                   'margin-bottom' => '0px',
-                  :background => '-moz-linear-gradient(top, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%)'
+                  :background => '-webkit-linear-gradient(top, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%)'
                   }
 
     background = {'background-color' => '#eee'}
