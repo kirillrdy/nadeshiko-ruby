@@ -20,7 +20,7 @@ EventMachine.run do
     web_socket.onopen do
       dom_on_sockets = DomOnSockets.new(web_socket)
       app = MyApp.new dom_on_sockets
-      app.setup_app
+      app.start
     end
   end
   puts "Server started"

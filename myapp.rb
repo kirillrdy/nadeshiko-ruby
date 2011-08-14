@@ -1,9 +1,9 @@
 class MyApp < App
 
-  def setup_app
+  def onstart
 
     add_elements do
-      div :id => :main, :style => { :margin => :auto, :width => '300px' } do
+      div :id => :main, :style => { :margin => :auto, :width => '900px', :border => '1px solid black' } do
         div :height => '30px' do
           h1 :text => 'Eiga'
         end
