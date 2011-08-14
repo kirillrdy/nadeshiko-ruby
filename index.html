@@ -7,7 +7,7 @@
     <script>
 
       function init() {
-        $("#main").empty()
+        $(document.body).empty()
         if (window.WebSocket){ws = new WebSocket("ws://localhost:8080/");}
         if (window.MozWebSocket){ws = new MozWebSocket("ws://localhost:8080/");}
         ws.onclose = function(){
