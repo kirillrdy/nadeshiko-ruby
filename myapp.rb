@@ -40,7 +40,6 @@ class MyApp < App
                 :columns => [:id, :title]
         end
       end
-      #dialog :id => :dialog
     end
 
 
@@ -54,12 +53,12 @@ class MyApp < App
       add_new_movie
     end
 
-    get_element(:show_dialog_button).onclick do
-      show_demo_dialog
-    end
-
     textfield.onkeypress do |key|
       add_new_movie if key.to_i == 13
+    end
+
+    get_element(:show_dialog_button).onclick do
+      show_demo_dialog
     end
 
   end
@@ -111,7 +110,6 @@ class MyApp < App
       dialog.remove_own_element
     end
 
-    
   end
 
 end
