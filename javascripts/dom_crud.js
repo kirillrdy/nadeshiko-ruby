@@ -56,13 +56,13 @@ function action_single_cmd(cmd){
 }
 
 
-function event_parser(event){
-  var i;
-  for(i = 0; i < 10000; i++){
-    var cmd = window.actions_list.shift();
-    if (cmd == undefined){ return }
-    action_single_cmd(cmd)
-  }
-}
+//function event_parser(event){
+//  var i;
+//  for(i = 0; i < 10000; i++){
+//    var cmd = window.actions_list.shift();
+//    if (cmd == undefined){ return }
+//    action_single_cmd(cmd)
+//  }
+//}
 
 //setInterval('event_parser()',0)
