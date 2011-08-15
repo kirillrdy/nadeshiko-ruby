@@ -77,7 +77,6 @@ class MyApp < App
 
   def show_demo_dialog
     dialog = Dialog.new :app => self
-    dialog.add_own_element_to_body
 
     dialog.show do
       table :style => {:width => '100%'} do

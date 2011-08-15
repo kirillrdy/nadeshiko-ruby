@@ -7,6 +7,9 @@ class Dialog < Element
   end
 
   def show &block
+
+    add_own_element_to_body
+
     @content = block
     content = app.get_element @content_id
     content.add_elements &block
