@@ -54,6 +54,8 @@ class MyApp < App
       grid.load
     #end
 
+    #get_element(:movies_grid2).load
+
     button.onclick do
       add_new_movie
     end
@@ -73,6 +75,7 @@ class MyApp < App
     textfield.get_value do |value|
       if value != ''
         MovieStore.add :title => value
+        EventsObserver.add Movie.new :title => value
       else
         alert 'Please enter something'
       end
