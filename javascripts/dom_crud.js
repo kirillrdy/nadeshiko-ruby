@@ -44,9 +44,9 @@ function action_single_cmd(cmd){
     $(cmd.selector).val(cmd.value)
   }
   if (cmd.method == 'remove_element' ){
-    $(cmd.selector).fadeOut(function(){
+    //$(cmd.selector).fadeOut(function(){
       $(cmd.selector).remove()
-    })
+    //})
   }
   if (cmd.method == 'get_screen_size' ){
     ws.send("screen_size,"+ window.innerWidth+','+window.innerHeight)
@@ -55,7 +55,8 @@ function action_single_cmd(cmd){
     $(cmd.selector).draggable({handle: cmd.handle_selector})
   }
  if (cmd.method == 'show_element' ){
-    $(cmd.selector).fadeIn()
+    //$(cmd.selector).fadeIn()
+    $(cmd.selector).show()
   }
 }
 
