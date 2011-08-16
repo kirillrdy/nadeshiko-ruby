@@ -1,8 +1,12 @@
 window.actions_list = []
 function add_cmd_to_list(event){
-  var cmd = JSON.parse(event.data)
+  var cmds = JSON.parse(event.data)
   //window.actions_list.push(cmd)
-  action_single_cmd(cmd)
+  for (i in cmds){
+    cmd = cmds[i]
+    action_single_cmd(cmd)
+  }
+  
 }
 
 

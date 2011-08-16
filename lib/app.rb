@@ -10,18 +10,26 @@ class App
   end
   
   def start
+    @dom_on_sockets.send_at_once = false
     onstart
+    @dom_on_sockets.flush_message_list
+  end
+
+  def batch_messages &block
+    @dom_on_sockets.send_at_once = false
+    block.call
+    @dom_on_sockets.flush_message_list
   end
 
   def add_elements &block
-
+    #@dom_on_sockets.send_at_once = false
     root = Node.new nil
     root.instance_eval &block
 
     root.children.each do |child|
       parse_nodes child
     end
-
+    #@dom_on_sockets.flush_message_list
   end
 
   def parse_nodes root, parent = nil

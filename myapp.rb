@@ -47,7 +47,9 @@ class MyApp < App
     textfield = get_element :textfield
     grid = get_element :movies_grid
 
-    grid.load
+    #batch_messages do
+      grid.load
+    #end
 
     button.onclick do
       add_new_movie

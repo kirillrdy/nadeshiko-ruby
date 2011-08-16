@@ -1,4 +1,5 @@
 class DomOnSockets
+  attr_accessor :send_at_once,:message_list
 
   def initialize web_socket
 
@@ -18,12 +19,26 @@ class DomOnSockets
     @get_value = {}
     @onclick = {}
     @onkeypress = {}
+
+    @send_at_once = true
+    @message_list = []
+
   end
 
+  def flush_message_list
+    @send_at_once = true
+    send @message_list
+    @message_list = []
+  end
 
   def send message
-    puts message
-    @web_socket.send message
+    if @send_at_once
+      message = [message] unless message.is_a? Array
+      puts "sending #{message.inspect}"
+      @web_socket.send message.to_json
+    else
+      @message_list << message
+    end
   end
 
 
@@ -55,7 +70,7 @@ class DomOnSockets
       'id' => id,
       'selector' => '#'+parent_id
     }
-    send hash.to_json
+    send hash
   end
 
   def add_element_to_body element_type,id
@@ -65,7 +80,7 @@ class DomOnSockets
       'id' => id,
       'selector' => 'body'
     }
-    send hash.to_json
+    send hash
   end
 
   def set_inner_html id, text
@@ -74,7 +89,7 @@ class DomOnSockets
       'selector' => '#'+id,
       'text' => text
     }
-    send hash.to_json
+    send hash
   end
 
   def alert message
@@ -82,7 +97,7 @@ class DomOnSockets
       'method' => 'alert',
       'message' => message
     }
-    send hash.to_json
+    send hash
   end
 
 
@@ -91,7 +106,7 @@ class DomOnSockets
       'method' => 'get_value',
       'selector' => '#'+id
     }
-    send hash.to_json
+    send hash
     @get_value[id] = block
   end
 
@@ -99,7 +114,7 @@ class DomOnSockets
     hash = {
       'method' => 'get_screen_size'
     }
-    send hash.to_json
+    send hash
     @get_screen_size = block
   end
 
@@ -108,7 +123,7 @@ class DomOnSockets
       'method' => 'add_onclick',
       'selector' => '#'+id
     }
-    send hash.to_json
+    send hash
     @onclick[id] = block
 
   end
@@ -118,7 +133,7 @@ class DomOnSockets
       'method' => 'add_onkeypress',
       'selector' => '#'+id
     }
-    send hash.to_json
+    send hash
     @onkeypress[id] = block
 
   end
@@ -129,7 +144,7 @@ class DomOnSockets
       'selector' => '#'+id,
       'value' => value
     }
-    send hash.to_json
+    send hash
   end
 
   def make_draggable id, handle_id
@@ -138,7 +153,7 @@ class DomOnSockets
       'selector' => '#'+id,
       'handle_selector' => '#'+handle_id.to_s
     }
-    send hash.to_json
+    send hash
   end
 
   def remove_element id
@@ -146,7 +161,7 @@ class DomOnSockets
       'method' => 'remove_element',
       'selector' => '#'+id,
     }
-    send hash.to_json
+    send hash
   end
 
   def set_css_by_selector  selector, property, value
@@ -156,7 +171,7 @@ class DomOnSockets
       'property' => property,
       'value' => value
     }
-    send hash.to_json
+    send hash
   end
 
   def show_element id
@@ -164,7 +179,7 @@ class DomOnSockets
       'method' => 'show_element',
       'selector' => '#'+ id
     }
-    send hash.to_json
+    send hash
   end
 
   def set_css id, property,value
@@ -174,7 +189,7 @@ class DomOnSockets
       'property' => property,
       'value' => value
     }
-    send hash.to_json
+    send hash
   end
 
 end

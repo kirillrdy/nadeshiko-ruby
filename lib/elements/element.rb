@@ -31,12 +31,15 @@ class Element
 
 
   def add_elements &block
+    @app.dom_on_sockets.send_at_once = false
     root = Node.new :div
     root.instance_eval &block
 
     root.children.each do |child|
       @app.parse_nodes child, self
     end
+
+    @app.dom_on_sockets.flush_message_list
 
   end
 
