@@ -1,4 +1,4 @@
 remind me to write more stuff here
 
 
-Requirements Firefox 6+
+Requirements Chrome 4+ ( recomend 15+ )
