@@ -18,7 +18,7 @@ class MyApp < App
     round_top = {'border-radius'=> '5px'}
     float_right = {:float => :right}
 
-    main_style = { :margin => :auto, :width => '1000px','margin-top' => '5px' }.merge(background).merge(border).merge(round_top)
+    main_style = { :margin => :auto, :width => '900px','margin-top' => '5px' }.merge(background).merge(border).merge(round_top)
     header_style = top_heading.merge({ :height => '80px' })
     dialog_style = {:position => 'absolute'}.merge(background).merge(border).merge(round_top)
     titles_style = {'text-shadow' => '#444 2px -2px 2px', :color => 'white'}
