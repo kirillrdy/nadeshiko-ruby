@@ -43,6 +43,8 @@ class App
     case root.element_type
       when :grid
         e = Grid.new options
+      when :grid2
+        e = Grid2.new options
       when :dialog
         e = Dialog.new options
         
