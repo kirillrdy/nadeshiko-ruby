@@ -1,22 +1,13 @@
 class Grid2 < Element
-  attr_accessor :items,:store
+  attr_accessor :items
 
   def initialize options = {}
     super options
-    @store = options[:store]
     @element_type = 'table'
     @columns = options[:columns]
-
-    EventsObserver.onadd do |record|
-      self.add_item record
-    end
-
   end
 
-#  def load
-#    records = @store.all self
-#    records.each{|x| add_item x }
-#  end
+
 
   def add_item record
     row = Element.new :app => @app, :element_type => :tr
@@ -33,11 +24,6 @@ class Grid2 < Element
       item.set_css 'border-style','dotted'
       item.set_css 'border-color','gray'
       item.set_css 'background-color','white'
-
-      item.onclick do
-        @app.alert 'You clicked ' + record.title
-      end
-
     end
 
     @items ||=[]
@@ -46,9 +32,9 @@ class Grid2 < Element
     @records ||= {}
     @records[record.id] = [record,row]
 
-    remove_button = Button.new :app => @app, :text => 'x' do
-      @store.remove record
-    end
+#    remove_button = Button.new :app => @app, :text => 'x' do
+#      @store.remove record
+#    end
 
     item = Element.new :app => @app, :element_type => 'td'
     row.add_element item
@@ -60,7 +46,7 @@ class Grid2 < Element
     item.set_css 'background-color','white'
     item.set_css 'width','20px'
 
-    item.add_element remove_button
+    #item.add_element remove_button
   end
 
   def remove(record)

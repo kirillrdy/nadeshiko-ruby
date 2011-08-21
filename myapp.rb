@@ -35,11 +35,10 @@ class MyApp < App
             button :id => :add_new_record, :text => 'Add New Entry'
             button :id => :show_dialog_button, :text => 'show demo dialog'
           end
-          grid  :id => :movies_grid,
-                :store => MovieStore,
-                :columns => [:id, :title]
+#          grid  :id => :movies_grid,
+#                :store => MovieStore,
+#                :columns => [:id, :title]
           grid2  :id => :movies_grid2,
-                :store => MovieStore,
                 :columns => [:id, :title]
         end
       end
@@ -48,10 +47,19 @@ class MyApp < App
 
     button = get_element :add_new_record
     textfield = get_element :textfield
-    grid = get_element :movies_grid
+    grid2 = get_element :movies_grid2
+
+
+    EventsObserver.onadd do |record|
+      grid2.add_item record
+    end
+
+    Movie.all.each do |movie|
+      grid2.add_item movie
+    end
 
     #batch_messages do
-      grid.load
+      #grid.load
     #end
 
     #get_element(:movies_grid2).load
@@ -74,8 +82,9 @@ class MyApp < App
     textfield = get_element :textfield
     textfield.get_value do |value|
       if value != ''
-        MovieStore.add :title => value
-        EventsObserver.add Movie.new :title => value
+        m = Movie.new :title => value
+        m.save!
+        EventsObserver.add m
       else
         alert 'Please enter something'
       end
