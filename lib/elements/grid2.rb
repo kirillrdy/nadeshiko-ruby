@@ -1,29 +1,23 @@
 class Grid2 < Element
-  attr_accessor :items
+  attr_accessor :items,:columns
 
   def initialize options = {}
     super options
-    @element_type = 'table'
     @columns = options[:columns]
+    @tbody_id = generate_random_id
   end
 
-
-
   def add_item record
-    row = Element.new :app => @app, :element_type => :tr
-    add_element row
 
-    @columns.each do |c|
-      item = Element.new :app => @app, :element_type => :td
-      row.add_element item
-      item.set_inner_html record.send(c)
+    columns = @columns
 
-      item.set_css 'border-width','1px'
-      item.set_css 'border-collapse','collapse'
-      item.set_css 'padding','5px'
-      item.set_css 'border-style','dotted'
-      item.set_css 'border-color','gray'
-      item.set_css 'background-color','white'
+    add_elements do
+      tr do
+        columns.each do |c|
+          td :text => record.send(c), :style => default_style
+        end
+        td :text => 'Edit,Delete'
+      end
     end
 
     @items ||=[]
@@ -36,17 +30,6 @@ class Grid2 < Element
 #      @store.remove record
 #    end
 
-    item = Element.new :app => @app, :element_type => 'td'
-    row.add_element item
-    item.set_css 'border-width','1px'
-    item.set_css 'border-collapse','collapse'
-    item.set_css 'padding','5px'
-    item.set_css 'border-style','dotted'
-    item.set_css 'border-color','gray'
-    item.set_css 'background-color','white'
-    item.set_css 'width','20px'
-
-    #item.add_element remove_button
   end
 
   def remove(record)
@@ -61,31 +44,34 @@ class Grid2 < Element
 
   def setup
 
-    set_css 'border-width','1px'
-    set_css 'border-collapse','collapse'
-    set_css 'border-spacing','2px'
-    set_css 'border-style','solid'
-    set_css 'border-color','gray'
-    set_css 'background-color','white'
-    set_css 'width','100%'
+    default_style2 = default_style
+    columns = @columns
 
-    @header = Element.new :app => @app, :element_type => 'tr'
-    add_element @header
-
-    (@columns + ['']).each do |c|
-      item = Element.new :app => @app, :element_type => 'th'
-      @header.add_element item
-      item.set_inner_html c.to_s
-
-      item.set_css 'border-width','1px'
-      item.set_css 'border-collapse','collapse'
-      item.set_css 'padding','5px'
-      item.set_css 'border-style','dotted'
-      item.set_css 'border-color','gray'
-      item.set_css 'background-color','#eee'
-      
+    add_elements do
+      table :style => default_style2.merge({:width => '100%'}) do
+        thead do
+          tr do
+            (columns+['']).each do |c|
+              th :text => c.to_s, :style => default_style2.merge({'background-color'=>'#eee'})
+            end
+          end
+        end
+        tbody :id => tbody_id
+      end
     end
 
+  end
+
+
+  def default_style
+    {
+      'border-width' => '1px',
+      'border-collapse' => 'collapse',
+      'border-spacing' => '2px',
+      'border-style' => 'solid',
+      'border-color' => 'gray',
+      'background-color' => 'white'
+    }
   end
 
 end

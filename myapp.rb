@@ -38,8 +38,8 @@ class MyApp < App
 #          grid  :id => :movies_grid,
 #                :store => MovieStore,
 #                :columns => [:id, :title]
-          grid2  :id => :movies_grid2,
-                :columns => [:id, :title]
+#          grid2  :id => :movies_grid2,
+#                :columns => [:id, :title]
         end
       end
     end
