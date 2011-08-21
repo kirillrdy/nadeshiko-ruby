@@ -1,5 +1,5 @@
 require 'sinatra'
 
 get '/' do
-  IO.read 'index.html'
+  IO.read 'public/index.html'
 end
