@@ -3,12 +3,14 @@ class Element
   attr_accessor :app
   attr_accessor :parent_id, :id,:element_type
 
-  def initialize options = {}
+  def initialize(options = {})
     default_options = {
       :app => options[:app],
       :id => generate_random_id,
       :element_type => 'div'
     }
+
+    #@children = []
 
     options =  default_options.merge options
 
@@ -19,6 +21,26 @@ class Element
     @style = options[:style]
   end
 
+  def method_missing element_type,*args, &block
+
+    super unless [:h1,:div,:input,:button].include? element_type
+
+    options = args.first
+
+    options.merge!({:app => app,:element_type => element_type})
+
+
+    a = Element.new(options)
+    self.add_element a
+
+    #debugger
+    #@children << a
+
+    a.instance_eval(&block) if block_given?
+
+  end
+
+
   def generate_random_id
     Digest::SHA1.hexdigest(rand.to_s)[0..6]
   end
@@ -27,8 +49,6 @@ class Element
     element.parent_id = self.id
     element.add_own_element_to_parent
   end
-
-
 
   def add_elements &block
     @app.dom_on_sockets.send_at_once = false
@@ -48,13 +68,12 @@ class Element
     @app.dom_on_sockets.show_element @id
   end
 
-  def add_own_element_to_body
-    @app.dom_on_sockets.add_element_to_body @element_type,@id
-    setup
-  end
-
   def add_own_element_to_parent
-    @app.dom_on_sockets.add_element @element_type,@id,@parent_id
+    if parent_id.empty?
+      @app.dom_on_sockets.add_element_to_body @element_type,@id
+    else
+      @app.dom_on_sockets.add_element @element_type,@id,@parent_id
+    end
     setup
   end
 

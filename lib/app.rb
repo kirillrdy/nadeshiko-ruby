@@ -23,12 +23,12 @@ class App
 
   def add_elements &block
     #@dom_on_sockets.send_at_once = false
-    root = Node.new nil
+    root = Element.new({:app => self, :id => nil})
     root.instance_eval &block
 
-    root.children.each do |child|
-      parse_nodes child
-    end
+#    root.children.each do |child|
+#      parse_nodes child
+#    end
     #@dom_on_sockets.flush_message_list
   end
 

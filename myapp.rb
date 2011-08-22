@@ -25,6 +25,7 @@ class MyApp < App
 
 
     add_elements do
+
       div :id => :main, :style => main_style do
         div :style => header_style do
           h1 :text => 'Eiga', :style => titles_style
@@ -35,11 +36,13 @@ class MyApp < App
             button :id => :add_new_record, :text => 'Add New Entry'
             button :id => :show_dialog_button, :text => 'show demo dialog'
           end
+          h1 :text => 'Hello'
 #          grid  :id => :movies_grid,
 #                :store => MovieStore,
 #                :columns => [:id, :title]
 #          grid2  :id => :movies_grid2,
 #                :columns => [:id, :title]
+          
         end
       end
     end
@@ -50,31 +53,25 @@ class MyApp < App
     grid2 = get_element :movies_grid2
 
 
-    EventsObserver.onadd do |record|
-      grid2.add_item record
-    end
+#    EventsObserver.onadd do |record|
+#      grid2.add_item record
+#    end
 
-    Movie.all.each do |movie|
-      grid2.add_item movie
-    end
+#    Movie.all.each do |movie|
+#      grid2.add_item movie
+#    end
 
-    #batch_messages do
-      #grid.load
-    #end
+#    button.onclick do
+#      add_new_movie
+#    end
 
-    #get_element(:movies_grid2).load
+#    textfield.onkeypress do |key|
+#      add_new_movie if key.to_i == 13
+#    end
 
-    button.onclick do
-      add_new_movie
-    end
-
-    textfield.onkeypress do |key|
-      add_new_movie if key.to_i == 13
-    end
-
-    get_element(:show_dialog_button).onclick do
-      show_demo_dialog
-    end
+#    get_element(:show_dialog_button).onclick do
+#      show_demo_dialog
+#    end
 
   end
 
