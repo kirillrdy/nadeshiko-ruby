@@ -23,14 +23,23 @@ class Element
 
   def method_missing element_type,*args, &block
 
-    super unless [:h1,:div,:input,:button].include? element_type
+    html_based_elements = [:h1,:div,:input,:button,:table,:tr,:th,:td,:thead]
+    magic_based_elements = [:grid2]
 
-    options = args.first
+    super unless (html_based_elements + magic_based_elements).include? element_type
+
+    options = args.first || {}
 
     options.merge!({:app => app,:element_type => element_type})
 
+    case element_type
+      when :grid2
+        a = Grid2.new(options)
+      else
+        a = Element.new(options)
+    end
 
-    a = Element.new(options)
+
     self.add_element a
 
     #debugger
@@ -51,18 +60,8 @@ class Element
   end
 
   def add_elements &block
-    @app.dom_on_sockets.send_at_once = false
-    root = Node.new :div
-    root.instance_eval &block
-
-    root.children.each do |child|
-      @app.parse_nodes child, self
-    end
-
-    @app.dom_on_sockets.flush_message_list
-
+    self.instance_eval &block
   end
-
 
   def show_element
     @app.dom_on_sockets.show_element @id

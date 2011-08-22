@@ -1,5 +1,5 @@
 class Grid2 < Element
-  attr_accessor :items,:columns
+  attr_accessor :items,:columns,:tbody_id
 
   def initialize options = {}
     super options
@@ -47,6 +47,8 @@ class Grid2 < Element
     default_style2 = default_style
     columns = @columns
 
+    tbody_id = tbody_id
+
     add_elements do
       table :style => default_style2.merge({:width => '100%'}) do
         thead do
@@ -56,7 +58,7 @@ class Grid2 < Element
             end
           end
         end
-        tbody :id => tbody_id
+        tbody :id => self.tbody_id
       end
     end
 
