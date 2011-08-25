@@ -89,10 +89,10 @@ class MyApp < App
     grid2 = get_element :movies_grid2
 
     grid2.add_item do
-      tr  do
+      tr do
         td :text => movie.id
         td :text => movie.title
-        td :text => ''
+        td
       end
     end
   end
