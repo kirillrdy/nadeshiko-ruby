@@ -1,4 +1,4 @@
-class DomOnSockets
+class Nadeshiko::DomOnSockets
   attr_accessor :send_at_once,:message_list
 
   def initialize web_socket

@@ -1,4 +1,4 @@
-class MyApp < App
+class MyApp < Nadeshiko::Application
 
   def onstart
 
@@ -59,7 +59,7 @@ class MyApp < App
     button = get_element :add_new_record
     textfield = get_element :textfield
 
-    GenericObserver.onadd do |record|
+    Nadeshiko::GenericObserver.onadd do |record|
       add_movie_to_table record
     end
 
@@ -99,7 +99,7 @@ class MyApp < App
       if value != ''
         m = Struct.new(:id,:title).new
         m.title = value
-        GenericObserver.add m
+        Nadeshiko::GenericObserver.add m
       else
         alert 'Please enter something'
       end

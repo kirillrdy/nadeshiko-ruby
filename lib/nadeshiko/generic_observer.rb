@@ -1,4 +1,4 @@
-class GenericObserver
+class Nadeshiko::GenericObserver
 
   def self.onadd &block
     @onadd ||= []
