@@ -34,7 +34,7 @@ class DomOnSockets
   def send message
     if @send_at_once
       message = [message] unless message.is_a? Array
-      puts "sending #{message.inspect}"
+      puts "#{@web_socket.object_id} sending #{message.inspect}"
       @web_socket.send message.to_json
     else
       @message_list << message
