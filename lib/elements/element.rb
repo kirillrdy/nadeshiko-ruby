@@ -13,6 +13,8 @@ class Element
   end
 
   def initialize(options = {})
+    @_nodes_stack = [self]
+
     default_options = {
       :app => options[:app],
       :id => generate_random_id,
@@ -51,9 +53,15 @@ class Element
         a = Element.new(options)
     end
 
-    self.add_element a
+    @_nodes_stack.last.add_element a
 
-    block.call(a) if block_given?
+    #self.add_element a
+
+    if block_given?
+      @_nodes_stack << a
+      block.call#(a)
+      @_nodes_stack.pop
+    end
 
   end
 
