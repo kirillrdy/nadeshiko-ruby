@@ -3,63 +3,29 @@ class Grid2 < Element
 
   def initialize options = {}
     super options
-    @columns = options[:columns]
     @tbody_id = generate_random_id
+    @columns = options[:columns]
   end
 
-  def add_item record
 
-    columns = @columns
-
-    add_elements do
-      tr do
-        columns.each do |c|
-          td :text => record.send(c), :style => default_style
-        end
-        td :text => 'Edit,Delete'
-      end
-    end
-
-    @items ||=[]
-    @items << row
-
-    @records ||= {}
-    @records[record.id] = [record,row]
-
-#    remove_button = Button.new :app => @app, :text => 'x' do
-#      @store.remove record
-#    end
-
+  def add_item &block
+    tbody = Element.get_element @tbody_id
+    tbody.instance_eval &block
   end
 
-  def remove(record)
-    record,dom_row =  @records[record.id]
-    dom_row.remove_own_element
-    @records.delete record.id
-  end
 
-  def onremove &block
-    @onremove_callback = block
-  end
 
   def setup
 
-    default_style2 = default_style
-    columns = @columns
-
-    tbody_id = tbody_id
-
-    add_elements do
-      table :style => default_style2.merge({:width => '100%'}) do
-        thead do
-          tr do
-            (columns+['']).each do |c|
-              th :text => c.to_s, :style => default_style2.merge({'background-color'=>'#eee'})
-            end
+    table :style => default_style.merge({:width => '100%'}) do |e|
+      e.thead :style => default_style do |e|
+        e.tr :style => default_style do |e|
+          (@columns+['']).each do |c|
+            e.th :text => c.to_s, :style => default_style.merge({'background-color'=>'#eee'})
           end
         end
-        tbody :id => self.tbody_id
       end
+      e.tbody :id => @tbody_id
     end
 
   end

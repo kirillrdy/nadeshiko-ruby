@@ -11,7 +11,7 @@ elements.each{|x| require_relative 'lib/elements/'+x }
 libs = [
   'dom_on_sockets',
   'app',
-#  'activerecord'
+  'activerecord'
   ]
 libs.each{|x| require_relative 'lib/'+ x}
 

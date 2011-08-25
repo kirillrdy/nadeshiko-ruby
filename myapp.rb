@@ -24,23 +24,31 @@ class MyApp < App
     titles_style = {'text-shadow' => '#444 2px -2px 2px', :color => 'white'}
 
 
-    add_elements do
+    default_table_style = {
+      'border-width' => '1px',
+      'border-collapse' => 'collapse',
+      'border-spacing' => '2px',
+      'border-style' => 'solid',
+      'border-color' => 'gray',
+      'background-color' => 'white'
+    }
 
-      div :id => :main, :style => main_style do
-        div :style => header_style do
-          h1 :text => 'Eiga', :style => titles_style
+
+    add_elements do
+      div :id => :main, :style => main_style do |e|
+        e.div :style => header_style do |e|
+          e.h1 :text => 'Eiga', :style => titles_style
         end
-        div :style => { :padding => '10px' } do
-          div :style => float_right do
-            input :id => :textfield
-            button :id => :add_new_record, :text => 'Add New Entry'
-            button :id => :show_dialog_button, :text => 'show demo dialog'
+        e.div :style => { :padding => '10px' } do |e|
+          e.div :style => float_right do |e|
+            e.input :id => :textfield
+            e.button :id => :add_new_record, :text => 'Add New Entry'
+            e.button :id => :show_dialog_button, :text => 'show demo dialog'
           end
-          h1 :text => 'Hello'
 #          grid  :id => :movies_grid,
 #                :store => MovieStore,
 #                :columns => [:id, :title]
-          grid2  :id => :movies_grid2,
+          e.grid2  :id => :movies_grid2,
                 :columns => [:id, :title]
           
         end
@@ -53,21 +61,27 @@ class MyApp < App
     grid2 = get_element :movies_grid2
 
 
-#    EventsObserver.onadd do |record|
-#      grid2.add_item record
-#    end
+    EventsObserver.onadd do |record|
+      grid2.add_item record
+    end
 
-#    Movie.all.each do |movie|
-#      grid2.add_item movie
-#    end
+    Movie.all.each do |movie|
+      grid2.add_item do
+        tr :style => default_table_style do |e|
+          e.td :style => default_table_style, :text => movie.id
+          e.td :style => default_table_style,:text => movie.title
+          e.td :style => default_table_style,:text => ''
+        end
+      end
+    end
 
-#    button.onclick do
-#      add_new_movie
-#    end
+    button.onclick do
+      add_new_movie
+    end
 
-#    textfield.onkeypress do |key|
-#      add_new_movie if key.to_i == 13
-#    end
+    textfield.onkeypress do |key|
+      add_new_movie if key.to_i == 13
+    end
 
 #    get_element(:show_dialog_button).onclick do
 #      show_demo_dialog

@@ -3,6 +3,15 @@ class Element
   attr_accessor :app
   attr_accessor :parent_id, :id,:element_type
 
+  def self.get_element id
+    @elements[id.to_s]
+  end
+
+  def self.register_element element
+    @elements ||= {}
+    @elements[element.id.to_s] = element
+  end
+
   def initialize(options = {})
     default_options = {
       :app => options[:app],
@@ -19,11 +28,14 @@ class Element
     @element_type = options[:element_type]
     @text = options[:text]
     @style = options[:style]
+
+    Element.register_element self
+
   end
 
   def method_missing element_type,*args, &block
 
-    html_based_elements = [:h1,:div,:input,:button,:table,:tr,:th,:td,:thead]
+    html_based_elements = [:h1,:div,:input,:button,:table,:tr,:th,:td,:thead,:tbody]
     magic_based_elements = [:grid2]
 
     super unless (html_based_elements + magic_based_elements).include? element_type
@@ -39,13 +51,9 @@ class Element
         a = Element.new(options)
     end
 
-
     self.add_element a
 
-    #debugger
-    #@children << a
-
-    a.instance_eval(&block) if block_given?
+    block.call(a) if block_given?
 
   end
 
@@ -109,20 +117,17 @@ class Element
   end
 
   def setup
-    #set_css 'border','1px solid black'
+
+    # Set inner_html as @text
     set_inner_html @text if @text
-    
+
+    # Apply Styles
     if @style
       @style.each_pair do |k,v|
         set_css k,v
       end
     end
-    
-    #set_css 'width','200px'
 
-#    onclick do
-#      alert 'Hello from Kirill'
-#    end
   end
 
 end
