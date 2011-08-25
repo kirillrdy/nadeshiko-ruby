@@ -60,6 +60,9 @@ class Element
       @_nodes_stack.pop
     end
 
+    # return newly created element
+    return a
+
   end
 
 
