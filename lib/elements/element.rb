@@ -21,8 +21,6 @@ class Element
       :element_type => 'div'
     }
 
-    #@children = []
-
     options =  default_options.merge options
 
     @app =  options[:app]
