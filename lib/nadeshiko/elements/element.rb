@@ -92,7 +92,7 @@ class Element
     setup
   end
 
-  def remove_own_element
+  def remove_element
     @app.dom_on_sockets.remove_element @id
   end
 

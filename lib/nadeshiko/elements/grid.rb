@@ -60,7 +60,7 @@ class Grid < Element
 
   def remove(record)
     record,dom_row =  @records[record.id]
-    dom_row.remove_own_element
+    dom_row.remove_element
     @records.delete record.id
   end
 

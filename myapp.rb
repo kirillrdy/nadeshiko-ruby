@@ -130,7 +130,7 @@ class MyApp < Nadeshiko::Application
     end
 
     get_element(:close_dialog_button).onclick do
-      dialog.remove_own_element
+      dialog.remove_element
     end
 
   end
