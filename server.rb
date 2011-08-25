@@ -8,7 +8,6 @@ require 'digest/sha1'
 
 elements = ['element','button','grid','dialog','grid2']
 
-require_relative 'lib/dsl'
 elements.each{|x| require_relative 'lib/elements/'+x }
 
 libs = [
