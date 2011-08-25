@@ -58,30 +58,24 @@ class MyApp < App
 
     button = get_element :add_new_record
     textfield = get_element :textfield
-    grid2 = get_element :movies_grid2
 
-
-#    EventsObserver.onadd do |record|
-#      grid2.add_item record
-#    end
 
     Movie.all.each do |movie|
-      grid2.add_item do
-        tr :style => default_table_style do
-          td :style => default_table_style, :text => movie.id
-          td :style => default_table_style,:text => movie.title
-          td :style => default_table_style,:text => ''
-        end
-      end
+      add_movie_to_table movie
     end
 
-#    button.onclick do
-#      add_new_movie
-#    end
+    GenericObserver.onadd do |record|
+      add_movie_to_table record
+    end
 
-#    textfield.onkeypress do |key|
-#      add_new_movie if key.to_i == 13
-#    end
+
+    button.onclick do
+      create_new_movie
+    end
+
+    textfield.onkeypress do |key|
+      create_new_movie if key.to_i == 13
+    end
 
     get_element(:show_dialog_button).onclick do
       show_demo_dialog
@@ -89,19 +83,36 @@ class MyApp < App
 
   end
 
-  def add_new_movie
+
+  def add_movie_to_table movie
+
+    grid2 = get_element :movies_grid2
+
+    grid2.add_item do
+      tr  do
+        td :text => movie.id
+        td :text => movie.title
+        td :text => ''
+      end
+    end
+  end
+
+
+  def create_new_movie
     textfield = get_element :textfield
     textfield.get_value do |value|
       if value != ''
         m = Movie.new :title => value
         m.save!
-        EventsObserver.add m
+        GenericObserver.add m
       else
         alert 'Please enter something'
       end
       textfield.set_value ''
     end
   end
+
+
 
   def show_demo_dialog
     dialog = Dialog.new :app => self
