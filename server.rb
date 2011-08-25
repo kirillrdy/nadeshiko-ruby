@@ -1,31 +1,4 @@
-require "rubygems"
-require "bundler/setup"
-
-require 'em-websocket'
-require 'json'
-require 'digest/sha1'
-
-
-elements = ['element','button','grid','dialog','grid2']
-
-elements.each{|x| require_relative 'lib/elements/'+x }
-
-libs = [
-  'dom_on_sockets',
-  'app',
-  'generic_observer'
-  ]
-libs.each{|x| require_relative 'lib/'+ x}
-
+require './lib/boot'
 require_relative 'myapp'
 
-EventMachine.run do
-  EventMachine::WebSocket.start(:host => "0.0.0.0", :port => 8080) do |web_socket|
-    web_socket.onopen do
-      dom_on_sockets = DomOnSockets.new(web_socket)
-      app = MyApp.new dom_on_sockets
-      app.start
-    end
-  end
-  puts "Nadeshiko Server started"
-end
+Nadeshiko::Server.run MyApp
