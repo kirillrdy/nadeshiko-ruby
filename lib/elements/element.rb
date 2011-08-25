@@ -3,14 +3,13 @@ class Element
   attr_accessor :app
   attr_accessor :parent_id, :id,:element_type
 
-  def self.get_element id
-    @elements[id.to_s]
+  def register_element_with_app element
+    @app.register_element element
   end
 
-  def self.register_element element
-    @elements ||= {}
-    @elements[element.id.to_s] = element
-  end
+#  def get_element id
+#    @app.get_element id
+#  end
 
   def initialize(options = {})
     @_nodes_stack = [self]
@@ -29,7 +28,7 @@ class Element
     @text = options[:text]
     @style = options[:style]
 
-    Element.register_element self
+    register_element_with_app self
 
   end
 
