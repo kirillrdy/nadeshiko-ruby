@@ -26,8 +26,12 @@ class App
     root.instance_eval &block
   end
 
+  def register_element element
+    @elements[element.id.to_s] = element
+  end
+
   def get_element id
-    Element.get_element id
+    @elements[id.to_s]
   end
 
 end
