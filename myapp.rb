@@ -59,11 +59,6 @@ class MyApp < App
     button = get_element :add_new_record
     textfield = get_element :textfield
 
-
-    Movie.all.each do |movie|
-      add_movie_to_table movie
-    end
-
     GenericObserver.onadd do |record|
       add_movie_to_table record
     end
@@ -102,8 +97,8 @@ class MyApp < App
     textfield = get_element :textfield
     textfield.get_value do |value|
       if value != ''
-        m = Movie.new :title => value
-        m.save!
+        m = Struct.new(:id,:title).new
+        m.title = value
         GenericObserver.add m
       else
         alert 'Please enter something'
