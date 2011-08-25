@@ -29,5 +29,5 @@ EventMachine.run do
       app.start
     end
   end
-  puts "Server started"
+  puts "Nadeshiko Server started"
 end
