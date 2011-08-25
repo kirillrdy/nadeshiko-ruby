@@ -35,20 +35,20 @@ class MyApp < App
 
 
     add_elements do
-      div :id => :main, :style => main_style do |e|
-        e.div :style => header_style do |e|
-          e.h1 :text => 'Eiga', :style => titles_style
+      div :id => :main, :style => main_style do
+        div :style => header_style do
+          h1 :text => 'Eiga', :style => titles_style
         end
-        e.div :style => { :padding => '10px' } do |e|
-          e.div :style => float_right do |e|
-            e.input :id => :textfield
-            e.button :id => :add_new_record, :text => 'Add New Entry'
-            e.button :id => :show_dialog_button, :text => 'show demo dialog'
+        div :style => { :padding => '10px' } do
+          div :style => float_right do
+            input :id => :textfield
+            button :id => :add_new_record, :text => 'Add New Entry'
+            button :id => :show_dialog_button, :text => 'show demo dialog'
           end
 #          grid  :id => :movies_grid,
 #                :store => MovieStore,
 #                :columns => [:id, :title]
-          e.grid2  :id => :movies_grid2,
+          grid2  :id => :movies_grid2,
                 :columns => [:id, :title]
           
         end
@@ -61,31 +61,31 @@ class MyApp < App
     grid2 = get_element :movies_grid2
 
 
-    EventsObserver.onadd do |record|
-      grid2.add_item record
-    end
+#    EventsObserver.onadd do |record|
+#      grid2.add_item record
+#    end
 
     Movie.all.each do |movie|
       grid2.add_item do
-        tr :style => default_table_style do |e|
-          e.td :style => default_table_style, :text => movie.id
-          e.td :style => default_table_style,:text => movie.title
-          e.td :style => default_table_style,:text => ''
+        tr :style => default_table_style do
+          td :style => default_table_style, :text => movie.id
+          td :style => default_table_style,:text => movie.title
+          td :style => default_table_style,:text => ''
         end
       end
     end
 
-    button.onclick do
-      add_new_movie
-    end
-
-    textfield.onkeypress do |key|
-      add_new_movie if key.to_i == 13
-    end
-
-#    get_element(:show_dialog_button).onclick do
-#      show_demo_dialog
+#    button.onclick do
+#      add_new_movie
 #    end
+
+#    textfield.onkeypress do |key|
+#      add_new_movie if key.to_i == 13
+#    end
+
+    get_element(:show_dialog_button).onclick do
+      show_demo_dialog
+    end
 
   end
 

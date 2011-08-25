@@ -17,15 +17,15 @@ class Grid2 < Element
 
   def setup
 
-    table :style => default_style.merge({:width => '100%'}) do |e|
-      e.thead :style => default_style do |e|
-        e.tr :style => default_style do |e|
+    table :style => default_style.merge({:width => '100%'}) do
+      thead :style => default_style do
+        tr :style => default_style do
           (@columns+['']).each do |c|
-            e.th :text => c.to_s, :style => default_style.merge({'background-color'=>'#eee'})
+            th :text => c.to_s, :style => default_style.merge({'background-color'=>'#eee'})
           end
         end
       end
-      e.tbody :id => @tbody_id
+      tbody :id => @tbody_id
     end
 
   end
