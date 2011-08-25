@@ -84,7 +84,7 @@ class Element
   end
 
   def add_own_element_to_parent
-    if parent_id.empty?
+    if parent_id == nil || parent_id.empty?
       @app.dom_on_sockets.add_element_to_body @element_type,@id
     else
       @app.dom_on_sockets.add_element @element_type,@id,@parent_id
