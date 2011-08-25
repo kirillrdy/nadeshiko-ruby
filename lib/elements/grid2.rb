@@ -9,7 +9,7 @@ class Grid2 < Element
 
 
   def add_item &block
-    tbody = Element.get_element @tbody_id
+    tbody = @app.get_element @tbody_id
     tbody.instance_eval &block
   end
 
