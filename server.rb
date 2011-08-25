@@ -11,11 +11,10 @@ elements.each{|x| require_relative 'lib/elements/'+x }
 libs = [
   'dom_on_sockets',
   'app',
-  'activerecord'
+  'activerecord',
+  'generic_observer'
   ]
 libs.each{|x| require_relative 'lib/'+ x}
-
-require_relative 'stores/movie_store'
 
 require_relative 'myapp'
 
