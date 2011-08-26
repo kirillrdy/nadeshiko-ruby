@@ -17,6 +17,15 @@ function action_single_cmd(cmd){
         ,'>'
         ].join(''))
   }
+
+  if (cmd.method == 'append'){
+    $(cmd.selector).append(cmd.content)
+  }
+
+  if (cmd.method == 'prepend'){
+    $(cmd.selector).prepend(cmd.content)
+  }
+
   if (cmd.method == 'set_inner_html' ){
     $(cmd.selector).text(cmd.text)
   }

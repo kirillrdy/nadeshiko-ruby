@@ -73,6 +73,24 @@ class Nadeshiko::DomOnSockets
     send hash
   end
 
+  def append element_type,id,parent_id
+    hash = {
+      'method' => 'append',
+      'content' => "<#{element_type} id=\"#{id}\"></#{element_type}>",
+      'selector' => '#'+parent_id
+    }
+    send hash
+  end
+
+  def prepend element_type,id,parent_id
+    hash = {
+      'method' => 'prepend',
+      'content' => "<#{element_type} id=\"#{id}\"></#{element_type}>",
+      'selector' => '#'+parent_id
+    }
+    send hash
+  end
+
   def add_element_to_body element_type,id
     hash = {
       'method' => 'add_element',
