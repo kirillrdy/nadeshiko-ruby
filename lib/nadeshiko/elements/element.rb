@@ -92,6 +92,25 @@ class Element
     setup
   end
 
+#  #TODO finish
+#  # Appends self to either known parent or body
+#  def append_self # assumes it knows parent, or appends to body
+#  end
+
+#  #TODO
+#  # appends to self
+#  def append content
+#  end
+#  
+#  # append self to parent
+#  def append_to parent_id
+#  end
+
+#  #TODO prepend finish
+#  # Make same methods as above for prepending
+#  def prepend_self
+#  end
+
   def remove_element
     @app.dom_on_sockets.remove_element @id
   end
