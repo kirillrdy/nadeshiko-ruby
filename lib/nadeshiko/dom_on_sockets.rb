@@ -211,4 +211,12 @@ class Nadeshiko::DomOnSockets
     send hash
   end
 
+  def empty id
+    hash = {
+      'method' => 'empty',
+      'selector' => '#'+id
+    }
+    send hash
+  end
+
 end

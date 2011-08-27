@@ -79,6 +79,10 @@ class Element
     @app.dom_on_sockets.show_element @id
   end
 
+  def empty
+    @app.dom_on_sockets.empty @id
+  end
+
   def add_own_element_to_parent
     if parent_id == nil || parent_id.empty?
       @app.dom_on_sockets.add_element_to_body @element_type,@id

@@ -26,6 +26,11 @@ function action_single_cmd(cmd){
     $(cmd.selector).prepend(cmd.content)
   }
 
+  if (cmd.method == 'empty'){
+    $(cmd.selector).empty()
+  }
+
+
   if (cmd.method == 'set_inner_html' ){
     $(cmd.selector).text(cmd.text)
   }
