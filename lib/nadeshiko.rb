@@ -21,6 +21,6 @@ libs = [
   'application',
   'generic_observer',
   'server'
-  ]
+]
 
 libs.each{|x| require_relative 'nadeshiko/'+ x}
