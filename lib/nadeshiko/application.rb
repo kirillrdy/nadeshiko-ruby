@@ -13,7 +13,16 @@ class Nadeshiko::Application
   end
   
   def start
-    onstart
+    batch_messages do
+      onstart
+    end
+  end
+
+  def batch_messages &block
+    @dom_on_sockets._batch_request << nil
+    block.call
+    @dom_on_sockets._batch_request.pop
+    @dom_on_sockets.flush_message_list
   end
 
   def add_elements &block

@@ -1,5 +1,5 @@
 class Nadeshiko::DomOnSockets
-  attr_accessor :send_at_once,:message_list
+  attr_accessor :_batch_request,:message_list
 
   def initialize web_socket
 
@@ -20,19 +20,20 @@ class Nadeshiko::DomOnSockets
     @onclick = {}
     @onkeypress = {}
 
-    @send_at_once = true
     @message_list = []
+
+    @_batch_request = []
 
   end
 
   def flush_message_list
-    @send_at_once = true
+    return if @_batch_request != []
     send @message_list
     @message_list = []
   end
 
   def send message
-    if @send_at_once
+    if @_batch_request == []
       message = [message] unless message.is_a? Array
       puts "#{@web_socket.object_id} sending #{message.inspect}"
       @web_socket.send message.to_json
@@ -45,7 +46,7 @@ class Nadeshiko::DomOnSockets
   def onmessage message
     puts "Recieved message: '#{message}'"
     cmds = message.split ',',-1
-    
+
     action,selector,arg1 = cmds
     id = selector.delete '#'
 
