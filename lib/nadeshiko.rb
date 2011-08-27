@@ -7,8 +7,10 @@ require 'digest/sha1'
 
 require 'em-websocket'
 
-# Defining Nadeshiko const
+require "nadeshiko/version"
+
 module Nadeshiko
+  # Your code goes here...
 end
 
 elements = ['element','button','grid','dialog','grid2']

@@ -1,2 +1,4 @@
-source :rubygems
-gem 'em-websocket'
+source "http://rubygems.org"
+
+# Specify your gem's dependencies in nadeshiko.gemspec
+gemspec
