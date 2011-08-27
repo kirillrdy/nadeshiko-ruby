@@ -34,7 +34,7 @@ class Element
 
   def method_missing element_type,*args, &block
 
-    html_based_elements = [:h1,:div,:input,:button,:table,:tr,:th,:td,:thead,:tbody,:h4]
+    html_based_elements = [:h1,:div,:input,:button,:table,:tr,:th,:td,:thead,:tbody,:h4,:span]
     magic_based_elements = [:grid2]
 
     super unless (html_based_elements + magic_based_elements).include? element_type
