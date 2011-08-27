@@ -37,7 +37,7 @@ class Element
 
     options = args.first || {}
 
-    options.merge!({:app => app,:element_type => element_type})
+    options.merge!({:app => app, :element_type => element_type})
 
     case element_type
       when :grid2
