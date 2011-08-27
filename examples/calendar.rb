@@ -6,7 +6,7 @@ class Calendar < Nadeshiko::Application
 
     add_elements do
 
-      div :style => {:height => '500px'} do
+      div :style => {:height => '90%'} do
         h1  :id => :month_name
         div :style => {:float => :right } do
           button :id => :prev_month_button, :text => 'Prev'
@@ -53,10 +53,11 @@ class Calendar < Nadeshiko::Application
       'border-spacing' => '2px',
       'border-style' => 'solid',
       'border-color' => 'gray',
-      'background-color' => 'white'
+      'background-color' => 'white',
+      'vertical-align' => 'top'
     }
 
-    default_table_row_style = default_table_style.merge(:height => '20%')
+    default_table_row_style = default_table_style.merge(:height => '16%')
     default_table_header_style = default_table_style.merge(:height => '20px')
 
     begging_of_month = date_to_display - date_to_display.day + 1
@@ -78,7 +79,17 @@ class Calendar < Nadeshiko::Application
           while ((begging_of_month + days_runner).mon == calendar_for_month) || ((begging_of_month + days_runner).mon == (calendar_for_month -1)) do
             tr :style => default_table_row_style do
               7.times do
-                td :style => default_table_style, :text => (begging_of_month + days_runner).day
+                runner_date = begging_of_month + days_runner
+                if runner_date.month == calendar_for_month
+                  if [0,6].include? runner_date.wday
+                    style = {:color => 'red'}
+                  else
+                    style = {:color => 'black'}
+                  end
+                else
+                  style = {:color => '#aaa'}
+                end
+                td :style => default_table_style.merge(style), :text => runner_date.day
                 days_runner += 1
               end
             end
