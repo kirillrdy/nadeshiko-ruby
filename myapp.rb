@@ -1,3 +1,6 @@
+require './lib/nadeshiko'
+
+
 class MyApp < Nadeshiko::Application
 
   def onstart
@@ -136,3 +139,5 @@ class MyApp < Nadeshiko::Application
   end
 
 end
+
+Nadeshiko::Server.run MyApp
