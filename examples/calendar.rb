@@ -23,17 +23,17 @@ class Calendar < Nadeshiko::Application
 
     # set up handlers for next and prev buttons
     get_element(:next_month_button).onclick do
-      get_element(:calendar_body).empty
       @date_to_display = @date_to_display.next_month
       batch_messages do
+        get_element(:calendar_body).empty
         render_calendar @date_to_display
       end
     end
 
     get_element(:prev_month_button).onclick do
-      get_element(:calendar_body).empty
       @date_to_display = @date_to_display.prev_month
       batch_messages do
+        get_element(:calendar_body).empty
         render_calendar @date_to_display
       end
     end
