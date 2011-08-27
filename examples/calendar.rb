@@ -21,6 +21,7 @@ class Calendar < Nadeshiko::Application
 
     render_calendar @date_to_display
 
+    # set up handlers for next and prev buttons
     get_element(:next_month_button).onclick do
       get_element(:calendar_body).empty
       @date_to_display = @date_to_display.next_month
@@ -42,9 +43,9 @@ class Calendar < Nadeshiko::Application
 
 
   def render_calendar(date_to_display)
-  
-    calendar_for_month = date_to_display.month
-  
+
+    ####################################
+    # Styles
     fill_parent = {:width => '100%',:height => '100%'}
 
     default_table_style =   {
@@ -60,6 +61,10 @@ class Calendar < Nadeshiko::Application
     default_table_row_style = default_table_style.merge(:height => '16%')
     default_table_header_style = default_table_style.merge(:height => '20px')
 
+    # end styles
+    #####################################
+
+    calendar_for_month = date_to_display.month
     begging_of_month = date_to_display - date_to_display.day + 1
     first_day_of_the_month = begging_of_month.wday
     days_runner = - first_day_of_the_month + 1
