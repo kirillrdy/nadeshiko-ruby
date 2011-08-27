@@ -7,10 +7,6 @@ class Element
     @app.register_element element
   end
 
-#  def get_element id
-#    @app.get_element id
-#  end
-
   def initialize(options = {})
     @_nodes_stack = [self]
 
@@ -45,23 +41,23 @@ class Element
 
     case element_type
       when :grid2
-        a = Grid2.new(options)
+        new_element = Grid2.new(options)
       else
-        a = Element.new(options)
+        new_element = Element.new(options)
     end
 
-    @_nodes_stack.last.add_element a
+    @_nodes_stack.last.add_element new_element
 
     #self.add_element a
 
     if block_given?
-      @_nodes_stack << a
-      block.call#(a)
+      @_nodes_stack << new_element
+      block.call
       @_nodes_stack.pop
     end
 
     # return newly created element
-    return a
+    return new_element
 
   end
 
