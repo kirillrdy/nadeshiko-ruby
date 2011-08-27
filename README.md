@@ -6,9 +6,9 @@ Nadeshiko
 Requirements
 -------------
 
-Chrome 4+ ( I use 15+ )
-Firefox 6+
-ruby 1.9.3 + ( it should work with 1.9.2 )
+ * ruby 1.9.3 + ( it should work with 1.9.2 )
+ * Chrome 4+ ( I use 15+ )
+ * Firefox 6+
 
 
 Hello World
