@@ -41,7 +41,7 @@ class Calendar < Nadeshiko::Application
   end
 
   #should be better refactored, but for now, I'll fix the render of Jan 2013 bug
-  def self.is_previous_month(draw_date, calendar_for_month)
+  def is_previous_month(draw_date, calendar_for_month)
     (draw_date.mon == (calendar_for_month - 1)) || (calendar_for_month == 1 && draw_date.mon == 12)
   end
 
@@ -79,7 +79,7 @@ class Calendar < Nadeshiko::Application
 
     get_element(:month_name).set_inner_html("#{date_to_display.year} #{month_name}")
 
-    get_element(:calendar_body).instance_eval do
+    add_elements_to(:calendar_body) do
       table :style => default_table_style.merge(fill_parent) do
 
         thead do
@@ -87,7 +87,7 @@ class Calendar < Nadeshiko::Application
         end
 
         tbody do
-          while ((beginning_of_month + days_runner).mon == calendar_for_month) || (Calendar.is_previous_month(beginning_of_month  + days_runner, calendar_for_month)) do
+          while ((beginning_of_month + days_runner).mon == calendar_for_month) || (is_previous_month(beginning_of_month  + days_runner, calendar_for_month)) do
             tr :style => default_table_row_style do
               7.times do
                 runner_date = beginning_of_month + days_runner
