@@ -1,7 +1,7 @@
 Nadeshiko
 =========
 
-  Small but powerful framework to develop realtime apps with nothing but Ruby
+  Small but powerful framework for developing realtime apps with nothing but Ruby
 
 Requirements
 -------------
