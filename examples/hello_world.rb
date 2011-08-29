@@ -3,11 +3,7 @@ require './lib/nadeshiko'
 class HelloWord < Nadeshiko::Application
 
   def onstart
-
-    add_elements do
-      span :text => 'Hello World'
-    end
-
+    span :text => 'Hello World'
   end
 
 end

@@ -1,7 +1,7 @@
 require './lib/nadeshiko'
 
 
-class MyApp < Nadeshiko::Application
+class CrudExample < Nadeshiko::Application
 
   def onstart
 
@@ -37,24 +37,19 @@ class MyApp < Nadeshiko::Application
     }
 
 
-    add_elements do
-      div :id => :main, :style => main_style do
-        div :style => header_style do
-          h1 :text => 'Eiga', :style => titles_style
+    div :id => :main, :style => main_style do
+      div :style => header_style do
+        h1 :text => 'Eiga', :style => titles_style
+      end
+      div :style => { :padding => '10px' } do
+        div :style => float_right do
+          input :id => :textfield
+          button :id => :add_new_record, :text => 'Add New Entry'
+          button :id => :show_dialog_button, :text => 'show demo dialog'
         end
-        div :style => { :padding => '10px' } do
-          div :style => float_right do
-            input :id => :textfield
-            button :id => :add_new_record, :text => 'Add New Entry'
-            button :id => :show_dialog_button, :text => 'show demo dialog'
-          end
-#          grid  :id => :movies_grid,
-#                :store => MovieStore,
-#                :columns => [:id, :title]
-          grid2  :id => :movies_grid2,
-                :columns => [:id, :title]
-          
-        end
+        grid2  :id => :movies_grid2,
+              :columns => [:id, :title]
+        
       end
     end
 
@@ -140,4 +135,4 @@ class MyApp < Nadeshiko::Application
 
 end
 
-Nadeshiko::Server.run MyApp
+Nadeshiko::Server.run CrudExample

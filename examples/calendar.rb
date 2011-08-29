@@ -4,17 +4,13 @@ class Calendar < Nadeshiko::Application
 
   def onstart
 
-    add_elements do
-
-      div :style => {:height => '90%'} do
-        h1  :id => :month_name
-        div :style => {:float => :right } do
-          button :id => :prev_month_button, :text => 'Prev'
-          button :id => :next_month_button, :text => 'Next'
-        end
-        div :id => :calendar_body
+    div :style => {:height => '90%'} do
+      h1  :id => :month_name
+      div :style => {:float => :right } do
+        button :id => :prev_month_button, :text => 'Prev'
+        button :id => :next_month_button, :text => 'Next'
       end
-
+      div :id => :calendar_body
     end
 
     @date_to_display = Date.today

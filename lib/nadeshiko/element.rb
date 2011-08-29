@@ -4,10 +4,6 @@ module Nadeshiko
     attr_accessor :app
     attr_accessor :parent_id, :id,:element_type
 
-    def register_element_with_app element
-      @app.register_element element
-    end
-
     def initialize(options = {})
       @_nodes_stack = [self]
 
@@ -26,6 +22,11 @@ module Nadeshiko
       @style = options[:style]
 
       register_element_with_app self
+    end
+
+    #TODO refactor
+    def register_element_with_app element
+      @app.register_element element
     end
 
     def method_missing element_type,*args, &block
@@ -69,9 +70,9 @@ module Nadeshiko
       element.add_own_element_to_parent
     end
 
-    def add_elements &block
-      self.instance_eval &block
-    end
+#    def add_elements &block
+#      self.instance_eval &block
+#    end
 
     def show_element
       @app.dom_on_sockets.show_element @id
@@ -90,6 +91,15 @@ module Nadeshiko
       setup
     end
 
+
+    # Will batch all messages
+    #
+    #   batch_messages do
+    #     do_something
+    #     # no message are sent
+    #   end
+    #   #messages get sent here
+    #
     def batch_messages &block
       @app.dom_on_sockets._batch_request << nil
       block.call

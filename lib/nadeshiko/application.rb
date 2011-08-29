@@ -10,6 +10,7 @@ module Nadeshiko
       @app = self
 
       super({:app => self})
+      @id = 'main'
       add_own_element_to_parent
     end
 
@@ -23,14 +24,6 @@ module Nadeshiko
         onstart
       end
     end
-
-
-#    # TODO use the one from element
-#    def add_elements &block
-#      root = Element.new({:app => self, :id => nil})
-#      root.instance_eval &block
-#    end
-
 
     # Get element by id
     # eg get_element :main_div

@@ -13,7 +13,7 @@ module Nadeshiko
 
       @content = block
       content = app.get_element @content_id
-      content.add_elements &block
+      content.instance_eval &block
 
       @app.dom_on_sockets.get_screen_size do |width,height|
 
@@ -59,11 +59,9 @@ module Nadeshiko
       header_id = @header_id
       content_id = @content_id
 
-      add_elements do
-        h4 :id => header_id, :text => 'Dialog' , :style => top_heading.merge(titles_style)
-        div :id => content_id, :style => { :padding => '5px' }
-      end # add elements
-      
+      h4 :id => header_id, :text => 'Dialog' , :style => top_heading.merge(titles_style)
+      div :id => content_id, :style => { :padding => '5px' }
+
     end
     
   end
