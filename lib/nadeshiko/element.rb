@@ -90,6 +90,13 @@ module Nadeshiko
       setup
     end
 
+    def batch_messages &block
+      @app.dom_on_sockets._batch_request << nil
+      block.call
+      @app.dom_on_sockets._batch_request.pop
+      @app.dom_on_sockets.flush_message_list
+    end
+
   #  #TODO finish
   #  # Appends self to either known parent or body
   #  def append_self # assumes it knows parent, or appends to body
