@@ -113,7 +113,7 @@ class MyApp < Nadeshiko::Application
 
 
   def show_demo_dialog
-    dialog = Dialog.new :app => self
+    dialog = Nadeshiko::Dialog.new :app => self
 
     dialog.show do
       table :style => {:width => '100%'} do
