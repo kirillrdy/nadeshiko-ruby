@@ -13,14 +13,15 @@ module Nadeshiko
   # Your code goes here...
 end
 
-elements = ['element','button','grid','dialog','grid2']
-elements.each{|x| require_relative 'nadeshiko/elements/'+x }
-
 libs = [
   'dom_on_sockets',
+  'element',
   'application',
   'generic_observer',
   'server'
 ]
 
 libs.each{|x| require_relative 'nadeshiko/'+ x}
+
+elements = ['button','grid','dialog','grid2']
+elements.each{|x| require_relative 'nadeshiko/elements/'+x }

@@ -1,43 +1,47 @@
-class Nadeshiko::Application
+module Nadeshiko
 
-  attr_accessor :dom_on_sockets
+  class Application
 
-  def initialize dom_on_sockets
-    @dom_on_sockets = dom_on_sockets
-    @elements = {}
-  end
+    attr_accessor :dom_on_sockets
 
-  # Client side alert
-  def alert msg
-    @dom_on_sockets.alert msg
-  end
-  
-  def start
-    batch_messages do
-      onstart
+    def initialize dom_on_sockets
+      @dom_on_sockets = dom_on_sockets
+      @elements = {}
     end
-  end
 
-  def batch_messages &block
-    @dom_on_sockets._batch_request << nil
-    block.call
-    @dom_on_sockets._batch_request.pop
-    @dom_on_sockets.flush_message_list
-  end
+    # Client side alert
+    def alert msg
+      @dom_on_sockets.alert msg
+    end
+    
+    def start
+      batch_messages do
+        onstart
+      end
+    end
 
-  def add_elements &block
-    root = Element.new({:app => self, :id => nil})
-    root.instance_eval &block
-  end
+    def batch_messages &block
+      @dom_on_sockets._batch_request << nil
+      block.call
+      @dom_on_sockets._batch_request.pop
+      @dom_on_sockets.flush_message_list
+    end
 
-  # Get element by id
-  # eg get_element :main_div
-  def get_element id
-    @elements[id.to_s]
-  end
+    def add_elements &block
+      root = Element.new({:app => self, :id => nil})
+      root.instance_eval &block
+    end
 
-  def register_element element
-    @elements[element.id.to_s] = element
+    # Get element by id
+    # eg get_element :main_div
+    def get_element id
+      @elements[id.to_s]
+    end
+
+    def register_element element
+      @elements[element.id.to_s] = element
+    end
+
   end
 
 end
