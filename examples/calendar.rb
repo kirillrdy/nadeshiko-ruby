@@ -68,7 +68,11 @@ class Calendar < Nadeshiko::Application
 
     calendar_for_month = date_to_display.month
     beginning_of_month = date_to_display - date_to_display.day + 1
+    
     first_day_of_the_month = beginning_of_month.wday
+    puts first_day_of_the_month
+    first_day_of_the_month = 7 if first_day_of_the_month == 0
+
     days_runner = - first_day_of_the_month + 1
 
     month_name = Date::MONTHNAMES[beginning_of_month.month]
