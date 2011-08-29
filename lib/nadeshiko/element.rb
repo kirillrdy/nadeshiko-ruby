@@ -26,7 +26,6 @@ module Nadeshiko
       @style = options[:style]
 
       register_element_with_app self
-
     end
 
     def method_missing element_type,*args, &block
@@ -59,9 +58,7 @@ module Nadeshiko
 
       # return newly created element
       return new_element
-
     end
-
 
     def generate_random_id
       Digest::SHA1.hexdigest(rand.to_s)[0..6]
