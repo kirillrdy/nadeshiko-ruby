@@ -55,6 +55,13 @@ function action_single_cmd(cmd){
       ws.send("keypress,"+cmd.selector+","+e.which)
     })
   }
+  if (cmd.method == 'sortable' ){
+    $(cmd.selector).sortable({
+      update: function(e,ui){
+        ws.send("sortable_update,#"+ui.item.attr("id")+','+ui.item.prev().attr("id"))
+      }
+    })
+  }
   if (cmd.method == 'get_value' ){
     var val = $(cmd.selector).val()
     ws.send("value,"+cmd.selector+","+val)
@@ -76,6 +83,9 @@ function action_single_cmd(cmd){
  if (cmd.method == 'show_element' ){
     //$(cmd.selector).fadeIn()
     $(cmd.selector).show()
+  }
+ if (cmd.method == 'insert_after' ){
+    $(cmd.selector).insertAfter(cmd.target)
   }
 }
 

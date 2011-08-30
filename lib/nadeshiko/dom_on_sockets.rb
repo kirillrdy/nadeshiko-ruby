@@ -19,6 +19,8 @@ class Nadeshiko::DomOnSockets
     @get_value = {}
     @onclick = {}
     @onkeypress = {}
+    @sortable = {}
+
     @message_list = []
     @_batch_request = []
   end
@@ -57,6 +59,9 @@ class Nadeshiko::DomOnSockets
         @get_value[id].call arg1
       when 'screen_size'
         @get_screen_size.call selector,arg1
+      when 'sortable_update'
+        #TODO fix
+        @sortable.call id, arg1
     end
 
   end
@@ -143,6 +148,15 @@ class Nadeshiko::DomOnSockets
     @get_screen_size = block
   end
 
+  def sortable id,&block
+    hash = {
+      'method' => 'sortable',
+      'selector' => '#'+id
+    }
+    send hash
+    @sortable = block
+  end
+
   def add_onclick id, &block
     hash = {
       'method' => 'add_onclick',
@@ -221,6 +235,15 @@ class Nadeshiko::DomOnSockets
     hash = {
       'method' => 'empty',
       'selector' => '#'+id
+    }
+    send hash
+  end
+
+  def insert_after id,target_id
+    hash = {
+      'method' => 'insert_after',
+      'selector' => '#'+id,
+      'target' => '#'+target_id
     }
     send hash
   end
