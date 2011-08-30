@@ -22,9 +22,7 @@ Your basic hello world
         require 'nadeshiko'
         class HelloWord < Nadeshiko::Application
           def onstart
-            add_elements do
-              span :text => 'Hello World'
-            end
+            span :text => 'Hello World'
           end
         end
         
