@@ -4,6 +4,8 @@ class Calendar < Nadeshiko::Application
 
   def onstart
 
+    setup_styles
+
     div :style => {:height => '90%'} do
       h1  :id => :month_name
       div :style => {:float => :right } do
@@ -21,7 +23,6 @@ class Calendar < Nadeshiko::Application
     get_element(:next_month_button).onclick do
       @date_to_display = @date_to_display.next_month
       batch_messages do
-        get_element(:calendar_body).empty
         render_calendar @date_to_display
       end
     end
@@ -29,7 +30,6 @@ class Calendar < Nadeshiko::Application
     get_element(:prev_month_button).onclick do
       @date_to_display = @date_to_display.prev_month
       batch_messages do
-        get_element(:calendar_body).empty
         render_calendar @date_to_display
       end
     end
@@ -42,11 +42,67 @@ class Calendar < Nadeshiko::Application
   end
 
   def render_calendar(date_to_display)
-    ####################################
-    # Styles
+
+    calendar_for_month = date_to_display.month
+    beginning_of_month = date_to_display - date_to_display.day + 1
+
+
+    first_day_of_the_month = beginning_of_month.wday
+    puts first_day_of_the_month
+    first_day_of_the_month = 7 if first_day_of_the_month == 0
+
+    days_runner = - first_day_of_the_month + 1
+
+    month_name = Date::MONTHNAMES[beginning_of_month.month]
+
+    get_element(:month_name).set_inner_html("#{date_to_display.year} #{month_name}")
+
+    get_element(:calendar_body).empty
+    add_elements_to(:calendar_body) do
+      table do
+        render_header_for_monthly_view
+        tbody do
+          while ((beginning_of_month + days_runner).mon == calendar_for_month) || (is_previous_month(beginning_of_month  + days_runner, calendar_for_month)) do
+            tr :class => 'table-row' do
+              7.times do
+                render_day_cell_for_monthly_view(beginning_of_month + days_runner,calendar_for_month)
+                days_runner += 1
+              end
+            end
+          end
+        end
+
+      end # table
+    end
+  end
+  
+  def render_header_for_monthly_view
+    thead do
+      ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].
+        each{|x| th :class => 'table-header', :text => x }
+    end
+  end
+  
+  def render_day_cell_for_monthly_view runner_date,calendar_for_month
+
+    if runner_date.month == calendar_for_month
+      if [0,6].include? runner_date.wday
+        cell_class = 'weekend'
+      else
+        cell_class = 'weekday'
+      end
+    else
+      cell_class = 'other-month'
+    end
+    td :class => cell_class,:text => runner_date.day
+
+  end
+
+
+  def setup_styles
     fill_parent = {:width => '100%',:height => '100%'}
 
-    default_table_style =   {
+    default_table_style = {
       'border-width' => '1px',
       'border-collapse' => 'collapse',
       'border-spacing' => '2px',
@@ -61,51 +117,20 @@ class Calendar < Nadeshiko::Application
 
     # end styles
     #####################################
+    css = Nadeshiko::Css.new
 
-    calendar_for_month = date_to_display.month
-    beginning_of_month = date_to_display - date_to_display.day + 1
-    
-    first_day_of_the_month = beginning_of_month.wday
-    puts first_day_of_the_month
-    first_day_of_the_month = 7 if first_day_of_the_month == 0
+    css.add 'table-header', default_table_header_style
+    css.add 'table-row', default_table_row_style
+    css.add 'table', default_table_style.merge(fill_parent)
+    css.add 'td', default_table_style.merge(:width => '14%')
+    css.add 'td.weekend',{:color => 'red'}
+    css.add 'td.weekday',{:color => 'black'}
+    css.add 'td.other-month',{:color => '#aaa'}
+    css.add 'table', default_table_style.merge(fill_parent)
 
-    days_runner = - first_day_of_the_month + 1
-
-    month_name = Date::MONTHNAMES[beginning_of_month.month]
-
-    get_element(:month_name).set_inner_html("#{date_to_display.year} #{month_name}")
-
-    add_elements_to(:calendar_body) do
-      table :style => default_table_style.merge(fill_parent) do
-
-        thead do
-          ['m','t','w','t','f','s','s'].each{|x| th :style => default_table_header_style, :text => x }
-        end
-
-        tbody do
-          while ((beginning_of_month + days_runner).mon == calendar_for_month) || (is_previous_month(beginning_of_month  + days_runner, calendar_for_month)) do
-            tr :style => default_table_row_style do
-              7.times do
-                runner_date = beginning_of_month + days_runner
-                if runner_date.month == calendar_for_month
-                  if [0,6].include? runner_date.wday
-                    style = {:color => 'red'}
-                  else
-                    style = {:color => 'black'}
-                  end
-                else
-                  style = {:color => '#aaa'}
-                end
-                td :style => default_table_style.merge(style), :text => runner_date.day
-                days_runner += 1
-              end
-            end
-          end
-        end
-
-      end # table
-    end # instance_eval
+    @dom_on_sockets.append_style_to_body css.to_css
   end
+
 end
 
 Nadeshiko::Server.run Calendar
