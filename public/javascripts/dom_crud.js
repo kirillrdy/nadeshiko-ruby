@@ -37,6 +37,11 @@ function action_single_cmd(cmd){
   if (cmd.method == 'set_css' ){
     $(cmd.selector).css( cmd.property,cmd.value )
   }
+
+  if (cmd.method == 'add_class' ){
+    $(cmd.selector).addClass(cmd.value )
+  }
+
   if (cmd.method == 'alert' ){
     alert(cmd.message)
   }

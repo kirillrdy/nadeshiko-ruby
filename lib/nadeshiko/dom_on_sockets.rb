@@ -219,4 +219,12 @@ class Nadeshiko::DomOnSockets
     send hash
   end
 
+ def add_class id,value
+    hash = {
+      'method' => 'add_class',
+      'selector' => '#'+id,
+      'value' => value
+    }
+    send hash
+  end
 end
