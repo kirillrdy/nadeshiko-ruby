@@ -7,11 +7,11 @@ class Nadeshiko::DomOnSockets
     @web_socket.onopen do
       self.onopen
     end
-    
+
     @web_socket.onclose do
       puts "Connection closed"
     end
-    
+
     @web_socket.onmessage do |msg|
       self.onmessage msg
     end
@@ -19,11 +19,8 @@ class Nadeshiko::DomOnSockets
     @get_value = {}
     @onclick = {}
     @onkeypress = {}
-
     @message_list = []
-
     @_batch_request = []
-
   end
 
   def flush_message_list
@@ -79,6 +76,15 @@ class Nadeshiko::DomOnSockets
       'method' => 'append',
       'content' => "<#{element_type} id=\"#{id}\"></#{element_type}>",
       'selector' => '#'+parent_id
+    }
+    send hash
+  end
+
+  def append_style_to_body style
+    hash = {
+      'method' => 'append',
+      'content' => "<style type=\"text/css\" media=\"screen\">#{style}</style>",
+      'selector' => 'body'
     }
     send hash
   end
