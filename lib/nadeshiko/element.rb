@@ -23,6 +23,8 @@ module Nadeshiko
       @text = options[:text]
       @style = options[:style]
 
+      @options = options
+
       register_element_with_app self
     end
 
@@ -31,6 +33,8 @@ module Nadeshiko
       @app.register_element element
     end
 
+    #TODO add meta programming magic,
+    # i dont like method missing
     def method_missing element_type,*args, &block
 
       html_based_elements = [:h1,:div,:input,:button,:table,:tr,:th,:td,:thead,:tbody,:h4,:span]
@@ -63,6 +67,7 @@ module Nadeshiko
       return new_element
     end
 
+    # generates random id 
     def generate_random_id
       Digest::SHA1.hexdigest(rand.to_s)[0..6]
     end
@@ -76,14 +81,23 @@ module Nadeshiko
 #      self.instance_eval &block
 #    end
 
+    # Shows hidden elements
+    # has no effect if element already visible
     def show_element
       @app.dom_on_sockets.show_element @id
     end
 
+    # Empties content of the element
     def empty
       @app.dom_on_sockets.empty @id
     end
 
+    def add_class class_name
+      @app.dom_on_sockets.add_class @id,class_name
+    end
+
+    # Adds self to parent
+    # if parent is nil adds self to body
     def add_own_element_to_parent
       if parent_id == nil || parent_id.empty?
         @app.dom_on_sockets.add_element_to_body @element_type,@id
@@ -128,10 +142,13 @@ module Nadeshiko
   #  def prepend_self
   #  end
 
+    # Removes element from DOM
     def remove_element
       @app.dom_on_sockets.remove_element @id
     end
 
+    # sets inner text for element
+    # TODO rename to set_html or html to be consitent with JQuery
     def set_inner_html text
       @app.dom_on_sockets.set_inner_html @id, text
     end
@@ -160,8 +177,9 @@ module Nadeshiko
       @app.dom_on_sockets.make_draggable @id,handle_id
     end
 
-    def setup
 
+    # When parent add child, it calls 'setup' on it
+    def setup
       # Set inner_html as @text
       set_inner_html @text if @text
 
