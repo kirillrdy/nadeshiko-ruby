@@ -36,11 +36,6 @@ class Calendar < Nadeshiko::Application
 
   end
 
-  #should be better refactored, but for now, I'll fix the render of Jan 2013 bug
-  def is_previous_month(draw_date, calendar_for_month)
-    (draw_date.mon == (calendar_for_month - 1)) || (calendar_for_month == 1 && draw_date.mon == 12)
-  end
-
   def render_calendar(date_to_display)
 
     calendar_for_month = date_to_display.month
@@ -62,7 +57,7 @@ class Calendar < Nadeshiko::Application
       table do
         render_header_for_monthly_view
         tbody do
-          while ((beginning_of_month + days_runner).mon == calendar_for_month) || (is_previous_month(beginning_of_month  + days_runner, calendar_for_month)) do
+          while (beginning_of_month + days_runner).mon != (date_to_display).next_month.mon do
             tr :class => 'table-row' do
               7.times do
                 render_day_cell_for_monthly_view(beginning_of_month + days_runner,calendar_for_month)
