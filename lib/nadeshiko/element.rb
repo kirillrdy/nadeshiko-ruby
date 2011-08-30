@@ -172,6 +172,15 @@ module Nadeshiko
         end
       end
 
+      if @options[:class]
+        if @options[:class].is_a? String
+          add_class @options[:class]
+        end
+        if @options[:class].is_a? Array
+          @options[:class].each{|x| add_class x }
+        end
+      end
+
     end
 
   end
