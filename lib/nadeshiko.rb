@@ -18,7 +18,8 @@ libs = [
   'element',
   'application',
   'generic_observer',
-  'server'
+  'server',
+  'css'
 ]
 
 libs.each{|x| require_relative 'nadeshiko/'+ x}
