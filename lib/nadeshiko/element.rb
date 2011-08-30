@@ -1,4 +1,6 @@
 module Nadeshiko
+
+  # Base class for everything in Nadeshiko
   class Element
 
     attr_accessor :app
