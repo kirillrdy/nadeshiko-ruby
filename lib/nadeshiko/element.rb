@@ -179,6 +179,13 @@ module Nadeshiko
       @app.dom_on_sockets.make_draggable @id,handle_id
     end
 
+    def sortable &block
+      @app.dom_on_sockets.sortable @id,&block
+    end
+
+    def insert_after element
+      @app.dom_on_sockets.insert_after @id,element.id
+    end
 
     # When parent add child, it calls 'setup' on it
     def setup
