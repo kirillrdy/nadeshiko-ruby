@@ -15,9 +15,10 @@ end
 
 libs = [
   'dom_on_sockets',
+  'element/dsl',
+  'element/jquery',
   'element',
   'application',
-  'generic_observer',
   'notifier',
   'server',
   'css'
