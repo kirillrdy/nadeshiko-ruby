@@ -6,6 +6,9 @@ module Nadeshiko
     attr_accessor :app
     attr_accessor :parent_id, :id,:element_type
 
+    include Dsl
+    include Jquery
+
     def initialize(options = {})
       @_nodes_stack = [self]
 
@@ -25,49 +28,9 @@ module Nadeshiko
 
       @options = options
 
-      register_element_with_app self
+      @app.register_element self
     end
 
-    #TODO refactor
-    def register_element_with_app element
-      @app.register_element element
-    end
-
-    #TODO add meta programming magic,
-    # i dont like method missing
-    def method_missing element_type,*args, &block
-
-      html_based_elements = [:h1,:div,:input,:button,
-        :table,:tr,:th,:td,:thead,:tbody,:h4,:span,
-        :ul,:li]
-      magic_based_elements = [:grid2]
-
-      super unless (html_based_elements + magic_based_elements).include? element_type
-
-      options = args.first || {}
-
-      options.merge!({:app => app, :element_type => element_type})
-
-      case element_type
-        when :grid2
-          new_element = Grid2.new(options)
-        else
-          new_element = Element.new(options)
-      end
-
-      @_nodes_stack.last.add_element new_element
-
-      #self.add_element a
-
-      if block_given?
-        @_nodes_stack << new_element
-        block.call
-        @_nodes_stack.pop
-      end
-
-      # return newly created element
-      return new_element
-    end
 
     # generates random id 
     def generate_random_id
@@ -77,25 +40,6 @@ module Nadeshiko
     def add_element element
       element.parent_id = self.id
       element.add_own_element_to_parent
-    end
-
-#    def add_elements &block
-#      self.instance_eval &block
-#    end
-
-    # Shows hidden elements
-    # has no effect if element already visible
-    def show_element
-      @app.dom_on_sockets.show_element @id
-    end
-
-    # Empties content of the element
-    def empty
-      @app.dom_on_sockets.empty @id
-    end
-
-    def add_class class_name
-      @app.dom_on_sockets.add_class @id,class_name
     end
 
     # Adds self to parent
@@ -123,68 +67,6 @@ module Nadeshiko
       block.call
       @app.dom_on_sockets._batch_request.pop
       @app.dom_on_sockets.flush_message_list
-    end
-
-  #  #TODO finish
-  #  # Appends self to either known parent or body
-  #  def append_self # assumes it knows parent, or appends to body
-  #  end
-
-  #  #TODO
-  #  # appends to self
-  #  def append content
-  #  end
-  #  
-  #  # append self to parent
-  #  def append_to parent_id
-  #  end
-
-  #  #TODO prepend finish
-  #  # Make same methods as above for prepending
-  #  def prepend_self
-  #  end
-
-    # Removes element from DOM
-    def remove_element
-      @app.dom_on_sockets.remove_element @id
-    end
-
-    # sets inner text for element
-    # TODO rename to set_html or html to be consitent with JQuery
-    def set_inner_html text
-      @app.dom_on_sockets.set_inner_html @id, text
-    end
-
-    def set_css property,value
-      @app.dom_on_sockets.set_css @id,property,value
-    end
-
-    def onclick &block
-      @app.dom_on_sockets.add_onclick @id,&block
-    end
-
-    def onkeypress &block
-      @app.dom_on_sockets.add_onkeypress @id,&block
-    end
-
-    def get_value &block
-      @app.dom_on_sockets.get_value @id, &block
-    end
-
-    def set_value value
-      @app.dom_on_sockets.set_value @id, value
-    end
-
-    def make_draggable handle_id
-      @app.dom_on_sockets.make_draggable @id,handle_id
-    end
-
-    def sortable &block
-      @app.dom_on_sockets.sortable @id,&block
-    end
-
-    def insert_after element
-      @app.dom_on_sockets.insert_after @id,element.id
     end
 
     # When parent add child, it calls 'setup' on it
