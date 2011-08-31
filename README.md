@@ -6,7 +6,7 @@ Nadeshiko
 Requirements
 -------------
 
- * ruby 1.9.3 + ( it should work with 1.9.2 )
+ * ruby 1.9.3+ ( it should work with 1.9.2 )
  * Chrome 4+ ( I use 15+ )
  * Firefox 6+
 
@@ -22,7 +22,7 @@ Your basic hello world
         require 'nadeshiko'
         class HelloWord < Nadeshiko::Application
           def onstart
-            span :text => 'Hello World'
+            div :text => 'Hello World'
           end
         end
         
