@@ -18,6 +18,7 @@ libs = [
   'element',
   'application',
   'generic_observer',
+  'notifier',
   'server',
   'css'
 ]
