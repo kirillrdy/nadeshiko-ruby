@@ -70,6 +70,9 @@ module Nadeshiko
     # When parent add child, it calls 'setup' on it
     def setup
       text @options[:text] if @options[:text]
+
+      add_class @options[:class] if @options[:class]
+
       # Set inner_html as @text
       #set_inner_html @text if @text
 
