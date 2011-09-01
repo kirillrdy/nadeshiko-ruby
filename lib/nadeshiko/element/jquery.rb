@@ -1,15 +1,31 @@
-module Nadeshiko::Jquery
+module Nadeshiko
+ module Jquery
 
+  def append object
+    case object
+      when String
+        _append_string object
+      when Element
+        _append_element object
+      else
+        raise "Can not add non supported object"
+    end
+  end
 
-  def append element
-    selector = @id == nil ? 'body' : "##{@id}"
+  def _append_element element
     child_type = element.element_type
-    
-    string =<<-EOL
-      $('#{selector}').append('<#{child_type} id="#{element.id}"></#{child_type}>')
-    EOL
+    element_string = "<#{child_type} id=\"#{element.id}\"></#{child_type}>"
+    _append_string element_string
+  end
+
+  def _append_string string_to_append
+    selector = @id == nil ? 'body' : "##{@id}"
+
+    string = "$('#{selector}').append(#{string_to_append.inspect})"
     @app.dom_on_sockets.execute string
   end
+
+
 
   def text val
     string =<<-EOL
@@ -19,7 +35,7 @@ module Nadeshiko::Jquery
   end
 
   def click &block
-    @app.dom_on_sockets.add_callback_block :click,@id, block
+    @app.dom_on_sockets.add_callback_block :click,@id, &block
     string =<<-EOL
       $('##{@id}').click(function(){
         ws.send('click,#{@id}')
@@ -28,6 +44,7 @@ module Nadeshiko::Jquery
     @app.dom_on_sockets.execute string
   end
 
+  # Gets or sets value of element
   def val value=nil, &block
     if value
       _set_val value
@@ -37,21 +54,7 @@ module Nadeshiko::Jquery
     end
   end
 
-  def _get_val &block
-    @app.dom_on_sockets.add_callback_block :val,@id, block
-    string =<<-EOL
-      var a = $('##{@id}').val()
-      ws.send('val,#{@id},'+ a )
-    EOL
-    @app.dom_on_sockets.execute string
-  end
 
-  def _set_val val
-    string =<<-EOL
-      $('##{@id}').val('#{val}')
-    EOL
-    @app.dom_on_sockets.execute string
-  end
 
   # Shows hidden elements
   # has no effect if element already visible
@@ -122,12 +125,29 @@ module Nadeshiko::Jquery
 #    @app.dom_on_sockets.make_draggable @id,handle_id
 #  end
 
-#  def sortable &block
-#    @app.dom_on_sockets.sortable @id,&block
-#  end
 
 #  def insert_after element
 #    @app.dom_on_sockets.insert_after @id,element.id
 #  end
 
+private
+
+  def _get_val &block
+    @app.dom_on_sockets.add_callback_block :val, @id, :once => true, &block
+
+    string =<<-EOL
+      var a = $('##{@id}').val()
+      ws.send('val,#{@id},'+ a )
+    EOL
+    @app.dom_on_sockets.execute string
+  end
+
+  def _set_val val
+    string =<<-EOL
+      $('##{@id}').val('#{val}')
+    EOL
+    @app.dom_on_sockets.execute string
+  end
+
+  end
 end
