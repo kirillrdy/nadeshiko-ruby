@@ -9,7 +9,7 @@ class Nadeshiko::DomOnSockets
     end
 
     @web_socket.onclose do
-      puts "Connection closed"
+      puts "Connection closed #{@web_socket.object_id}"
     end
 
     @web_socket.onmessage do |msg|
