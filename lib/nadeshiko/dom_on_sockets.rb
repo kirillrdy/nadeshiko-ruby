@@ -1,5 +1,5 @@
 class Nadeshiko::DomOnSockets
-  attr_accessor :_batch_request,:message_list,:callbacks
+  attr_accessor :_batch_commands,:callbacks
 
   def initialize web_socket
 
@@ -22,17 +22,16 @@ class Nadeshiko::DomOnSockets
     @commands = ''
   end
 
-  def _execute
-    # if are in batch block
-    return if @_batch_commands != []
-
-    send @message_list
-    @message_list = []
-  end
-
   def execute cmd
-    puts "#{@web_socket.object_id} sending #{cmd.inspect}"
-    @web_socket.send cmd
+    @commands += cmd
+    @commands += "\n"
+
+    if @_batch_commands == []
+      puts "#{@web_socket.object_id} sending #{@commands.inspect}"
+      @web_socket.send @commands
+      @commands = ''
+    end
+
   end
 
   def add_callback_block action, id, options = {} , &block
