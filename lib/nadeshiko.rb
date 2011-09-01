@@ -21,8 +21,7 @@ libs = [
   'element',
   'application',
   'notifier',
-  'server',
-  'css'
+  'server'
 ]
 
 libs.each{|x| require_relative 'nadeshiko/'+ x}
