@@ -8,6 +8,7 @@ module Nadeshiko
 
     include Dsl
     include Jquery
+    include JqueryUi
 
     def initialize(options = {})
       @_nodes_stack = [self]
