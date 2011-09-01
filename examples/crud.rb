@@ -51,7 +51,7 @@ class CrudExample < Nadeshiko::Application
 
     div :id => :main, :class => :main_content do
       div :class => :header do
-        h1 :text => 'Eiga', :class => :title
+        h1 :text => 'List of Records', :class => :title
       end
       div :style => { :padding => '10px' } do
         div :class => :float_right do
