@@ -14,7 +14,21 @@ module Nadeshiko
 
       # Add self ( in this case to body )
       #add self
+    end
 
+    def style options = {}, &block
+      values = block.call
+      string = "<style type=\"text/css\" media=\"screen\">\n"
+      
+      values.each_pair do |selector,styles|
+        string += "#{selector} {\n"
+        styles.each_pair do |attribute,value|
+          string += "#{attribute}: #{value};\n"
+        end
+        string += "}\n"
+      end
+      string += '</style>'
+      append string
     end
 
     # Client side alert
