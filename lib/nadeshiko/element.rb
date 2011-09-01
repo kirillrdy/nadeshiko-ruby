@@ -35,22 +35,6 @@ module Nadeshiko
       Digest::SHA1.hexdigest(rand.to_s)[0..6]
     end
 
-#    def add_element element
-#      element.parent_id = self.id
-#      element.add_own_element_to_parent
-#    end
-
-#    # Adds self to parent
-#    # if parent is nil adds self to body
-#    def add_own_element_to_parent
-#      if parent_id == nil || parent_id.empty?
-#        @app.dom_on_sockets.add_element_to_body @element_type,@id
-#      else
-#        @app.dom_on_sockets.add_element @element_type,@id,@parent_id
-#      end
-#      setup
-#    end
-
 
     # Will batch all messages
     #
@@ -75,24 +59,7 @@ module Nadeshiko
 
       add_class @options[:class] if @options[:class]
 
-      # Set inner_html as @text
-      #set_inner_html @text if @text
-
-      # Apply Styles
-#      if @style
-#        @style.each_pair do |k,v|
-#          set_css k,v
-#        end
-#      end
-
-#      if @options[:class]
-#        if @options[:class].is_a? String
-#          add_class @options[:class]
-#        end
-#        if @options[:class].is_a? Array
-#          @options[:class].each{|x| add_class x }
-#        end
-#      end
+      #TODO add handling for style attribute
 
     end
 
