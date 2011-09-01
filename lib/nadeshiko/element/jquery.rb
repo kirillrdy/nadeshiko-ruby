@@ -55,6 +55,16 @@ module Nadeshiko
   end
 
 
+  def empty
+    string="$('##{@id}').empty()"
+    @app.dom_on_sockets.execute string
+  end
+
+  def add_class class_name
+    string="$('##{@id}').addClass(#{class_name.inspect})"
+    @app.dom_on_sockets.execute string
+  end
+
 
   # Shows hidden elements
   # has no effect if element already visible
