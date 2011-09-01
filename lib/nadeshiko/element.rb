@@ -61,10 +61,12 @@ module Nadeshiko
     #   #messages get sent here
     #
     def batch_messages &block
-      #@app.dom_on_sockets._batch_request << nil
+      @app.dom_on_sockets._batch_commands << nil
       block.call
-      #@app.dom_on_sockets._batch_request.pop
-      #@app.dom_on_sockets.flush_message_list
+      @app.dom_on_sockets._batch_commands.pop
+
+      # just need to call this function
+      @app.dom_on_sockets.execute ''
     end
 
     # When parent add child, it calls 'setup' on it
