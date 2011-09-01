@@ -5,10 +5,6 @@ class CrudExample < Nadeshiko::Application
 
   def onstart
 
-    # Setting body style
-    @dom_on_sockets.set_css_by_selector 'body','background-color','#9aa'
-    @dom_on_sockets.set_css_by_selector 'body','padding','0px'
-    @dom_on_sockets.set_css_by_selector 'body','margin','0px'
     # Theme presets
     top_heading = { :padding => '5px',
                   'margin-top' => '0px',
@@ -36,13 +32,29 @@ class CrudExample < Nadeshiko::Application
       'background-color' => 'white'
     }
 
+    style do
+      {
+        'body' => {
+          'background-color' => '#9aa',
+          'padding' => '0px',
+          'margin' => '0px'
+        },
+        '.main_content' => main_style,
+        '.header' => header_style,
+        '.title' => titles_style,
+        '.float_right' => float_right
+      }
+    end
 
-    div :id => :main, :style => main_style do
-      div :style => header_style do
-        h1 :text => 'Eiga', :style => titles_style
+
+
+
+    div :id => :main, :class => :main_content do
+      div :class => :header do
+        h1 :text => 'Eiga', :class => :title
       end
       div :style => { :padding => '10px' } do
-        div :style => float_right do
+        div :class => :float_right do
           input :id => :textfield
           button :id => :add_new_record, :text => 'Add New Entry'
           button :id => :show_dialog_button, :text => 'show demo dialog'
@@ -57,20 +69,20 @@ class CrudExample < Nadeshiko::Application
     button = get_element :add_new_record
     textfield = get_element :textfield
 
-    Nadeshiko::GenericObserver.onadd do |record|
+    Nadeshiko::Notifier.notify_on 'item_add' do |record|
       add_movie_to_table record
     end
 
 
-    button.onclick do
+    button.click do
       create_new_movie
     end
 
-    textfield.onkeypress do |key|
-      create_new_movie if key.to_i == 13
-    end
+#    textfield.onkeypress do |key|
+#      create_new_movie if key.to_i == 13
+#    end
 
-    get_element(:show_dialog_button).onclick do
+    get_element(:show_dialog_button).click do
       show_demo_dialog
     end
 
@@ -93,15 +105,15 @@ class CrudExample < Nadeshiko::Application
 
   def create_new_movie
     textfield = get_element :textfield
-    textfield.get_value do |value|
+    textfield.val do |value|
       if value != ''
         m = Struct.new(:id,:title).new
         m.title = value
-        Nadeshiko::GenericObserver.add m
+        Nadeshiko::Notifier.trigger 'item_add', m
       else
         alert 'Please enter something'
       end
-      textfield.set_value ''
+      textfield.val ''
     end
   end
 
@@ -127,7 +139,7 @@ class CrudExample < Nadeshiko::Application
       end
     end
 
-    get_element(:close_dialog_button).onclick do
+    get_element(:close_dialog_button).click do
       dialog.remove_element
     end
 
