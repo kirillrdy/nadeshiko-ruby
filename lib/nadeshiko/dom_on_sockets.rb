@@ -30,25 +30,44 @@ class Nadeshiko::DomOnSockets
     @message_list = []
   end
 
-  
-
   def execute cmd
     puts "#{@web_socket.object_id} sending #{cmd.inspect}"
     @web_socket.send cmd
   end
 
-  def add_callback_block action, id, block
+  def add_callback_block action, id, options = {} , &block
+    if options[:once] == true
+      _add_callback_block action,id do |*args|
+        block.call *args
+        clear_callbacks action,id
+      end
+    else
+      _add_callback_block action,id,&block
+    end
+    
+  end
+
+  def _add_callback_block action,id,&block
     @callbacks[action] ||= {}
     @callbacks[action][id] ||= []
     @callbacks[action][id] << block
   end
 
 
+  def clear_callbacks action,id
+    puts "clearing callbacls for #{action} #{id}"
+    @callbacks[action] ||= {}
+    @callbacks[action][id] = []
+  end
+
   def onmessage message
     puts "#{@web_socket.object_id} Recieved message: '#{message}'"
     action,id, *args = message.split ',',-1
 
-    @callbacks[action.to_sym][id].each{|x| x.call *args }
+    @callbacks[action.to_sym][id].each{|x|
+      puts "calling #{action} #{id} callback"
+      x.call *args
+    }
 
 #    action,selector,arg1 = cmds
 #    id = selector.delete '#'
