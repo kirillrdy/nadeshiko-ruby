@@ -34,8 +34,8 @@ class HelloWord < Nadeshiko::Application
       Nadeshiko::Notifier.trigger :item_moved,item,prev_item
     end
 
-    get_element(:add_item).onclick do
-      get_element(:textfield).get_value do |value|
+    get_element(:add_item).click do
+      get_element(:textfield).val do |value|
         Nadeshiko::Notifier.trigger :item_added, value
       end
     end
