@@ -10,8 +10,11 @@ module Nadeshiko
       @app = self
 
       super({:app => self})
-      @id = 'main'
-      add_own_element_to_parent
+      @id = nil
+
+      # Add self ( in this case to body )
+      #add self
+
     end
 
     # Client side alert

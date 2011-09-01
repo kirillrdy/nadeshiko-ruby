@@ -22,9 +22,8 @@ module Nadeshiko
           new_element = Element.new(options)
       end
 
-      @_nodes_stack.last.add_element new_element
-
-      #self.add_element a
+      @_nodes_stack.last.append new_element
+      new_element.setup
 
       if block_given?
         @_nodes_stack << new_element
@@ -33,6 +32,7 @@ module Nadeshiko
       end
 
       # return newly created element
+      # that in dsl you can get ref to it
       return new_element
     end
   end

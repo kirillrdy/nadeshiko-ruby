@@ -22,7 +22,7 @@
         ws.onclose = function(){
           setTimeout("init()",0)
         };
-        ws.onmessage =  add_cmd_to_list
+        ws.onmessage =  execute_cmd
       };
       $(init)
 
