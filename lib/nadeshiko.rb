@@ -17,6 +17,7 @@ libs = [
   'dom_on_sockets',
   'element/dsl',
   'element/jquery',
+  'element/jquery_ui',
   'element',
   'application',
   'notifier',

@@ -18,6 +18,41 @@ module Nadeshiko::Jquery
     @app.dom_on_sockets.execute string
   end
 
+  def click &block
+    @app.dom_on_sockets.add_callback_block :click,@id, block
+    string =<<-EOL
+      $('##{@id}').click(function(){
+        ws.send('click,#{@id}')
+      })
+    EOL
+    @app.dom_on_sockets.execute string
+  end
+
+  def val value=nil, &block
+    if value
+      _set_val value
+    end
+    if block_given?
+      _get_val &block
+    end
+  end
+
+  def _get_val &block
+    @app.dom_on_sockets.add_callback_block :val,@id, block
+    string =<<-EOL
+      var a = $('##{@id}').val()
+      ws.send('val,#{@id},'+ a )
+    EOL
+    @app.dom_on_sockets.execute string
+  end
+
+  def _set_val val
+    string =<<-EOL
+      $('##{@id}').val('#{val}')
+    EOL
+    @app.dom_on_sockets.execute string
+  end
+
   # Shows hidden elements
   # has no effect if element already visible
 #  def show

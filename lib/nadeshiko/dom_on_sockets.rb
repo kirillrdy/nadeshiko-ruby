@@ -1,5 +1,5 @@
 class Nadeshiko::DomOnSockets
-  attr_accessor :_batch_request,:message_list
+  attr_accessor :_batch_request,:message_list,:callbacks
 
   def initialize web_socket
 
@@ -16,10 +16,8 @@ class Nadeshiko::DomOnSockets
       self.onmessage msg
     end
 
-#    @get_value = {}
-#    @onclick = {}
-#    @onkeypress = {}
-#    @sortable = {}
+    @callbacks = {}
+
     @_batch_commands = []
     @commands = ''
   end
@@ -39,10 +37,18 @@ class Nadeshiko::DomOnSockets
     @web_socket.send cmd
   end
 
+  def add_callback_block action, id, block
+    @callbacks[action] ||= {}
+    @callbacks[action][id] ||= []
+    @callbacks[action][id] << block
+  end
+
 
   def onmessage message
-    puts "Recieved message: '#{message}'"
-#    cmds = message.split ',',-1
+    puts "#{@web_socket.object_id} Recieved message: '#{message}'"
+    action,id, *args = message.split ',',-1
+
+    @callbacks[action.to_sym][id].each{|x| x.call *args }
 
 #    action,selector,arg1 = cmds
 #    id = selector.delete '#'
