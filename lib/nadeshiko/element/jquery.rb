@@ -61,7 +61,7 @@ module Nadeshiko
   end
 
   def add_class class_name
-    string="$('##{@id}').addClass(#{class_name.inspect})"
+    string="$('##{@id}').addClass(#{class_name.to_s.inspect})"
     @app.dom_on_sockets.execute string
   end
 
