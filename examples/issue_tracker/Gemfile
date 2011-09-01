@@ -1,0 +1,5 @@
+source :rubygems
+
+gem 'nadeshiko'
+gem 'sqlite3'
+gem 'standalone_migrations'
