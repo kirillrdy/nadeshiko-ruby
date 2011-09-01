@@ -54,9 +54,13 @@ module Nadeshiko
     end
   end
 
-
   def empty
     string="$('##{@id}').empty()"
+    @app.dom_on_sockets.execute string
+  end
+
+  def remove
+    string="$('##{@id}').remove()"
     @app.dom_on_sockets.execute string
   end
 
