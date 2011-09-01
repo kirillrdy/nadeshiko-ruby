@@ -6,7 +6,7 @@ class Calendar < Nadeshiko::Application
 
     setup_styles
 
-    div :style => {:height => '90%'} do
+    div :style => {:height => '100%'} do
       h1  :id => :month_name
       div :style => {:float => :right } do
         button :id => :prev_month_button, :text => 'Prev'
@@ -90,15 +90,17 @@ class Calendar < Nadeshiko::Application
       cell_class = 'other-month'
     end
     td :class => cell_class do
-      span :text => runner_date.day
-      ul :class => 'day-lists' do
-        li :class => 'day-event blue' do
-          span :text => 'Some Event'
-        end
-        li :class => 'day-event green' do
-          span :text => 'Other Event'
-        end
-      end.sortable :connectWith => '.day-lists'
+      div :text => runner_date.day
+      div :class => 'fill-parent' do
+        ul :class => 'day-lists' do
+          li :class => 'day-event blue' do
+            span :text => 'Some Event'
+          end
+          li :class => 'day-event green' do
+            span :text => 'Other Event'
+          end
+        end.sortable :connectWith => '.day-lists'
+      end
     end
 
   end
@@ -129,14 +131,14 @@ class Calendar < Nadeshiko::Application
         'table-header' => default_table_header_style,
         'table-row' => default_table_row_style,
         'table' => default_table_style.merge(fill_parent),
-        'td' =>  default_table_style.merge(:width => '14%'),
+        'td' =>  default_table_style.merge(:width => '14%',:height => '16%'),
         'td.weekend' => {:color => 'red'},
         'td.weekday'=> {:color => 'black'},
         'ul' => {
           'list-style-type' =>  'none',
           'margin' => '0px',
           'padding' => '0px',
-          'height' => '100%'
+          'height' => '90%'
         },
         'td.other-month' => {:color => '#aaa'},
         '.day-event' => {
@@ -151,6 +153,10 @@ class Calendar < Nadeshiko::Application
         },
         '.orange' => {
           'background-color' => 'orange'
+        },
+        '.fill-parent' => {
+          :width => '100%',
+          :height => '100%'
         }
       }
     end
