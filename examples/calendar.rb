@@ -20,14 +20,14 @@ class Calendar < Nadeshiko::Application
     render_calendar @date_to_display
 
     # set up handlers for next and prev buttons
-    get_element(:next_month_button).onclick do
+    get_element(:next_month_button).click do
       @date_to_display = @date_to_display.next_month
       batch_messages do
         render_calendar @date_to_display
       end
     end
 
-    get_element(:prev_month_button).onclick do
+    get_element(:prev_month_button).click do
       @date_to_display = @date_to_display.prev_month
       batch_messages do
         render_calendar @date_to_display
@@ -50,7 +50,7 @@ class Calendar < Nadeshiko::Application
 
     month_name = Date::MONTHNAMES[beginning_of_month.month]
 
-    get_element(:month_name).set_inner_html("#{date_to_display.year} #{month_name}")
+    get_element(:month_name).text("#{date_to_display.year} #{month_name}")
 
     get_element(:calendar_body).empty
     add_elements_to(:calendar_body) do
@@ -89,7 +89,17 @@ class Calendar < Nadeshiko::Application
     else
       cell_class = 'other-month'
     end
-    td :class => cell_class,:text => runner_date.day
+    td :class => cell_class do
+      span :text => runner_date.day
+      ul :class => 'day-lists' do
+        li :class => 'day-event blue' do
+          span :text => 'Some Event'
+        end
+        li :class => 'day-event green' do
+          span :text => 'Other Event'
+        end
+      end.sortable :connectWith => '.day-lists'
+    end
 
   end
 
@@ -110,20 +120,41 @@ class Calendar < Nadeshiko::Application
     default_table_row_style = default_table_style.merge(:height => '16%')
     default_table_header_style = default_table_style.merge(:height => '20px')
 
+#aqua, black, blue, fuchsia, gray, grey, green, lime, maroon, navy, olive, purple, red, silver, teal, white, yellow
+
     # end styles
     #####################################
-    css = Nadeshiko::Css.new
+    style do
+      {
+        'table-header' => default_table_header_style,
+        'table-row' => default_table_row_style,
+        'table' => default_table_style.merge(fill_parent),
+        'td' =>  default_table_style.merge(:width => '14%'),
+        'td.weekend' => {:color => 'red'},
+        'td.weekday'=> {:color => 'black'},
+        'ul' => {
+          'list-style-type' =>  'none',
+          'margin' => '0px',
+          'padding' => '0px',
+          'height' => '100%'
+        },
+        'td.other-month' => {:color => '#aaa'},
+        '.day-event' => {
+          :padding => '1px',
+          'margin-bottom' => '1px',
+          'background-color' => 'blue',
+          'border-radius' => '3px',
+          :color => 'white'
+        },
+        '.green' => {
+          'background-color' => 'green'
+        },
+        '.orange' => {
+          'background-color' => 'orange'
+        }
+      }
+    end
 
-    css.add 'table-header', default_table_header_style
-    css.add 'table-row', default_table_row_style
-    css.add 'table', default_table_style.merge(fill_parent)
-    css.add 'td', default_table_style.merge(:width => '14%')
-    css.add 'td.weekend',{:color => 'red'}
-    css.add 'td.weekday',{:color => 'black'}
-    css.add 'td.other-month',{:color => '#aaa'}
-    css.add 'table', default_table_style.merge(fill_parent)
-
-    @dom_on_sockets.append_style_to_body css.to_css
   end
 
 end
