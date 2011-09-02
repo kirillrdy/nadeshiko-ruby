@@ -1,8 +1,13 @@
 require './lib/nadeshiko'
 
+# This example demonstrates how to create an ordered list 
+# with live updates on addition of new items and on move of an item
 class OrderedList < Nadeshiko::Application
 
   class << self
+
+    # I added a global counter for items created so that i can keep a track of number of items created
+    # since this example doesnt acctually persist items list
     attr_accessor :number_runner
   end
 
@@ -10,16 +15,19 @@ class OrderedList < Nadeshiko::Application
 
   def onstart
 
-    input :id => 'textfield'
-    button :id => 'add_item', :text => 'add'
+    input :id => :textfield
+    button :id => :add_item, :text => 'add'
 
-    ul :id => 'sortable' do
+    ul :id => :sortable do
       ['item1','item2','item3'].each do |i|
         li :id => i do
           span :text => i
         end
       end
     end
+
+    # Made list sortable
+    get_element(:sortable).sortable
 
 
     # subscribe to notifications
@@ -41,10 +49,10 @@ class OrderedList < Nadeshiko::Application
       end
     end
 
-    # Hook into events
-    get_element(:sortable).sortable
 
 
+    # Event on sortupdate
+    # fired when one of users moved item
     get_element(:sortable).sortupdate do |item_id|
 
       moved_element = get_element(item_id)
@@ -62,6 +70,7 @@ class OrderedList < Nadeshiko::Application
       end
     end
 
+    # This is triggered when user adds new item
     get_element(:add_item).click do
       get_element(:textfield).val do |value|
         self.class.number_runner += 1
