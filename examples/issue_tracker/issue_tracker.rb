@@ -79,7 +79,9 @@ class IssueTracker < Nadeshiko::Application
 
 
     get_element(:list_of_issues).sortupdate do |moved_element_id|
-      move_element moved_element_id
+      batch_messages do
+        move_element moved_element_id
+      end
     end
 
   end
