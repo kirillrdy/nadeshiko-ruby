@@ -33,7 +33,7 @@ module Nadeshiko
 
     def text val
       string =<<-EOL
-        $('##{@id}').text('#{val}')
+        $('##{@id}').text(#{val.inspect})
       EOL
       @app.dom_on_sockets.execute string
     end
@@ -42,7 +42,8 @@ module Nadeshiko
       @app.dom_on_sockets.add_callback_block :click,@id, &block
       string =<<-EOL
         $('##{@id}').click(function(){
-          ws.send('click,#{@id}')
+          var array = ['click','#{@id}']
+          ws.send(JSON.stringify(array))
         })
       EOL
       @app.dom_on_sockets.execute string
@@ -120,7 +121,8 @@ module Nadeshiko
 
       string =<<-EOL
         var a = $('##{@id}').#{method}()#{additional_params}
-        ws.send('#{method},#{@id},'+ a )
+        var array = ['#{method}','#{@id}',a]
+        ws.send(JSON.stringify(array))
       EOL
       @app.dom_on_sockets.execute string
     end

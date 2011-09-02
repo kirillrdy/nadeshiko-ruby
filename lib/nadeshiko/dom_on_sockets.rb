@@ -61,7 +61,8 @@ class Nadeshiko::DomOnSockets
 
   def onmessage message
     puts "#{@web_socket.object_id} Recieved message: '#{message}'"
-    action,id, *args = message.split ',',-1
+    action,id, *args = JSON.parse message
+    #action,id, *args = message.split ',',-1
 
     @callbacks[action.to_sym][id].each{|x|
       puts "calling #{action} #{id} callback"

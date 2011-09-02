@@ -17,7 +17,8 @@ module Nadeshiko::JqueryUi
     @app.dom_on_sockets.add_callback_block :sortupdate,@id, &block
     string =<<-EOL
       $('##{@id}').bind('sortupdate',function(event,ui){
-        ws.send('sortupdate,#{@id},'+ui.item.attr("id"))
+        var array = ['sortupdate','#{@id}',ui.item.attr("id")]
+        ws.send(JSON.stringify(array))
       })
     EOL
     @app.dom_on_sockets.execute string
