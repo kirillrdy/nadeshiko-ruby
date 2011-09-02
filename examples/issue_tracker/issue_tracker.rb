@@ -47,9 +47,6 @@ class IssueTracker < Nadeshiko::Application
 
   def move_element moved_element_id
 
-
-
-
     moved_element = get_element(moved_element_id)
     moved_element.index do |index|
       issue = moved_element.options[:record]
@@ -62,10 +59,12 @@ class IssueTracker < Nadeshiko::Application
       sort_orders = range.to_a
       issues_to_update = Issue.where(:sort_order => sort_orders )
 
-      if old_pos > new_pos
-        issues_to_update.each{|x| x.sort_order +=1 ; x.save! }
-      else
-        issues_to_update.each{|x| x.sort_order -=1 ; x.save! }
+      Issue.transaction do
+        if old_pos > new_pos
+          issues_to_update.each{|x| x.sort_order +=1 ; x.save! }
+        else
+          issues_to_update.each{|x| x.sort_order -=1 ; x.save! }
+        end
       end
 
       issue.sort_order = new_pos
@@ -83,8 +82,6 @@ class IssueTracker < Nadeshiko::Application
           end
         end
       end
-
-      
 
     end
   end
