@@ -1,6 +1,4 @@
 require './lib/nadeshiko'
-
-
 class CrudExample < Nadeshiko::Application
 
   def onstart
@@ -47,8 +45,8 @@ class CrudExample < Nadeshiko::Application
     end
 
 
-
-
+    #######################################
+    # Main Layout starts here
     div :id => :main, :class => :main_content do
       div :class => :header do
         h1 :text => 'List of Records', :class => :title
@@ -61,7 +59,6 @@ class CrudExample < Nadeshiko::Application
         end
         grid2  :id => :movies_grid2,
               :columns => [:id, :title]
-        
       end
     end
 
@@ -82,9 +79,9 @@ class CrudExample < Nadeshiko::Application
 #      create_new_movie if key.to_i == 13
 #    end
 
-    get_element(:show_dialog_button).click do
-      show_demo_dialog
-    end
+#    get_element(:show_dialog_button).click do
+#      show_demo_dialog
+#    end
 
   end
 
@@ -119,31 +116,31 @@ class CrudExample < Nadeshiko::Application
 
 
 
-  def show_demo_dialog
-    dialog = Nadeshiko::Dialog.new :app => self
+#  def show_demo_dialog
+#    dialog = Nadeshiko::Dialog.new :app => self
 
-    dialog.show do
-      table :style => {:width => '100%'} do
-        ['Title','Year','Some other field'].each do |x|
-          tr do
-            td :text => x
-            td do
-              input
-            end
-          end
-        end
-      end
-      div :style => {'margin' => '10px','float' => 'right'} do
-        button :text => 'Close', :id => :close_dialog_button
-        button :text => 'Create'
-      end
-    end
+#    dialog.show do
+#      table :style => {:width => '100%'} do
+#        ['Title','Year','Some other field'].each do |x|
+#          tr do
+#            td :text => x
+#            td do
+#              input
+#            end
+#          end
+#        end
+#      end
+#      div :style => {'margin' => '10px','float' => 'right'} do
+#        button :text => 'Close', :id => :close_dialog_button
+#        button :text => 'Create'
+#      end
+#    end
 
-    get_element(:close_dialog_button).click do
-      dialog.remove_element
-    end
+#    get_element(:close_dialog_button).click do
+#      dialog.remove_element
+#    end
 
-  end
+#  end
 
 end
 
