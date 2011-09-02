@@ -6,14 +6,19 @@ class IssueTracker < Nadeshiko::Application
     style do
       {
         '#list_of_issues' => {
-          :height => '90%'
+          :height => '90%',
+          :width => '400px',
+          #:border => '1px solid gray'
+          :background => '#efe',
+          'border-radius' => '3px',
         },
         '#footer' => {
           :margin => :auto,
           :width => '200px'
         },
         '.issue' => {
-          :width => '400px',
+          #:width => '400px',
+          :width => '100%',
           'border-radius' => '3px',
           :border => '1px solid gray',
           :background => '#eee'
@@ -27,9 +32,14 @@ class IssueTracker < Nadeshiko::Application
       }
     end
 
-    input :id => :new_issue_text_field
-    button :id => :add_new_issue_button, :text => 'Add New Issue'
+    h1 :text => 'Non-pivotal tracker (TM)'
 
+    div do
+      input :id => :new_issue_text_field
+      button :id => :add_new_issue_button, :text => 'Add New Issue'
+    end
+
+    span :text => 'Icebox'
     div :id => :list_of_issues do
       Issue.all.each do |issue|
         add_issue_to_list issue
@@ -117,7 +127,10 @@ class IssueTracker < Nadeshiko::Application
 
   def add_issue_to_list issue
     issue_div = div :id => "issue_#{issue.id}", :record => issue, :class => 'issue' do
-      span :text => issue.description, :class => 'issue-description'
+      
+      story_description = "#{issue.id}: #{issue.description}"
+      
+      span :text => story_description, :class => 'issue-description'
       x = div :text => 'x', :class => 'issue-buttons'
       x.click do
         issue.destroy
