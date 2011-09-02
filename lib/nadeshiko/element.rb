@@ -4,7 +4,7 @@ module Nadeshiko
   class Element
 
     attr_accessor :app
-    attr_accessor :parent_id, :id,:element_type
+    attr_accessor :parent_id, :id,:element_type,:options
 
     include Dsl
     include Jquery
