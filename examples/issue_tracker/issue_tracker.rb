@@ -29,6 +29,10 @@ class IssueTracker < Nadeshiko::Application
       end
     end
 
+    Nadeshiko::Notifier.notify_on :issue_destroyed do |removed_id|
+      get_element(removed_id).remove
+    end
+
     get_element(:add_new_issue_button).click do
       get_element(:new_issue_text_field).val do |value|
         get_element(:new_issue_text_field).val ''
@@ -92,7 +96,8 @@ class IssueTracker < Nadeshiko::Application
       x = button :text => 'x'
       x.click do
         issue.destroy
-        issue_div.remove
+        Nadeshiko::Notifier.trigger :issue_destroyed, issue_div.id
+        #issue_div.remove
       end
     end
   end
