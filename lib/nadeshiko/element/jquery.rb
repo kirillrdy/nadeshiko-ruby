@@ -23,6 +23,14 @@ module Nadeshiko
       end
     end
 
+    def insert_after object
+      _call_method_with_params :insertAfter, "##{object.id}"
+    end
+
+    def insert_before object
+      _call_method_with_params :insertBefore, "##{object.id}"
+    end
+
     def text val
       string =<<-EOL
         $('##{@id}').text('#{val}')
