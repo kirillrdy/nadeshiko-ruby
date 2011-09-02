@@ -3,6 +3,30 @@ require_relative 'boot'
 class IssueTracker < Nadeshiko::Application
   def onstart
 
+    style do
+      {
+        '#list_of_issues' => {
+          :height => '90%'
+        },
+        '#footer' => {
+          :margin => :auto,
+          :width => '200px'
+        },
+        '.issue' => {
+          :width => '400px',
+          'border-radius' => '3px',
+          :border => '1px solid gray',
+          :background => '#eee'
+        },
+        '.issue-description' => {
+          :width => '330px'
+        },
+        '.issue-buttons' => {
+          'float' => 'right'
+        }
+      }
+    end
+
     input :id => :new_issue_text_field
     button :id => :add_new_issue_button, :text => 'Add New Issue'
 
@@ -12,6 +36,7 @@ class IssueTracker < Nadeshiko::Application
       end
     end.sortable
 
+    div :id => :footer, :text => "Powered by Nadeshiko #{Nadeshiko::VERSION}"
 
     Nadeshiko::Notifier.notify_on :issue_create do |issue|
       add_elements_to(:list_of_issues) do
@@ -91,9 +116,9 @@ class IssueTracker < Nadeshiko::Application
   end
 
   def add_issue_to_list issue
-    issue_div = div :id => "issue_#{issue.id}", :record => issue do
-      span :text => issue.description
-      x = button :text => 'x'
+    issue_div = div :id => "issue_#{issue.id}", :record => issue, :class => 'issue' do
+      span :text => issue.description, :class => 'issue-description'
+      x = div :text => 'x', :class => 'issue-buttons'
       x.click do
         issue.destroy
         Nadeshiko::Notifier.trigger :issue_destroyed, issue_div.id
