@@ -1,5 +1,5 @@
 class Nadeshiko::DomOnSockets
-  attr_accessor :_batch_commands,:callbacks
+  attr_accessor :_batch_commands,:callbacks, :web_socket
 
   def initialize web_socket
 
