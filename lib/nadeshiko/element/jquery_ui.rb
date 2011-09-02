@@ -13,4 +13,14 @@ module Nadeshiko::JqueryUi
     @app.dom_on_sockets.execute string
   end
 
+  def sortupdate &block
+    @app.dom_on_sockets.add_callback_block :sortupdate,@id, &block
+    string =<<-EOL
+      $('##{@id}').bind('sortupdate',function(event,ui){
+        ws.send('sortupdate,#{@id},'+ui.item.attr("id"))
+      })
+    EOL
+    @app.dom_on_sockets.execute string
+  end
+
 end
