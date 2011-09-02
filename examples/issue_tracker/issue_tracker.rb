@@ -6,7 +6,7 @@ class IssueTracker < Nadeshiko::Application
     style do
       {
         '#list_of_issues' => {
-          :height => '90%',
+          :height => '80%',
           :width => '400px',
           #:border => '1px solid gray'
           :background => '#efe',
