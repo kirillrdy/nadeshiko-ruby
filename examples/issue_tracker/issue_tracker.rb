@@ -1,5 +1,4 @@
 require_relative 'boot'
-
 class IssueTracker < Nadeshiko::Application
   def onstart
 
@@ -33,7 +32,6 @@ class IssueTracker < Nadeshiko::Application
     end
 
     h1 :text => 'Non-pivotal tracker (TM)'
-
     div do
       input :id => :new_issue_text_field
       button :id => :add_new_issue_button, :text => 'Add New Issue'
