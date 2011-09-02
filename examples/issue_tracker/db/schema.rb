@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(:version => 20110901055557) do
   create_table "issues", :force => true do |t|
     t.string  "description"
     t.boolean "finished"
+    t.integer "sort_order"
   end
 
 end
