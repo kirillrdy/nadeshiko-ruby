@@ -106,13 +106,14 @@ class IssueTracker < Nadeshiko::Application
       get_element(removed_id).remove
     end
 
-    get_element(:add_new_issue_button).click do
-      get_element(:new_issue_text_field).val do |value|
-        get_element(:new_issue_text_field).val ''
-        issue = Issue.new :description => value
-        issue.save!
-        Nadeshiko::Notifier.trigger :issue_create, issue
+    get_element(:new_issue_text_field).keydown do |key|
+      if key.to_i == 13
+        create_new_issue
       end
+    end
+
+    get_element(:add_new_issue_button).click do
+      create_new_issue
     end
 
 
@@ -162,6 +163,15 @@ class IssueTracker < Nadeshiko::Application
         end
       end
 
+    end
+  end
+
+  def create_new_issue
+    get_element(:new_issue_text_field).val do |value|
+      get_element(:new_issue_text_field).val ''
+      issue = Issue.new :description => value
+      issue.save!
+      Nadeshiko::Notifier.trigger :issue_create, issue
     end
   end
 
