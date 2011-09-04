@@ -168,6 +168,7 @@ class IssueTracker < Nadeshiko::Application
 
   def create_new_issue
     get_element(:new_issue_text_field).val do |value|
+      return if value == ''
       get_element(:new_issue_text_field).val ''
       issue = Issue.new :description => value
       issue.save!
