@@ -66,7 +66,7 @@ class CrudExample < Nadeshiko::Application
     button = get_element :add_new_record
     textfield = get_element :textfield
 
-    Nadeshiko::Notifier.notify_on 'item_add' do |record|
+    Nadeshiko::Notifier.bind 'item_add' do |record|
       add_movie_to_table record
     end
 

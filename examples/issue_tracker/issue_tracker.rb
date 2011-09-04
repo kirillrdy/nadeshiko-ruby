@@ -82,7 +82,7 @@ class IssueTracker < Nadeshiko::Application
 
 
 
-    Nadeshiko::Notifier.notify_on :issue_create do |issue|
+    Nadeshiko::Notifier.bind :issue_create do |issue|
       batch_messages do
         prepend_to :list_of_issues do
           add_issue_to_list issue
@@ -90,7 +90,7 @@ class IssueTracker < Nadeshiko::Application
       end
     end
 
-    Nadeshiko::Notifier.notify_on :issue_moved do |moved_issue_element_id,target_id,special_case|
+    Nadeshiko::Notifier.bind :issue_moved do |moved_issue_element_id,target_id,special_case|
       moved_element = get_element(moved_issue_element_id)
       target = get_element(target_id)
       batch_messages do
@@ -102,7 +102,7 @@ class IssueTracker < Nadeshiko::Application
       end
     end
 
-    Nadeshiko::Notifier.notify_on :issue_destroyed do |removed_id|
+    Nadeshiko::Notifier.bind :issue_destroyed do |removed_id|
       get_element(removed_id).remove
     end
 

@@ -31,17 +31,17 @@ class OrderedList < Nadeshiko::Application
 
 
     # subscribe to notifications
-    Nadeshiko::Notifier.notify_on :item_moved_to_top do |moved_element_id,next_element_id|
+    Nadeshiko::Notifier.bind :item_moved_to_top do |moved_element_id,next_element_id|
       e = get_element(moved_element_id)
       e.insert_before(get_element(next_element_id))
     end
 
-    Nadeshiko::Notifier.notify_on :item_moved do |moved_element_id,prev_element_id|
+    Nadeshiko::Notifier.bind :item_moved do |moved_element_id,prev_element_id|
       e = get_element(moved_element_id)
       e.insert_after(get_element(prev_element_id))
     end
 
-    Nadeshiko::Notifier.notify_on :item_added do |value|
+    Nadeshiko::Notifier.bind :item_added do |value|
       add_elements_to(:sortable) do
         li :id => 'new_item_' + self.class.number_runner.to_s do
           span :text => value
