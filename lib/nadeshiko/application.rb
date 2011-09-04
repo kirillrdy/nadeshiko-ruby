@@ -10,6 +10,10 @@ module Nadeshiko
       @app = self
 
       super({:app => self})
+
+      @_nodes_stack << self
+      @_append_method << :append
+
       @id = nil
 
       # Add self ( in this case to body )
@@ -52,11 +56,20 @@ module Nadeshiko
       @elements[element.id.to_s] = element
     end
 
-
-    def add_elements_to element_id, &block
+    def append_to element_id, &block
       @_nodes_stack << get_element(element_id)
-      self.instance_eval &block
+      @_append_method << :append
+      block.call
       @_nodes_stack.pop
+      @_nodes_stack.pop
+    end
+
+    def prepend_to element_id, &block
+      @_nodes_stack << get_element(element_id)
+      @_append_method << :prepend
+      block.call
+      @_nodes_stack.pop
+      @_append_method.pop
     end
 
   end

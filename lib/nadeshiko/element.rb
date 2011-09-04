@@ -11,7 +11,8 @@ module Nadeshiko
     include JqueryUi
 
     def initialize(options = {})
-      @_nodes_stack = [self]
+      @_nodes_stack = []
+      @_append_method = []
 
       default_options = {
         :app => options[:app],
