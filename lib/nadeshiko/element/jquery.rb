@@ -60,6 +60,17 @@ module Nadeshiko
       @app.dom_on_sockets.execute string
     end
 
+    def keydown &block
+      @app.dom_on_sockets.add_callback_block :keydown,@id, &block
+      string =<<-EOL
+        $('##{@id}').keydown(function(event){
+          var array = ['keydown','#{@id}',event.which]
+          ws.send(JSON.stringify(array))
+        })
+      EOL
+      @app.dom_on_sockets.execute string
+    end
+
     # Gets or sets value of element
     def val value=nil, &block
       if value
