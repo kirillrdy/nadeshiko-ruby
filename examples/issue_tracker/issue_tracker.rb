@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require_relative 'boot'
 class IssueTracker < Nadeshiko::Application
 
