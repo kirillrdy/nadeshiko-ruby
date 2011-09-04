@@ -12,6 +12,17 @@ module Nadeshiko
       end
     end
 
+    def prepend object
+      case object
+        when String
+          _prepend_string object
+        when Element
+          _prepend_element object
+        else
+          raise "Can not add non supported object"
+      end
+    end
+
     def after object
       case object
         when String
@@ -134,6 +145,14 @@ module Nadeshiko
 
     def _append_string string_to_append
       _call_method_with_params :append, string_to_append
+    end
+
+    def _prepend_element element
+      _prepend_string element.to_html
+    end
+
+    def _prepend_string string_to_prepend
+      _call_method_with_params :prepend, string_to_prepend
     end
 
     def _after_element element
