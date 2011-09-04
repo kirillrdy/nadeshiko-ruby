@@ -6,7 +6,7 @@ module Nadeshiko
 
       html_based_elements = [:h1,:div,:input,:button,
         :table,:tr,:th,:td,:thead,:tbody,:h4,:span,
-        :ul,:li]
+        :ul,:li,:link]
       magic_based_elements = [:grid2]
 
       super unless (html_based_elements + magic_based_elements).include? element_type
