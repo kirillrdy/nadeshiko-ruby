@@ -53,7 +53,8 @@ class Calendar < Nadeshiko::Application
     get_element(:month_name).text("#{date_to_display.year} #{month_name}")
 
     get_element(:calendar_body).empty
-    add_elements_to(:calendar_body) do
+
+    append_to :calendar_body do
       table do
         render_header_for_monthly_view
         tbody do
