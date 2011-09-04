@@ -84,7 +84,7 @@ class IssueTracker < Nadeshiko::Application
 
     Nadeshiko::Notifier.notify_on :issue_create do |issue|
       batch_messages do
-        add_elements_to(:list_of_issues) do
+        prepend_to :list_of_issues do
           add_issue_to_list issue
         end
       end
