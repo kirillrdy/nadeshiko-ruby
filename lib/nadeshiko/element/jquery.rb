@@ -96,6 +96,11 @@ module Nadeshiko
       @app.dom_on_sockets.execute string
     end
 
+    def remove_class class_name
+      string="$('##{@id}').removeClass(#{class_name.to_s.inspect})"
+      @app.dom_on_sockets.execute string
+    end
+
     def bind event, &block
       @app.dom_on_sockets.add_callback_block event, @id, &block
       string =<<-EOL
