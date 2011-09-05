@@ -24,4 +24,8 @@ module Nadeshiko::JqueryUi
     @app.dom_on_sockets.execute string
   end
 
+  def effect args = ''
+    _call_method_with_params :effect, args
+  end
+
 end
