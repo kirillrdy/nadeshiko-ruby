@@ -4,8 +4,8 @@ module Styling
 
     style do
       {
-        'issue-description' => {
-          :width => '300px'
+        '.issue-description' => {
+          :width => '260px'
         },
         '.right' => {
           :float => 'right'
