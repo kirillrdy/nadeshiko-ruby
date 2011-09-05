@@ -24,8 +24,16 @@ module Nadeshiko::JqueryUi
     @app.dom_on_sockets.execute string
   end
 
-  def effect args = ''
-    _call_method_with_params :effect, args
+
+  #OLD effects
+#  def effect args = ''
+#    _call_method_with_params :effect, args
+#  end
+
+  def effect effect,options = {}, speed = 1000
+    selector = @id == nil ? 'body' : "##{@id}"
+    string = "$('#{selector}').effect(#{effect.inspect},{},#{speed})"
+    @app.dom_on_sockets.execute string
   end
 
 end

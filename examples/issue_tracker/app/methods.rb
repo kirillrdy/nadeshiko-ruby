@@ -71,6 +71,6 @@ module Methods
         Nadeshiko::Notifier.trigger :issue_destroyed, issue_div.id
       end
     end
-    issue_div.effect "highlight"
+    issue_div.effect "highlight",{},3000
   end
 end

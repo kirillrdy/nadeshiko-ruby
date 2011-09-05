@@ -13,10 +13,10 @@ module Notifications
       target = get_element(target_id)
       batch_messages do
         if special_case
-          moved_element.effect "highlight"
+          moved_element.effect "highlight",{},3000
           moved_element.insert_before(target)
         else
-          moved_element.effect "highlight"
+          moved_element.effect "highlight",{},3000
           moved_element.insert_after(target)
         end
       end
