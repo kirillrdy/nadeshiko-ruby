@@ -13,7 +13,7 @@ module Styling
         '.left' => {
           :float => 'left'
         },
-        '#list_of_issues' => {
+        '.list-of-issues' => {
           background:  '#eee',
           height: '800px'
         },
@@ -23,35 +23,5 @@ module Styling
 
       }
     end
-
-#    style do
-#      {
-#        '#list_of_issues' => {
-#          :height => '80%',
-#          :width => '400px',
-#          #:border => '1px solid gray'
-#          :background => '#efe',
-#          'border-radius' => '3px',
-#        },
-#        '#footer' => {
-#          :margin => :auto,
-#          :width => '200px'
-#        },
-#        '.issue' => {
-#          #:width => '400px',
-#          :width => '100%',
-#          'border-radius' => '3px',
-#          :border => '1px solid gray',
-#          :background => '#eee'
-#        },
-#        '.issue-description' => {
-#          :width => '330px'
-#        },
-#        '.issue-buttons' => {
-#          'float' => 'right'
-#        }
-#      }
-#    end
-
   end
 end
