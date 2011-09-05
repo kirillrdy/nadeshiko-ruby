@@ -15,6 +15,7 @@ module EventHandlers
 
 
     get_element(:list_of_issues).sortupdate do |moved_element_id|
+      get_element(moved_element_id).effect "highlight",{},3000
       batch_messages do
         move_element moved_element_id
       end
