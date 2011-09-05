@@ -54,7 +54,6 @@ class Nadeshiko::DomOnSockets
 
 
   def clear_callbacks action,id
-    puts "clearing callbacls for #{action} #{id}"
     @callbacks[action] ||= {}
     @callbacks[action][id] = []
   end
@@ -65,7 +64,6 @@ class Nadeshiko::DomOnSockets
     #action,id, *args = message.split ',',-1
 
     @callbacks[action.to_sym][id].each{|x|
-      puts "calling #{action} #{id} callback"
       x.call *args
     }
 
