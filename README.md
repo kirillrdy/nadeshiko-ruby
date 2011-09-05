@@ -29,8 +29,6 @@ Your basic hello world
         Nadeshiko::Server.run HelloWord
         # end of file
         
-        
-        nadeshiko-http-server.rb &
         ruby hello_world.rb
 
 In your browser
