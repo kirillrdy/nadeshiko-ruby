@@ -64,11 +64,16 @@ module Methods
       story_description = "#{issue.id}: #{issue.description}"
 
       div :text => story_description, :class => 'issue-description left'
-      div :text => 'Finish', :class => 'btn success right'
       x = div :text => 'Delete', :class => 'btn danger right'
       x.click do
         issue.destroy
         Nadeshiko::Notifier.trigger :issue_destroyed, issue_div.id
+      end
+      x = div :text => 'Start', :class => 'btn info right'
+      x.click do
+        x.text "Finish"
+        x.remove_class "info"
+        x.add_class "success"
       end
     end
     issue_div.effect "highlight",{},3000
