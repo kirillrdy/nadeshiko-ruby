@@ -10,13 +10,14 @@ module Notifications
 
     Nadeshiko::Notifier.bind :issue_moved do |moved_issue_element_id,target_id,special_case|
       moved_element = get_element(moved_issue_element_id)
-      moved_element.effect "highlight",{},3000
       target = get_element(target_id)
       batch_messages do
         if special_case
           moved_element.insert_before(target)
+          moved_element.effect "highlight",{},3000
         else
           moved_element.insert_after(target)
+          moved_element.effect "highlight",{},3000
         end
       end
     end
