@@ -25,15 +25,13 @@ module Methods
       issue.save!
 
       # Notification thingy
-      moved_element.index do |index|
-        if index.to_i == 0
-          moved_element.next do |next_id|
-            Nadeshiko::Notifier.trigger :issue_moved, moved_element_id,next_id, true
-          end
-        else
-          moved_element.prev do |prev_id|
-            Nadeshiko::Notifier.trigger :issue_moved, moved_element_id,prev_id, false
-          end
+      if index.to_i == 0
+        moved_element.next do |next_id|
+          Nadeshiko::Notifier.trigger :issue_moved, moved_element_id,next_id, true
+        end
+      else
+        moved_element.prev do |prev_id|
+          Nadeshiko::Notifier.trigger :issue_moved, moved_element_id,prev_id, false
         end
       end
 
