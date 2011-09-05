@@ -15,7 +15,7 @@ module Layout
       div :class => 'span8 column' do
         h4 :text => 'Search'
         input :id => :search_issue_text_field
-        button :id => :search_issue_button, :text => 'Search', :class => 'btn'
+        button :id => :search_issue_button, :text => 'Search', :class => 'btn small'
         div :class => 'list-of-issues'
       end
       div :class => 'span8 column' do
