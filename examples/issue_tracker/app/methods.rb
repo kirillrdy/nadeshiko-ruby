@@ -44,7 +44,12 @@ module Methods
     get_element(:new_issue_text_field).val do |value|
       if value != ''
         get_element(:new_issue_text_field).val ''
-        issue = Issue.new :description => value
+
+        Issue.transaction do
+          Issue.all.each{|x| x.sort_order +=1 ; x.save! }
+        end
+
+        issue = Issue.new :description => value, :sort_order => 0
         issue.save!
         Nadeshiko::Notifier.trigger :issue_create, issue
       end
