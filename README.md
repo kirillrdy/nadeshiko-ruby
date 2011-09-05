@@ -22,7 +22,7 @@ Your basic hello world
         require 'nadeshiko'
         class HelloWord < Nadeshiko::Application
           def onstart
-            div :text => 'Hello World'
+            h1 :text => 'Hello World'
           end
         end
         
