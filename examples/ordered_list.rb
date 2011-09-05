@@ -42,7 +42,7 @@ class OrderedList < Nadeshiko::Application
     end
 
     Nadeshiko::Notifier.bind :item_added do |value|
-      add_elements_to(:sortable) do
+      append_to(:sortable) do
         li :id => 'new_item_' + self.class.number_runner.to_s do
           span :text => value
         end
