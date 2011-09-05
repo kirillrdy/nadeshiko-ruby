@@ -15,7 +15,9 @@ module Styling
         },
         '.list-of-issues' => {
           background:  '#eee',
-          height: '800px'
+          height: '800px',
+          overflow: 'auto',
+          'border-radius' => '6px'
         },
         '.well' => {
           'margin-bottom' =>  '1px'
