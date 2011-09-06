@@ -4,25 +4,23 @@ module Nadeshiko
     # i dont like method missing
     def method_missing element_type,*args, &block
 
-      html_based_elements = [:h1,:div,:input,:button,
-        :table,:tr,:th,:td,:thead,:tbody,:h4,:span,
-        :ul,:li,:link]
-      magic_based_elements = [:grid2]
-
-      super unless (html_based_elements + magic_based_elements).include? element_type
-
       options = args.first || {}
-
       options.merge!({:app => app, :element_type => element_type})
 
-      #TODO make this dynamic
-      case element_type
-        when :grid2
-          new_element = Grid2.new(options)
-        else
-          new_element = Element.new(options)
-      end
+      html_based_elements = [:h1,:h2,:h3,:h4,:div,:input,:button,
+        :table,:tr,:th,:td,:thead,:tbody,:span,
+        :ul,:li,:link]
 
+      if html_based_elements.include? element_type
+        new_element = Element.new options
+      else
+        begin
+          element_class = Kernel.const_get element_type.capitalize.to_sym
+        rescue NameError => e
+          super
+        end
+        new_element = element_class.new(options)
+      end
 
       @_nodes_stack.last.send @_append_method.last, new_element
 
