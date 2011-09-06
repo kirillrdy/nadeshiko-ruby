@@ -36,6 +36,9 @@ module Nadeshiko
       Digest::SHA1.hexdigest(rand.to_s)[0..6]
     end
 
+    def get_element element_id
+      @app.get_element element_id
+    end
 
     # Will batch all messages
     #
