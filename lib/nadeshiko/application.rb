@@ -54,7 +54,7 @@ module Nadeshiko
       @_append_method << :append
       block.call
       @_nodes_stack.pop
-      @_nodes_stack.pop
+      @_append_method.pop
     end
 
     def prepend_to element_id, &block
