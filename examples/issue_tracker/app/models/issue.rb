@@ -1,4 +1,4 @@
-module IssueTracker
+class IssueTracker < Nadeshiko::Application
 class Issue < ActiveRecord::Base
   default_scope order(:sort_order)
 
@@ -17,4 +17,4 @@ class Issue < ActiveRecord::Base
   end
 
 end
-module IssueTracker
+end

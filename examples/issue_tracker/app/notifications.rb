@@ -1,4 +1,4 @@
-module IssueTracker
+class IssueTracker < Nadeshiko::Application
 module Notifications
   def setup_notificaitons
     Nadeshiko::Notifier.bind :issue_create do |issue|

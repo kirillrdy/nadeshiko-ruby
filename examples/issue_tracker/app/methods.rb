@@ -1,4 +1,4 @@
-module IssueTracker
+class IssueTracker < Nadeshiko::Application
 module Methods
   def move_element moved_element_id
 

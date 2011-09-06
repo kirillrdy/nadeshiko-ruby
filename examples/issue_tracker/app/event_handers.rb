@@ -1,4 +1,4 @@
-module IssueTracker
+class IssueTracker < Nadeshiko::Application
 module EventHandlers
   def issue_events
 

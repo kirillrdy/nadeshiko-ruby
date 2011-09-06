@@ -1,4 +1,4 @@
-module IssueTracker
+class IssueTracker < Nadeshiko::Application
 module Layout
 
   def initial_layout

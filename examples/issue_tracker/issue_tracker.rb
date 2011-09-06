@@ -21,6 +21,10 @@ class IssueTracker < Nadeshiko::Application
     initial_layout
     setup_notificaitons
     issue_events
+
+    list :id => :list1
+
+
   end
 
 end
