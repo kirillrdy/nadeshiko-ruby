@@ -1,3 +1,4 @@
+module IssueTracker
 module EventHandlers
   def issue_events
 
@@ -21,4 +22,5 @@ module EventHandlers
     end
   end
 
+end
 end

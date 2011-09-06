@@ -1,6 +1,12 @@
 #!/usr/bin/env ruby
-
 require_relative 'boot'
+
+class Nadeshiko::List < Nadeshiko::Element
+  def setup
+    div :class => 'nadeshiko-list'
+  end
+end
+
 class IssueTracker < Nadeshiko::Application
 
   include Styling

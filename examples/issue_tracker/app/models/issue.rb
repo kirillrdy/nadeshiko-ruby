@@ -1,3 +1,4 @@
+module IssueTracker
 class Issue < ActiveRecord::Base
   default_scope order(:sort_order)
 
@@ -16,3 +17,4 @@ class Issue < ActiveRecord::Base
   end
 
 end
+module IssueTracker

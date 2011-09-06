@@ -1,3 +1,4 @@
+module IssueTracker
 module Layout
 
   def initial_layout
@@ -37,4 +38,5 @@ module Layout
     end.sortable
   end
 
+end
 end

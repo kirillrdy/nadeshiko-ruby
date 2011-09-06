@@ -1,3 +1,4 @@
+module IssueTracker
 module Notifications
   def setup_notificaitons
     Nadeshiko::Notifier.bind :issue_create do |issue|
@@ -26,4 +27,5 @@ module Notifications
       get_element(removed_id).remove
     end
   end
+end
 end

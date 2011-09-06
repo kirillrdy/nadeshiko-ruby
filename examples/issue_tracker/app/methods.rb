@@ -1,3 +1,4 @@
+module IssueTracker
 module Methods
   def move_element moved_element_id
 
@@ -76,4 +77,5 @@ module Methods
     end
     issue_div.effect "highlight",{},3000
   end
+end
 end
