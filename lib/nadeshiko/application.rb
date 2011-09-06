@@ -10,14 +10,7 @@ module Nadeshiko
       @app = self
 
       super({:app => self})
-
-      @_nodes_stack << self
-      @_append_method << :append
-
       @id = nil
-
-      # Add self ( in this case to body )
-      #add self
     end
 
     def style options = {}, &block
