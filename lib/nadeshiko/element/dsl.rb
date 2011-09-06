@@ -15,11 +15,12 @@ module Nadeshiko
         new_element = Element.new options
       else
         begin
-          element_class = Kernel.const_get element_type.capitalize.to_sym
+          const_sym = element_type.capitalize.to_sym
+          element_class = Nadeshiko.const_get const_sym
+          new_element = element_class.new options
         rescue NameError => e
           super
         end
-        new_element = element_class.new(options)
       end
 
       @_nodes_stack.last.send @_append_method.last, new_element
