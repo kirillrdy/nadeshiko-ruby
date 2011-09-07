@@ -37,7 +37,7 @@ module Layout
     order_scope ||= OrderScope.create :name => 'icebox', :data => []
 
     icebox.item_renderer do |record|
-      div  :class => "well" do
+      item = div  :class => "well" do
         story_description = "#{record.id}: #{record.description}"
         div :text => story_description, :class => 'issue-description left'
         x = div :text => 'Delete', :class => 'btn danger right'
@@ -45,18 +45,21 @@ module Layout
           icebox.remove_record record
         end
       end
+      item.effect "highlight"
+      item
     end
 
     icebox.onremove do |record|
       record.destroy
     end
 
-    icebox.onsortupdate do
-      puts "new order #{list.records_order}"
+    icebox.onsortupdate do |moved_element|
+      moved_element.effect 'highlight' if moved_element
       order_scope.data = icebox.records_order
       order_scope.save!
     end
 
+    # we use load_records instead of append_record, to skip_sort_update callback
     icebox.load_records Issue.load_in_order(order_scope.data)
 
   end
