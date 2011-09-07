@@ -88,7 +88,7 @@ class Nadeshiko::List < Nadeshiko::Element
       element.insert_after @elements[new_index-1]
     end
     
-    @onsortupdate.call if @onsortupdate
+    @onsortupdate.call element if @onsortupdate
     
   end
 
