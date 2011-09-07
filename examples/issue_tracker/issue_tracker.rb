@@ -9,6 +9,9 @@ class Nadeshiko::List < Nadeshiko::Element
     super
     @element_type = :div
     @records = []
+    @elements = []
+    @elements_hash = {}
+    @records_hash = {}
   end
 
   def item_renderer &block
@@ -34,10 +37,10 @@ class Nadeshiko::List < Nadeshiko::Element
 
   def append_record_to_list record
     @records << record
-    @elements_hash ||= {}
-    @records_hash ||= {}
+
     @app.append_to(@id) do
       new_element = @item_renederer.call(record)
+      @elements << new_element
       @elements_hash[record.id] = new_element
       @records_hash[new_element.id] = record
     end
@@ -68,9 +71,25 @@ class Nadeshiko::List < Nadeshiko::Element
     @onremove.call record if @onremove
     @records.delete record
     @records_hash.delete record
-    #TODO
-    #elements_hash delete
+    @elements.delete @elements_hash[record.id]
     @elements_hash[record.id].remove
+    @onsortupdate.call if @onsortupdate
+  end
+
+  def move_record_by_index old_index,new_index
+    record = @records[old_index]
+    @records.delete record
+    @records.insert new_index,record
+
+    element = @elements[old_index]
+    @elements.delete element
+    @elements.insert new_index,element
+
+    if new_index == 0
+      element.insert_before @elements[1]
+    else
+      element.insert_after @elements[new_index-1]
+    end
     
     @onsortupdate.call if @onsortupdate
     
@@ -81,17 +100,13 @@ class Nadeshiko::List < Nadeshiko::Element
     if @options[:sortable]
       sortable
       sortupdate do |moved_item_id|
-        moved_item_id
-        get_element moved_item_id
-        get_element(moved_item_id).index do |index|
-          @records.delete @records_hash[moved_item_id]
-          @records.insert(index,@records_hash[moved_item_id])
-          puts records_order.inspect
-          @onsortupdate.call if @onsortupdate
+        moved_item = get_element moved_item_id
+        moved_item.index do |index|
+          old_index = @elements.index moved_item
+          Nadeshiko::Notifier.trigger :record_moved,old_index,index
         end
       end
     end
-
 
     if @options[:notify]
       #TODO make work with multiple lists
@@ -101,6 +116,10 @@ class Nadeshiko::List < Nadeshiko::Element
 
       Nadeshiko::Notifier.bind :record_removed do |record|
         remove_from_list record
+      end
+
+      Nadeshiko::Notifier.bind :record_moved do |old_index,new_index|
+        move_record_by_index old_index,new_index
       end
 
     end
