@@ -3,8 +3,13 @@ class CreateIssues < ActiveRecord::Migration
     create_table :issues do |t|
       t.string :description
       t.boolean :finished
-      t.integer :sort_order
     end
+
+    create_table :order_scopes do |t|
+      t.string :name
+      t.string :data
+    end
+
   end
 
   def self.down
