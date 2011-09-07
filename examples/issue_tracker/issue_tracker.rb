@@ -68,11 +68,11 @@ class Nadeshiko::List < Nadeshiko::Element
   end
 
   def remove_from_list record
-    @onremove.call record if @onremove
     @records.delete record
     @records_hash.delete record
     @elements.delete @elements_hash[record.id]
     @elements_hash[record.id].remove
+    @onremove.call record if @onremove
     @onsortupdate.call if @onsortupdate
   end
 
@@ -96,7 +96,6 @@ class Nadeshiko::List < Nadeshiko::Element
   end
 
   def setup
-
     if @options[:sortable]
       sortable
       sortupdate do |moved_item_id|
