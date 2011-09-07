@@ -17,12 +17,8 @@ class Nadeshiko::List < Nadeshiko::Element
 
   def load_records records
     records.each do |record|
-      append_record :skip_sort_update => true
+      append_record record, :skip_sort_update => true
     end
-  end
-
-  def load_records records
-    #add record
   end
 
   def append_record record, options = {}
