@@ -26,5 +26,8 @@ libs = [
 
 libs.each{|x| require_relative 'nadeshiko/'+ x}
 
-elements = ['button','grid','dialog','grid2']
+elements = ['list',
+  #'button','grid','dialog','grid2'
+]
+
 elements.each{|x| require_relative 'nadeshiko/elements/'+x }
