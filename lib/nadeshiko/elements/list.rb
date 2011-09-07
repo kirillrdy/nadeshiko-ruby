@@ -27,9 +27,12 @@ class Nadeshiko::List < Nadeshiko::Element
     else
       append_record_to_list record
     end
-
-    @onsortupdate.call if @onsortupdate && @options[:skip_sort_update] != true
-
+    
+    #TODO fix, this is the only time this callback is triggered where it
+    # doesnt pass newly created element to the event handler
+    # fix, split into two different events
+    # or pass it newly created element
+    @onsortupdate.call if @onsortupdate && options[:skip_sort_update] != true
   end
 
   def append_record_to_list record
