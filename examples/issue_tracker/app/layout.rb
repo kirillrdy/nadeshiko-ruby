@@ -22,7 +22,6 @@ module Layout
       div :class => 'span8 column' do
         h4 :text => 'My Work'
         span :text => 'other things here'
-        #icebox_panel
         div  :class => 'list-of-issues'
       end
     end
@@ -31,11 +30,35 @@ module Layout
   end
 
   def icebox_panel
-    div :id => :list_of_issues, :class => 'list-of-issues' do
-      Issue.all.each do |issue|
-        add_issue_to_list issue
+    list :id => :icebox, :class => 'list-of-issues' , :notify => true , :sortable => true
+
+    icebox = get_element :icebox
+    order_scope = OrderScope.where(:name => 'icebox').first
+    order_scope ||= OrderScope.create :name => 'icebox', :data => []
+
+    icebox.item_renderer do |record|
+      div  :class => "well" do
+        story_description = "#{record.id}: #{record.description}"
+        div :text => story_description, :class => 'issue-description left'
+        x = div :text => 'Delete', :class => 'btn danger right'
+        x.click do
+          icebox.remove_record record
+        end
       end
-    end.sortable
+    end
+
+    icebox.onremove do |record|
+      record.destroy
+    end
+
+    icebox.onsortupdate do
+      puts "new order #{list.records_order}"
+      order_scope.data = icebox.records_order
+      order_scope.save!
+    end
+
+    icebox.load_records Issue.load_in_order(order_scope.data)
+
   end
 
 end
