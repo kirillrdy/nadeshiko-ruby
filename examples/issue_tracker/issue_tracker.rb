@@ -59,7 +59,7 @@ class Nadeshiko::List < Nadeshiko::Element
     @onsortupdate = block
   end
 
-  def remove record
+  def remove_record record
     if @options[:notify]
       Nadeshiko::Notifier.trigger :record_removed, record
     else
@@ -96,6 +96,9 @@ class Nadeshiko::List < Nadeshiko::Element
   end
 
   def setup
+
+    super
+
     if @options[:sortable]
       sortable
       sortupdate do |moved_item_id|
@@ -117,8 +120,10 @@ class Nadeshiko::List < Nadeshiko::Element
         remove_from_list record
       end
 
-      Nadeshiko::Notifier.bind :record_moved do |old_index,new_index|
-        move_record_by_index old_index,new_index
+      if @options[:sortable]
+        Nadeshiko::Notifier.bind :record_moved do |old_index,new_index|
+          move_record_by_index old_index,new_index
+        end
       end
 
     end
@@ -132,59 +137,12 @@ class IssueTracker < Nadeshiko::Application
   include Styling
   include EventHandlers
   include Layout
-  include Notifications
   include Methods
 
-
   def onstart
-
-    order_scope = OrderScope.where(:name => 'icebox').first
-    order_scope ||= OrderScope.create :name => 'icebox', :data => []
-
-
-    input :id => :textfield
-    button(:class => 'btn',:text => 'add').click do
-      get_element(:textfield).val do |value|
-        i = Issue.new :description => value
-        i.save!
-        list = get_element(:list1)
-        list.append_record i, :notify => true
-      end
-    end
-
-    list :id => :list1 ,:sortable => true, :notify => true
-
-    list = get_element(:list1)
-
-
-    list.item_renderer do |record|
-      div  :class => "well" do
-        story_description = "#{record.id}: #{record.description}"
-        div :text => story_description, :class => 'issue-description left'
-        x = div :text => 'Delete', :class => 'btn danger right'
-        x.click do
-          list.remove record
-        end
-      end
-    end
-
-
-    list.onremove do |record|
-      record.destroy
-    end
-
-    list.onsortupdate do
-      order_scope.data = list.records_order
-      order_scope.save!
-    end
-
-    list.load_records Issue.load_in_order(order_scope.data)
-
     issues_styling
-#    initial_layout
-#    setup_notificaitons
-#    issue_events
-
+    initial_layout
+    issue_events
   end
 
 end
