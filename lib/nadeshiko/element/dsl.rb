@@ -8,7 +8,7 @@ module Nadeshiko
       options.merge!({:app => app, :element_type => element_type})
 
       html_based_elements = [:h1,:h2,:h3,:h4,:div,:input,:button,
-        :table,:tr,:th,:td,:thead,:tbody,:span,
+        :table,:tr,:th,:td,:thead,:tbody,:span,:a,
         :ul,:li,:link]
 
       if html_based_elements.include? element_type
