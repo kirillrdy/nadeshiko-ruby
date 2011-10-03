@@ -19,6 +19,8 @@ class CustomClass < Nadeshiko::Application
 
   def onstart
     span :text => 'Hello World'
+    
+    # This magically looks up class List under Nadeshiko namespace
     list :id => :custom_list1
   end
 
