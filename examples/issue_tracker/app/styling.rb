@@ -5,6 +5,9 @@ module Styling
 
     style do
       {
+        'body' => {
+          'padding-top' => '40px'
+        },
         '.issue-description' => {
           :width => '260px'
         },
