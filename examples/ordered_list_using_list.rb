@@ -23,7 +23,7 @@ class OrderedList < Nadeshiko::Application
         record = Struct.new(:id,:name).new
         record.name = value
         record.id = rand
-        get_element(:list).append_record record
+        get_element(:list).append_record record,:notify => true
       end
     end
 
