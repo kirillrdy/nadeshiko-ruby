@@ -11,21 +11,53 @@
 
     <script>
 
-      function init() {
-        $(document.body).empty()
+
+      function new_socket_connection(){
         var host = window.location.hostname
         var web_socket_location = "ws://"+host+":8080/"
-
         if (window.MozWebSocket){ws = new MozWebSocket(web_socket_location);}
         if (window.WebSocket){ws = new WebSocket(web_socket_location);}
 
+        ws.onopen = function(){
+          $(document.body).empty()
+        }
+
+        return ws
+        
+      }
+
+      function init_nadeshiko_client() {
+
+        var ws = new_socket_connection()
+
         ws.onclose = function(){
-          setTimeout("init()",0)
+          $(document.body).append("<span style=\"position:absolute; left:600px;top:10px;z-index:10001;\" class=\"label warning\">Lost connection retrying</span>")
+          setTimeout("reconnect()",0)
         };
         ws.onmessage =  execute_cmd
       };
-      $(init)
 
+
+      function reconnect(){ 
+        var ws = new_socket_connection()
+
+        ws.onclose = function(){
+          setTimeout("reconnect()",0)
+        };
+
+        ws.onopen = function(){
+          $(document.body).empty()
+          ws.onclose = function(){
+            setTimeout("init_nadeshiko_client()",0)
+          }
+        }
+
+        ws.onmessage =  execute_cmd
+
+    
+    }
+
+   $(init_nadeshiko_client)
     </script>
   </head>
 
