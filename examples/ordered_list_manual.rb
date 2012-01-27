@@ -18,7 +18,7 @@ class OrderedList < Nadeshiko::Application
       end
     end
 
-    # Made list sortable, jQuery call
+    # Make list sortable, jQuery call
     get_element(:sortable).sortable
 
 
