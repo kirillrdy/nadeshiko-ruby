@@ -4,14 +4,6 @@ require './lib/nadeshiko'
 # with live updates on addition of new items and on move of an item
 class OrderedList < Nadeshiko::Application
 
-  class << self
-
-    # I added a global counter for items created so that i can keep a track of number of items created
-    # since this example doesnt acctually persist items list
-    attr_accessor :number_runner
-  end
-
-  @number_runner = 0
 
   def onstart
 
@@ -26,9 +18,46 @@ class OrderedList < Nadeshiko::Application
       end
     end
 
-    # Made list sortable
+    # Made list sortable, jQuery call
     get_element(:sortable).sortable
 
+
+    # Event on sortupdate
+    # fired when one of users moved item
+    get_element(:sortable).sortupdate do |item_id|
+
+      moved_element = get_element(item_id)
+
+      moved_element.index do |index|
+        if index.to_i == 0
+          # next is just a jQuery method
+          moved_element.next do |next_element_id|
+            Nadeshiko::Notifier.trigger :item_moved_to_top,moved_element.id,next_element_id
+          end
+        else
+          # prev is just a jQuery method
+          moved_element.prev do |prev_element_id|
+            Nadeshiko::Notifier.trigger :item_moved,moved_element.id,prev_element_id
+          end
+        end
+      end
+    end
+
+    # This is triggered when user adds new item
+    get_element(:add_item).click do
+      get_element(:textfield).val do |value|
+        # if user trying to add an empty item, we should
+        # just ignore, or perhaps alert
+        if value != ''
+
+          # Notify clients of new value being added
+          Nadeshiko::Notifier.trigger :item_added, value
+
+          # clear text box for next entry
+          get_element(:textfield).val ''
+        end
+      end
+    end
 
     # subscribe to notifications
     Nadeshiko::Notifier.bind :item_moved_to_top do |moved_element_id,next_element_id|
@@ -43,40 +72,12 @@ class OrderedList < Nadeshiko::Application
 
     Nadeshiko::Notifier.bind :item_added do |value|
       append_to(:sortable) do
-        li :id => 'new_item_' + self.class.number_runner.to_s do
+        li do
           span :text => value
         end
       end
     end
 
-
-
-    # Event on sortupdate
-    # fired when one of users moved item
-    get_element(:sortable).sortupdate do |item_id|
-
-      moved_element = get_element(item_id)
-
-      moved_element.index do |index|
-        if index.to_i == 0
-          moved_element.next do |next_element_id|
-            Nadeshiko::Notifier.trigger :item_moved_to_top,moved_element.id,next_element_id
-          end
-        else
-          moved_element.prev do |prev_element_id|
-            Nadeshiko::Notifier.trigger :item_moved,moved_element.id,prev_element_id
-          end
-        end
-      end
-    end
-
-    # This is triggered when user adds new item
-    get_element(:add_item).click do
-      get_element(:textfield).val do |value|
-        self.class.number_runner += 1
-        Nadeshiko::Notifier.trigger :item_added, value
-      end
-    end
 
   end
 
