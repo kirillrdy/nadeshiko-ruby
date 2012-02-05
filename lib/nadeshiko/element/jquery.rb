@@ -1,6 +1,7 @@
 module Nadeshiko
   module Jquery
 
+    # Appends Element or string
     def append object
       case object
         when String
@@ -12,6 +13,7 @@ module Nadeshiko
       end
     end
 
+    # Prepends Element or string
     def prepend object
       case object
         when String
@@ -42,6 +44,7 @@ module Nadeshiko
       _call_method_with_params :insertBefore, "##{object.id}"
     end
 
+    # Sets inner html value of an element
     def text val
       string =<<-EOL
         $('##{@id}').text(#{val.inspect})
@@ -49,6 +52,7 @@ module Nadeshiko
       @app.dom_on_sockets.execute string
     end
 
+    # Adds onclick callback
     def click &block
       @app.dom_on_sockets.add_callback_block :click,@id, &block
       string =<<-EOL
@@ -60,6 +64,7 @@ module Nadeshiko
       @app.dom_on_sockets.execute string
     end
 
+    # adds onkeydown callback
     def keydown &block
       @app.dom_on_sockets.add_callback_block :keydown,@id, &block
       string =<<-EOL
@@ -81,11 +86,13 @@ module Nadeshiko
       end
     end
 
+    # Empties elements content
     def empty
       string="$('##{@id}').empty()"
       @app.dom_on_sockets.execute string
     end
 
+    # Removes element
     def remove
       string="$('##{@id}').remove()"
       @app.dom_on_sockets.execute string
@@ -98,16 +105,19 @@ module Nadeshiko
       @app.dom_on_sockets.execute string
     end
 
+    # Adds class to an element
     def add_class class_name
       string="$('##{@id}').addClass(#{class_name.to_s.inspect})"
       @app.dom_on_sockets.execute string
     end
 
+    # Removes class from an element
     def remove_class class_name
       string="$('##{@id}').removeClass(#{class_name.to_s.inspect})"
       @app.dom_on_sockets.execute string
     end
 
+    # Bind to custom event
     def bind event, &block
       @app.dom_on_sockets.add_callback_block event, @id, &block
       string =<<-EOL
