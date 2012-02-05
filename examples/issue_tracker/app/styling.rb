@@ -5,12 +5,6 @@ class IssueTracker < Nadeshiko::Application
 
       style do
         {
-          'body' => {
-            'padding-top' => '40px'
-          },
-          '.issue-description' => {
-            :width => '260px'
-          },
           '.right' => {
             :float => 'right'
           },
