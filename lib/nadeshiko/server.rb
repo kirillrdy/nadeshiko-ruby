@@ -7,6 +7,10 @@ module Nadeshiko
 
     public_dir = File.dirname(__FILE__)+ '/../../public'
 
+    # we used to set public_dir for serving bundled assets
+    # but that proved hard when used in other prjects
+    # so now we use default public_dir
+    # and generate hardwired routes for bundled files
     #set :public, public_dir
 
     set :root, Dir.getwd
