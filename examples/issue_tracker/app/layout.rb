@@ -16,21 +16,23 @@ class IssueTracker < Nadeshiko::Application
       #h1 :text => 'Non-pivotal tracker (TM)'
       div :class => 'container-fluid' do
         div :class => 'row show-grid' do
-          div :class => 'span8 column' do
+          div :class => 'span6 column' do
             h4 :text => 'Icebox'
             div do
-              input :id => :new_issue_text_field, :class => 'xlarge'
+              input :id => :new_issue_text_field
               button :id => :add_new_issue_button, :text => 'Add New Issue', :class => 'btn primary'
             end
             icebox_panel
           end
-          div :class => 'span8 column' do
+          div :class => 'span6 column' do
             h4 :text => 'Search'
-            input :id => :search_issue_text_field
-            button :id => :search_issue_button, :text => 'Search', :class => 'btn small'
+            form :class => 'form-search' do
+              input :id => :search_issue_text_field, :class => 'search-query'
+              button :id => :search_issue_button, :text => 'Search', :class => 'btn small'
+            end
             div :class => 'list-of-issues'
           end
-          div :class => 'span8 column' do
+          div :class => 'span6 column' do
             h4 :text => 'My Work'
             span :text => 'other things here'
             div  :class => 'list-of-issues'
