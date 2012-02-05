@@ -1,6 +1,12 @@
 class IssueTracker < Nadeshiko::Application
   module Layout
 
+    def succeful_authentication
+      get_element(:login_screen).remove
+      initial_layout
+      issue_events
+    end
+
     def login_screen
 
       div :id => :login_screen, :style=>"position: relative; top: auto; left: auto; margin: 0 auto; z-index: 1", :class=>"modal" do
@@ -9,11 +15,30 @@ class IssueTracker < Nadeshiko::Application
           h3 :text => 'Please login'
         end
         div :class=>"modal-body", :id => 'modal-body' do
-          input :id => :username, :placeholder => 'Username', :class => 'input-small'
-          input :id => :password, :placeholder => 'Password', :type => 'password',:class => 'input-small'
+          form :class => 'form-horizontal' do
+            div :class => 'control-group' do
+              label :class => 'control-label', :text => 'Username'
+              div :class => 'controls' do
+                input :id => :username, :placeholder => 'Username', :class => ''
+              end
+            end
+            div :class => 'control-group' do
+              label :class => 'control-label', :text => 'Password'
+              div :class => 'controls' do
+                input :id => :password, :placeholder => 'Password', :type => 'password',:class => ''
+              end
+            end
+
+          end
         end
         div :class=>"modal-footer" do
           a :class=>"btn btn-primary", :href=>"#", :text =>'Login', :id => 'login_button'
+        end
+      end
+
+      get_element(:password).keydown do |key|
+        if key == 13
+          succeful_authentication
         end
       end
 
@@ -21,10 +46,8 @@ class IssueTracker < Nadeshiko::Application
         get_element(:username).val do |user_name|
           get_element(:password).val do |password|
             #TODO use real users for authentication
-            if user_name == 'kirillrdy' && password == 'great_password'
-              get_element(:login_screen).remove
-              initial_layout
-              issue_events
+            if user_name == 'kirillrdy' && password == 'password'
+              succeful_authentication
             else
               append_to 'modal-body' do
                 label :text => 'Wrong Username or Password',
