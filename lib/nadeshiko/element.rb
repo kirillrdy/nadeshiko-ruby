@@ -64,6 +64,10 @@ module Nadeshiko
 
       add_class @options[:class] if @options[:class]
 
+      list_of_approved_attributes = [:placeholder]
+      list_of_approved_attributes.each do |attribute_name|
+        attr attribute_name,@options[attribute_name] if @options[attribute_name]
+      end
       #TODO add handling for style attribute
 
     end
