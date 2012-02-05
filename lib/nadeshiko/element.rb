@@ -24,6 +24,7 @@ module Nadeshiko
 
       @app =  @options[:app]
       @id = @options[:id].to_s
+      @type = @options[:type]
 
       @element_type = options[:element_type]
 

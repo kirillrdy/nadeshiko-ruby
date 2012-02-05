@@ -133,7 +133,10 @@ module Nadeshiko
     #TODO move this elsewhere, doesnt belong to jquery
     def to_html
       child_type = element_type
-      element_string = "<#{child_type} id=\"#{@id}\"></#{child_type}>"
+      type_string = ''
+      type_string = "type=\"#{@type}\"" if @type
+
+      element_string = "<#{child_type} id=\"#{@id}\" #{type_string}></#{child_type}>"
     end
 
 
