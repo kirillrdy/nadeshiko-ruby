@@ -51,9 +51,11 @@ class IssueTracker < Nadeshiko::Application
       icebox.item_renderer do |record|
         item = div  :class => "well" do
           story_description = "#{record.id}: #{record.description}"
-          div :text => story_description, :class => 'issue-description left'
-          x = div :text => 'Delete', :class => 'btn danger right'
-          x.click do
+          div :text => story_description, :class => 'span4'
+          delete_button = div :text => 'Delete', :class => 'btn btn-danger' do
+            i :class => 'icon-trash icon-white'
+          end
+          delete_button.click do
             icebox.remove_record record
           end
         end
