@@ -2,24 +2,33 @@ class IssueTracker < Nadeshiko::Application
   module Layout
 
     def login_screen
-      div :id => 'login_form' ,:class => 'well' do
-        h1 :text => "Please login"
-        user_name = input :id => :username, :placeholder => 'Username', :class => 'input-small'
-        password  = input :id => :password, :placeholder => 'Password', :type => 'password',:class => 'input-small'
-        x = button :text => 'Login'
-        x.click do
-          user_name.val do |user_name|
-            password.val do |password|
-              #TODO use real users for authentication
-              if user_name == 'kirillrdy' && password == 'great_password'
-                get_element('login_form').remove
-                initial_layout
-                issue_events
-              else
-                append_to :login_form do
-                  label :text => 'Wrong Username or Password',
-                    :class => 'label label-important'
-                end
+
+      div :id => :login_screen, :style=>"position: relative; top: auto; left: auto; margin: 0 auto; z-index: 1", :class=>"modal" do
+        div :class=>"modal-header" do
+          a 'data-dismiss' => "modal", :class=>"close", :href=>"#", :text => 'X'
+          h3 :text => 'Please login'
+        end
+        div :class=>"modal-body", :id => 'modal-body' do
+          input :id => :username, :placeholder => 'Username', :class => 'input-small'
+          input :id => :password, :placeholder => 'Password', :type => 'password',:class => 'input-small'
+        end
+        div :class=>"modal-footer" do
+          a :class=>"btn btn-primary", :href=>"#", :text =>'Login', :id => 'login_button'
+        end
+      end
+
+      get_element(:login_button).click do
+        get_element(:username).val do |user_name|
+          get_element(:password).val do |password|
+            #TODO use real users for authentication
+            if user_name == 'kirillrdy' && password == 'great_password'
+              get_element(:login_screen).remove
+              initial_layout
+              issue_events
+            else
+              append_to 'modal-body' do
+                label :text => 'Wrong Username or Password',
+                  :class => 'label label-important'
               end
             end
           end
