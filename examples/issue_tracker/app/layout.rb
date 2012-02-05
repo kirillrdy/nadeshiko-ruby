@@ -69,10 +69,9 @@ class IssueTracker < Nadeshiko::Application
         end
       end
 
-      #h1 :text => 'Non-pivotal tracker (TM)'
       div :class => 'container-fluid' do
-        div :class => 'row show-grid' do
-          div :class => 'span6 column' do
+        div :class => 'row' do
+          div :class => 'span6' do
             h4 :text => 'Icebox'
             div do
               input :id => :new_issue_text_field
@@ -80,7 +79,7 @@ class IssueTracker < Nadeshiko::Application
             end
             icebox_panel
           end
-          div :class => 'span6 column' do
+          div :class => 'span6' do
             h4 :text => 'Search'
             form :class => 'form-search' do
               input :id => :search_issue_text_field, :class => 'search-query'
@@ -110,12 +109,23 @@ class IssueTracker < Nadeshiko::Application
       order_scope ||= OrderScope.create :name => 'icebox', :data => []
 
       icebox.item_renderer do |record|
-        item = div  :class => "well" do
+        item = div  :class => "well issue-item" do
           story_description = "#{record.id}: #{record.description}"
-          div :text => story_description, :class => 'span4'
-          delete_button = div :text => 'Delete', :class => 'btn btn-danger' do
+          div :text => story_description, :class => 'span3'
+          div :class => 'btn' do
+            i :class => 'icon-star-empty'
+          end
+          div :class => 'btn' do
+            i :class => 'icon-ok'
+          end
+          div :class => 'btn' do
+            i :class => 'icon-pencil'
+          end
+          delete_button = div :class => 'btn btn-danger' do
             i :class => 'icon-trash icon-white'
           end
+
+
           delete_button.click do
             icebox.remove_record record
           end
