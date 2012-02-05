@@ -3,12 +3,10 @@ class IssueTracker < Nadeshiko::Application
 
     def initial_layout
 
-      div :class => "topbar" do
-        div :class => "topbar-inner" do
+      div :class => "navbar" do
+        div :class => "navbar-inner" do
           div :class => "container" do
-            h3 do
-              a :text => 'Non-pivotal tracker (TM)'
-            end
+              a :class => 'brand', :text => 'Non-pivotal tracker (TM)'
           end
         end
       end
