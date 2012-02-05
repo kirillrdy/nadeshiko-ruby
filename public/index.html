@@ -31,7 +31,7 @@
         var ws = new_socket_connection()
 
         ws.onclose = function(){
-          $(document.body).append("<span style=\"position:absolute; left:600px;top:10px;z-index:10001;\" class=\"label warning\">Lost connection retrying</span>")
+          $(document.body).append("<span style=\"position:absolute; left:600px;top:10px;z-index:10001;\" class=\"label label-warning\">Lost connection retrying</span>")
           setTimeout("reconnect()",0)
         };
         ws.onmessage =  execute_cmd
