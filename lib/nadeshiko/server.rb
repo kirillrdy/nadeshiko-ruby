@@ -23,8 +23,8 @@ module Nadeshiko
 
     list_of_javascript_files = ['dom_crud.js',
       'FABridge.js',
-      'jquery.min.js',
-      'jquery-ui.min.js',
+      'jquery-1.7.1.min.js',
+      'jquery-ui-1.8.17.custom.min.js',
       'swfobject.js',
       'web_socket.js'
       ]
