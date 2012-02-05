@@ -57,7 +57,7 @@ module Nadeshiko
       @app.dom_on_sockets.execute ''
     end
 
-    # When parent add child, it calls 'setup' on it
+    # When parent adds child, it calls 'setup' on it
     def setup
       text @options[:text] if @options[:text]
 
