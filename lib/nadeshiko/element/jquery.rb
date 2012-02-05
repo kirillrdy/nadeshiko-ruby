@@ -91,6 +91,13 @@ module Nadeshiko
       @app.dom_on_sockets.execute string
     end
 
+    # Add handling for getting value of attribute,
+    # currently only sets attribute values
+    def attr attribute_name,value = nil
+      string="$('##{@id}').attr('#{attribute_name}','#{value}')"
+      @app.dom_on_sockets.execute string
+    end
+
     def add_class class_name
       string="$('##{@id}').addClass(#{class_name.to_s.inspect})"
       @app.dom_on_sockets.execute string
