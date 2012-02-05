@@ -25,6 +25,9 @@ class IssueTracker < Nadeshiko::Application
           },
           '#add_new_issue_button' => {
             'margin-bottom' => '9px'
+          },
+          ".issue-item" => {
+            :padding => '5px'
           }
 
         }
