@@ -13,12 +13,18 @@ class IssueTracker < Nadeshiko::Application
           },
           '.list-of-issues' => {
             background:  '#eee',
-            height: '800px',
+            height: '700px',
             overflow: 'auto',
             'border-radius' => '6px'
           },
           '.well' => {
             'margin-bottom' =>  '1px'
+          },
+          'input' => {
+            :height => '28px'
+          },
+          '#add_new_issue_button' => {
+            'margin-bottom' => '9px'
           }
 
         }
