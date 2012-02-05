@@ -1,6 +1,32 @@
 class IssueTracker < Nadeshiko::Application
   module Layout
 
+    def login_screen
+      div :id => 'login_form' ,:class => 'well' do
+        h1 :text => "Please login"
+        user_name = input :id => :username, :placeholder => 'Username', :class => 'input-small'
+        password  = input :id => :password, :placeholder => 'Password', :type => 'password',:class => 'input-small'
+        x = button :text => 'Login'
+        x.click do
+          user_name.val do |user_name|
+            password.val do |password|
+              #TODO use real users for authentication
+              if user_name == 'kirillrdy' && password == 'great_password'
+                get_element('login_form').remove
+                initial_layout
+                issue_events
+              else
+                append_to :login_form do
+                  label :text => 'Wrong Username or Password',
+                    :class => 'label label-important'
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+
     def initial_layout
 
       div :class => "navbar" do
@@ -18,7 +44,7 @@ class IssueTracker < Nadeshiko::Application
             h4 :text => 'Icebox'
             div do
               input :id => :new_issue_text_field
-              button :id => :add_new_issue_button, :text => 'Add New Issue', :class => 'btn primary'
+              button :id => :add_new_issue_button, :text => 'Add New Issue', :class => 'btn'
             end
             icebox_panel
           end
@@ -26,7 +52,10 @@ class IssueTracker < Nadeshiko::Application
             h4 :text => 'Search'
             form :class => 'form-search' do
               input :id => :search_issue_text_field, :class => 'search-query'
-              button :id => :search_issue_button, :text => 'Search', :class => 'btn small'
+              div :id => :search_issue_button,  :class => 'btn btn-small' do
+                i :class => 'icon-search'
+                label :text => 'Search'
+              end
             end
             div :class => 'list-of-issues'
           end

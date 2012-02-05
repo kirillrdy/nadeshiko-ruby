@@ -10,8 +10,9 @@ class IssueTracker < Nadeshiko::Application
 
   def onstart
     issues_styling
-    initial_layout
-    issue_events
+    login_screen
+    #initial_layout
+    #issue_events
   end
 
 end
