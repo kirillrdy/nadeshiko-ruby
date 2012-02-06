@@ -64,8 +64,17 @@ class IssueTracker < Nadeshiko::Application
       div :class => "navbar" do
         div :class => "navbar-inner" do
           div :class => "container" do
-              a :class => 'brand', :text => 'Non-pivotal tracker (TM)'
+            a :class => 'brand', :text => 'Non-pivotal tracker (TM)'
+            ul :class => :nav do
+              li :class => :active do
+                a :text => 'Home'
+              end
+              li do
+                a :text => 'Admin'
+              end
+            end
           end
+          
         end
       end
 
