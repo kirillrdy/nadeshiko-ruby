@@ -4,6 +4,8 @@ class IssueTracker < Nadeshiko::Application
     def succeful_authentication
       get_element(:login_screen).remove
       initial_layout
+      issues_layout
+      nav_bar_events
       issue_events
     end
 
@@ -66,11 +68,11 @@ class IssueTracker < Nadeshiko::Application
           div :class => "container" do
             a :class => 'brand', :text => 'Non-pivotal tracker (TM)'
             ul :class => :nav do
-              li :class => :active do
-                a :text => 'Home'
+              li :id => :home_li, :class => :active do
+                a :text => 'Home', :id => :home_section_link
               end
-              li do
-                a :text => 'Admin'
+              li :id => :admin_li do
+                a :text => 'Admin', :id => :admin_section_link
               end
             end
           end
@@ -78,7 +80,14 @@ class IssueTracker < Nadeshiko::Application
         end
       end
 
-      div :class => 'container-fluid' do
+      div :id => :main_body, :class => 'container-fluid' do
+      end
+
+      div :id => :footer, :text => "Powered by Nadeshiko #{Nadeshiko::VERSION}"
+    end
+
+    def issues_layout
+      append_to :main_body do
         div :class => 'row' do
           div :class => 'span6' do
             h4 :text => 'Icebox'
@@ -106,8 +115,6 @@ class IssueTracker < Nadeshiko::Application
           end
         end
       end
-
-      div :id => :footer, :text => "Powered by Nadeshiko #{Nadeshiko::VERSION}"
     end
 
     def icebox_panel
@@ -156,6 +163,31 @@ class IssueTracker < Nadeshiko::Application
       # we use load_records instead of append_record, to skip_sort_update callback
       icebox.load_records Issue.load_in_order(order_scope.data)
 
+    end
+
+    def add_admin_layout
+      append_to :main_body do
+        table :class => 'table table-striped' do
+          thead do
+            tr do
+              th :text => 'Id'
+              th :text => 'description'
+              th :text => 'Actions'
+            end
+          end
+          tbody do
+            for issue in Issue.all
+              tr do
+                td :text => issue.id
+                td :text => issue.description
+                td do
+                  div :text => 'Delete', :class => 'btn'
+                end
+              end
+            end
+          end
+        end
+      end
     end
 
   end
