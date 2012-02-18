@@ -11,6 +11,8 @@ class Nadeshiko::List < Nadeshiko::Element
     @records_hash = {}
   end
 
+  # Sets item_renderer for this list
+  # block gets passed record that is being rendered
   def item_renderer &block
     @item_renederer = block
   end
@@ -90,9 +92,9 @@ class Nadeshiko::List < Nadeshiko::Element
     else
       element.insert_after @elements[new_index-1]
     end
-    
+
     @onsortupdate.call element if @onsortupdate
-    
+
   end
 
   def setup
