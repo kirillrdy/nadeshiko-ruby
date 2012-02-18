@@ -7,7 +7,6 @@ class Silverforge < Nadeshiko::Application
   include LoginScreen
 
   include MainLayout
-  include Methods
   include Admin
   include Tasks
 
