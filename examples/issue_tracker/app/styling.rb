@@ -1,4 +1,4 @@
-class IssueTracker < Nadeshiko::Application
+class Silverforge < Nadeshiko::Application
   module Styling
     def issues_styling
       append '<link rel="stylesheet" href="/bootstrap/css/bootstrap.css">'

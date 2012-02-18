@@ -1,4 +1,4 @@
-class IssueTracker < Nadeshiko::Application
+class Silverforge < Nadeshiko::Application
   class Task < ActiveRecord::Base
 
     def self.load_in_order ids

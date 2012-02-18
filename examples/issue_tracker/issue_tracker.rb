@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require_relative 'boot'
 
-class IssueTracker < Nadeshiko::Application
+class Silverforge < Nadeshiko::Application
 
   include LoginScreen
   include Styling
@@ -9,6 +9,7 @@ class IssueTracker < Nadeshiko::Application
   include Layout
   include Methods
   include Admin
+  include Tasks
 
   def onstart
     issues_styling
@@ -17,4 +18,4 @@ class IssueTracker < Nadeshiko::Application
 
 end
 
-Nadeshiko::Server.run IssueTracker
+Nadeshiko::Server.run Silverforge

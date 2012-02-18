@@ -1,4 +1,4 @@
-class IssueTracker < Nadeshiko::Application
+class Silverforge < Nadeshiko::Application
   module Layout
 
     def main_layout
