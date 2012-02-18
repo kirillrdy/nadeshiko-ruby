@@ -1,67 +1,7 @@
 class IssueTracker < Nadeshiko::Application
   module Layout
 
-    def succeful_authentication
-      get_element(:login_screen).remove
-      initial_layout
-      issues_layout
-      nav_bar_events
-      issue_events
-    end
-
-    def login_screen
-
-      div :id => :login_screen, :style=>"position: relative; top: auto; left: auto; margin: 0 auto; z-index: 1", :class=>"modal" do
-        div :class=>"modal-header" do
-          a 'data-dismiss' => "modal", :class=>"close", :href=>"#", :text => 'X'
-          h3 :text => 'Please login'
-        end
-        div :class=>"modal-body", :id => 'modal-body' do
-          form :class => 'form-horizontal' do
-            div :class => 'control-group' do
-              label :class => 'control-label', :text => 'Username'
-              div :class => 'controls' do
-                input :id => :username, :placeholder => 'Username', :class => ''
-              end
-            end
-            div :class => 'control-group' do
-              label :class => 'control-label', :text => 'Password'
-              div :class => 'controls' do
-                input :id => :password, :placeholder => 'Password', :type => 'password',:class => ''
-              end
-            end
-
-          end
-        end
-        div :class=>"modal-footer" do
-          a :class=>"btn btn-primary", :href=>"#", :text =>'Login', :id => 'login_button'
-        end
-      end
-
-      get_element(:password).keydown do |key|
-        if key == 13
-          succeful_authentication
-        end
-      end
-
-      get_element(:login_button).click do
-        get_element(:username).val do |user_name|
-          get_element(:password).val do |password|
-            #TODO use real users for authentication
-            if user_name == 'kirillrdy' && password == 'password'
-              succeful_authentication
-            else
-              append_to 'modal-body' do
-                label :text => 'Wrong Username or Password',
-                  :class => 'label label-important'
-              end
-            end
-          end
-        end
-      end
-    end
-
-    def initial_layout
+    def main_layout
 
       div :class => "navbar" do
         div :class => "navbar-inner" do
@@ -161,34 +101,11 @@ class IssueTracker < Nadeshiko::Application
       end
 
       # we use load_records instead of append_record, to skip_sort_update callback
-      icebox.load_records Issue.load_in_order(order_scope.data)
+      icebox.load_records Task.load_in_order(order_scope.data)
 
     end
 
-    def add_admin_layout
-      append_to :main_body do
-        table :class => 'table table-striped' do
-          thead do
-            tr do
-              th :text => 'Id'
-              th :text => 'description'
-              th :text => 'Actions'
-            end
-          end
-          tbody do
-            for issue in Issue.all
-              tr do
-                td :text => issue.id
-                td :text => issue.description
-                td do
-                  div :text => 'Delete', :class => 'btn'
-                end
-              end
-            end
-          end
-        end
-      end
-    end
+
 
   end
 end
