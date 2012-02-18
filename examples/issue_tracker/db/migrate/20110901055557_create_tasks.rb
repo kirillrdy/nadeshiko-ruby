@@ -1,4 +1,4 @@
-class CreateIssues < ActiveRecord::Migration
+class CreateTasks < ActiveRecord::Migration
    def self.up
 
     create_table :tasks do |t|
@@ -9,6 +9,11 @@ class CreateIssues < ActiveRecord::Migration
     create_table :order_scopes do |t|
       t.string :name
       t.string :data
+    end
+
+    create_table :users do |t|
+      t.string :name
+      t.string :email
     end
 
   end
