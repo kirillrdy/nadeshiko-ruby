@@ -3,16 +3,16 @@ require_relative 'boot'
 
 class Silverforge < Nadeshiko::Application
 
-  include LoginScreen
   include Styling
-  include EventHandlers
-  include Layout
+  include LoginScreen
+
+  include MainLayout
   include Methods
   include Admin
   include Tasks
 
   def onstart
-    issues_styling
+    main_styling
     login_screen
   end
 

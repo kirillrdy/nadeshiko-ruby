@@ -1,6 +1,6 @@
 class Silverforge < Nadeshiko::Application
   module Styling
-    def issues_styling
+    def main_styling
       append '<link rel="stylesheet" href="/bootstrap/css/bootstrap.css">'
 
       style do
