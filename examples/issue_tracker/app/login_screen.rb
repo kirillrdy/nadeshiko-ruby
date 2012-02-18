@@ -33,22 +33,25 @@ class Silverforge < Nadeshiko::Application
 
       get_element(:password).keydown do |key|
         if key == 13
-          succeful_authentication
+          try_login
         end
       end
 
       get_element(:login_button).click do
-        get_element(:username).val do |user_name|
-          get_element(:password).val do |password|
-            #TODO use real users for authentication
-            @current_user = User.authenticate user_name
-            if @current_user
-              succeful_authentication
-            else
-              append_to 'modal-body' do
-                label :text => 'Wrong Username or Password',
-                  :class => 'label label-important'
-              end
+        try_login
+      end
+    end
+
+    def try_login
+      get_element(:username).val do |user_name|
+        get_element(:password).val do |password|
+          @current_user = User.authenticate user_name
+          if @current_user
+            succeful_authentication
+          else
+            append_to 'modal-body' do
+              label :text => 'Wrong Username or Password',
+                :class => 'label label-important'
             end
           end
         end
