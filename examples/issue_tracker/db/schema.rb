@@ -23,4 +23,9 @@ ActiveRecord::Schema.define(:version => 20110901055557) do
     t.boolean "finished"
   end
 
+  create_table "users", :force => true do |t|
+    t.string "name"
+    t.string "email"
+  end
+
 end
