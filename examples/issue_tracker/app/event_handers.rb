@@ -26,7 +26,6 @@ class IssueTracker < Nadeshiko::Application
 
     def issue_events
 
-
       get_element(:new_issue_text_field).keydown do |key|
         if key.to_i == 13
           create_new_issue
