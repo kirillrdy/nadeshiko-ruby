@@ -41,7 +41,8 @@ class Silverforge < Nadeshiko::Application
         get_element(:username).val do |user_name|
           get_element(:password).val do |password|
             #TODO use real users for authentication
-            if user_name == 'kirillrdy' && password == 'password'
+            @current_user = User.authenticate user_name
+            if @current_user
               succeful_authentication
             else
               append_to 'modal-body' do
@@ -60,6 +61,7 @@ class Silverforge < Nadeshiko::Application
       issues_layout
       nav_bar_events
       issue_events
+      get_element(:current_user_name).text @current_user.name
     end
 
   end
