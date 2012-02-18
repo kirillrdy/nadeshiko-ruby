@@ -5,27 +5,19 @@ class Silverforge < Nadeshiko::Application
       append_to :main_body do
         div :class => 'row' do
           div :class => 'span6' do
-            h4 :text => 'Icebox'
+            h4 :text => 'Tasks'
             div do
               input :id => :new_issue_text_field
-              button :id => :add_new_issue_button, :text => 'Add New Issue', :class => 'btn'
+              button :id => :add_new_issue_button, :text => 'Add', :class => 'btn'
             end
             icebox_panel
           end
           div :class => 'span6' do
-            h4 :text => 'Search'
-            form :class => 'form-search' do
-              input :id => :search_issue_text_field, :class => 'search-query'
-              div :id => :search_issue_button,  :class => 'btn btn-small' do
-                i :class => 'icon-search'
-                label :text => 'Search'
-              end
-            end
+            h4 :text => 'Current'
             div :class => 'list-of-issues'
           end
           div :class => 'span6 column' do
-            h4 :text => 'My Work'
-            span :text => 'other things here'
+            h4 :text => 'Review'
             div  :class => 'list-of-issues'
           end
         end
@@ -45,10 +37,7 @@ class Silverforge < Nadeshiko::Application
           story_description = "#{record.id}: #{record.description}"
           div :text => story_description, :class => 'span3'
           div :class => 'btn' do
-            i :class => 'icon-star-empty'
-          end
-          div :class => 'btn' do
-            i :class => 'icon-ok'
+            i :class => 'icon-play'
           end
           div :class => 'btn' do
             i :class => 'icon-pencil'
