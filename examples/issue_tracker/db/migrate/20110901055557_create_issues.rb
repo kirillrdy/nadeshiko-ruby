@@ -1,7 +1,7 @@
 class CreateIssues < ActiveRecord::Migration
    def self.up
 
-    create_table :issues do |t|
+    create_table :tasks do |t|
       t.string :description
       t.boolean :finished
     end
