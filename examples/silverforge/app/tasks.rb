@@ -48,6 +48,7 @@ class Silverforge < Nadeshiko::Application
 
           start_button.click do
             @current_user.start_task record
+            get_element(:current_work_item).effect "highlight"
           end
           delete_button.click do
             icebox.remove_record record
