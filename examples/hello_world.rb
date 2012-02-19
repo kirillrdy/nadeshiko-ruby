@@ -1,11 +1,13 @@
 require './lib/nadeshiko'
 
-class HelloWord < Nadeshiko::Application
+module Examples
+  class HelloWord < Nadeshiko::Application
 
-  def onstart
-    span :text => 'Hello World'
+    def onstart
+      span :text => 'Hello World'
+    end
+
   end
-
 end
 
 Nadeshiko::Server.run HelloWord
