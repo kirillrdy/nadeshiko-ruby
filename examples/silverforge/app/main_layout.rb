@@ -11,12 +11,16 @@ class Silverforge < Nadeshiko::Application
               li :id => :home_li, :class => :active do
                 a :text => 'Home', :id => :home_section_link
               end
-              li :id => :admin_li, :class => 'span6' do
+              li :id => :admin_li, :class => 'span3' do
                 a :text => 'Admin', :id => :admin_section_link
               end
               li do
                 a :text => '', :id => :current_user_name
               end
+              li do
+                a :text => 'clock', :id => :current_work_item
+              end
+
               li do
                 a :text => 'clock', :id => :clock_link
               end
