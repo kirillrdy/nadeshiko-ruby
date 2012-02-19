@@ -35,6 +35,9 @@ class Silverforge < Nadeshiko::Application
       EventMachine::PeriodicTimer.new(1) do
         get_element(:clock_link).text Time.now.strftime('%H:%M:%S')
       end
+      EventMachine::PeriodicTimer.new(1) do
+        get_element(:current_work_item).text @current_user.current_work_item
+      end
 
 
     end
