@@ -13,6 +13,10 @@
 
 ActiveRecord::Schema.define(:version => 20110901055557) do
 
+  create_table "accounts", :force => true do |t|
+    t.string "name"
+  end
+
   create_table "order_scopes", :force => true do |t|
     t.string "name"
     t.string "data"
@@ -24,7 +28,17 @@ ActiveRecord::Schema.define(:version => 20110901055557) do
   end
 
   create_table "projects", :force => true do |t|
-    t.string "name"
+    t.integer "account_id"
+    t.string  "name"
+  end
+
+  create_table "task_logs", :force => true do |t|
+    t.integer  "task_id"
+    t.integer  "user_id"
+    t.string   "description"
+    t.string   "category"
+    t.datetime "start_at"
+    t.datetime "finish_at"
   end
 
   create_table "tasks", :force => true do |t|
@@ -36,8 +50,9 @@ ActiveRecord::Schema.define(:version => 20110901055557) do
   end
 
   create_table "users", :force => true do |t|
-    t.string "name"
-    t.string "email"
+    t.integer "account_id"
+    t.string  "name"
+    t.string  "email"
   end
 
 end
