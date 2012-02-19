@@ -36,7 +36,7 @@ class Silverforge < Nadeshiko::Application
         item = div  :class => "well issue-item" do
           story_description = "#{record.id}: #{record.description}"
           div :text => story_description, :class => 'span3'
-          div :class => 'btn' do
+          start_button = div :class => 'btn' do
             i :class => 'icon-play'
           end
           div :class => 'btn' do
@@ -46,7 +46,9 @@ class Silverforge < Nadeshiko::Application
             i :class => 'icon-trash icon-white'
           end
 
-
+          start_button.click do
+            @current_user.start_task record
+          end
           delete_button.click do
             icebox.remove_record record
           end
