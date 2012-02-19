@@ -4,7 +4,7 @@ class Silverforge < Nadeshiko::Application
     def issues_layout
       append_to :main_body do
         div :class => 'row' do
-          div :class => 'span6' do
+          div :class => 'span5' do
             h4 :text => 'Tasks'
             div do
               input :id => :new_issue_text_field
