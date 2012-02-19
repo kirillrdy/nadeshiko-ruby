@@ -3,6 +3,9 @@ class CreateTasks < ActiveRecord::Migration
 
     create_table :tasks do |t|
       t.string :description
+      t.integer :assigned_to
+      t.string :status
+      t.string :task_type
       t.boolean :finished
     end
 
@@ -14,6 +17,15 @@ class CreateTasks < ActiveRecord::Migration
     create_table :users do |t|
       t.string :name
       t.string :email
+    end
+
+    create_table :projects do |t|
+      t.string :name
+    end
+
+    create_table :project_users do |t|
+      t.integer :project_id
+      t.integer :user_id
     end
 
   end

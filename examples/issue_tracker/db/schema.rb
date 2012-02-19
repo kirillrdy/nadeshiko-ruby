@@ -18,8 +18,20 @@ ActiveRecord::Schema.define(:version => 20110901055557) do
     t.string "data"
   end
 
+  create_table "project_users", :force => true do |t|
+    t.integer "project_id"
+    t.integer "user_id"
+  end
+
+  create_table "projects", :force => true do |t|
+    t.string "name"
+  end
+
   create_table "tasks", :force => true do |t|
     t.string  "description"
+    t.integer "assigned_to"
+    t.string  "status"
+    t.string  "task_type"
     t.boolean "finished"
   end
 
