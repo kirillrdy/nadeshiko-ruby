@@ -17,4 +17,4 @@ class Silverforge < Nadeshiko::Application
 
 end
 
-Nadeshiko::Server.run Silverforge
+#Nadeshiko::Server.run Silverforge
