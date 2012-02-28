@@ -43,9 +43,9 @@ class Silverforge < Nadeshiko::Application
     end
 
     def try_login
-      get_element(:username).val do |user_name|
+      get_element(:username).val do |username|
         get_element(:password).val do |password|
-          @current_user = User.authenticate user_name
+          @current_user = User.authenticate username
           if @current_user
             succeful_authentication
           else
