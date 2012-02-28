@@ -140,6 +140,10 @@ module Nadeshiko
       _get_return_value_of_method_call :prev, '.attr("id")' , &block
     end
 
+    def trigger event_name
+      @app.dom_on_sockets.execute "$('##{@id}').trigger('#{event_name}')"
+    end
+
     #TODO move this elsewhere, doesnt belong to jquery
     def to_html
       child_type = element_type
