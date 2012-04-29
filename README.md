@@ -7,7 +7,7 @@ Requirements
 -------------
 
  * ruby 1.9.3+ ( it should work with 1.9.2 )
- * Chrome 4+ ( I use 15+ )
+ * Chrome 4+
  * Firefox 6+
 
 
