@@ -49,7 +49,7 @@ module Nadeshiko
             app.start
           end
         end
-        HttpServer.run!({:port=> 4567 })
+        HttpServer.run!({:port=> 3000 })
       end
 
     end
