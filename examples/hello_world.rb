@@ -10,4 +10,4 @@ module Examples
   end
 end
 
-Nadeshiko::Server.run HelloWord
+Nadeshiko::Server.run Examples::HelloWord
